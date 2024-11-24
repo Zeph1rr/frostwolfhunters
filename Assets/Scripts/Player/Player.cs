@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[SelectionBase]
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
