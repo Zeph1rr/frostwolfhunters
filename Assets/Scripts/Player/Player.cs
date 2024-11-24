@@ -12,17 +12,21 @@ public class Player : MonoBehaviour
 
     private float _minMovingSpeed = 0.1f;
     private bool _isRunning = false;
+    private Vector2 _movementVector;
 
     private void Awake() {
         Instance = this;
         _rigidBody = GetComponent<Rigidbody2D>();
     }
 
+    private void Update() {
+        _movementVector = GameInput.Instance.GetMovementVector();
+    }
+
     private void FixedUpdate() {
-        Vector2 direction = GameInput.Instance.GetMovementVector();
-        if (Mathf.Abs(direction.x) > _minMovingSpeed || Mathf.Abs(direction.y) > _minMovingSpeed) {
+        if (Mathf.Abs(_movementVector.x) > _minMovingSpeed || Mathf.Abs(_movementVector.y) > _minMovingSpeed) {
             _isRunning = true;
-            Move(direction);
+            Move(_movementVector);
         } else {
             _isRunning = false;
         }
