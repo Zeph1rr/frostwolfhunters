@@ -30,11 +30,10 @@ public class Player : MonoBehaviour
         } else {
             _isRunning = false;
         }
-        Debug.Log(_isRunning);
     }
 
     public void Move(Vector2 direction) {
-        _rigidBody.MovePosition(_rigidBody.position + direction * (_characterStats.stats.Speed * Time.deltaTime));   
+        _rigidBody.MovePosition(_rigidBody.position + direction * (_characterStats.stats.Speed * Time.deltaTime));
     }
 
     public bool IsRunning() {
