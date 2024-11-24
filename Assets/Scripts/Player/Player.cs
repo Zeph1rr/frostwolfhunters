@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 [SelectionBase]
@@ -7,7 +8,7 @@ public class Player : MonoBehaviour
     public static Player Instance {get; private set;}
 
     [Header("Character Stats")]
-    [SerializeField] private CharacterStats _characterStats;
+    [SerializeField] private PlayerStatsSO _characterStats;
 
     private Rigidbody2D _rigidBody;
 
@@ -34,7 +35,7 @@ public class Player : MonoBehaviour
     }
 
     public void Move(Vector2 direction) {
-        _rigidBody.MovePosition(_rigidBody.position + direction * (_characterStats.stats.Speed * Time.deltaTime));
+        _rigidBody.MovePosition(_rigidBody.position + direction * (_characterStats.Stats.Speed * Time.deltaTime));
     }
 
     public bool IsRunning() {
@@ -45,5 +46,4 @@ public class Player : MonoBehaviour
         Vector3 playerScreenPosition = Camera.main.WorldToScreenPoint(transform.position);
         return playerScreenPosition;
     }
-
 }
