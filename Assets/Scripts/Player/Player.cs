@@ -37,4 +37,9 @@ public class Player : MonoBehaviour
         return _isRunning;
     }
 
+    public Vector3 GetPlayerScreenPosition() {
+        Vector3 playerScreenPosition = Camera.main.WorldToScreenPoint(transform.position);
+        return playerScreenPosition;
+    }
+
 }
