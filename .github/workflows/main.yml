@@ -1,0 +1,76 @@
+name: Build project
+
+# Триггер на создание релиза
+on:
+  release:
+    types: [published]  # Сработает при публикации релиза
+
+jobs:
+  buildForAllSupportedPlatforms:
+    name: Build for ${{ matrix.targetPlatform }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        targetPlatform:
+          - StandaloneWindows64
+          - StandaloneWindows
+          - StandaloneLinux64
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library-${{ matrix.targetPlatform }}
+          restore-keys: Library-
+
+      - uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: ${{ matrix.targetPlatform }}
+
+      # Объединённый шаг для создания имени билда (репозиторий + версия)
+      - name: Set build name
+        id: set_build_name
+        run: |
+          # Извлечение имени репозитория
+          REPO_NAME=${GITHUB_REPOSITORY##*/}
+          
+          # Извлечение версии из тега
+          VERSION=${GITHUB_REF##*/}
+          
+          # Создание имени билда
+          BUILD_NAME="${REPO_NAME}-${{ matrix.targetPlatform }}-${VERSION}"
+          
+          # Сохранение в переменной окружения
+          echo "BUILD_NAME=${BUILD_NAME}" >> $GITHUB_ENV
+          
+          # Выводим имя билда для проверки
+          echo "Build name is: $BUILD_NAME"
+
+      # Шаг для создания zip архива с использованием имени билда
+      - name: Create zip archive from build folder
+        run: |
+          zip -r ${{ env.BUILD_NAME }}.zip build/${{ matrix.targetPlatform }}
+
+      # Шаг для загрузки артефакта в GitHub Actions
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.BUILD_NAME }}-archive
+          path: ${{ env.BUILD_NAME }}.zip  # Путь к zip архиву
+
+      # Добавляем шаг для прикрепления zip архива к релизу
+      - name: Upload zip archive to GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ${{ env.BUILD_NAME }}.zip  # Указываем путь к zip архиву
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Используем стандартный GITHUB_TOKEN для работы с GitHub API
