@@ -18,7 +18,7 @@ MonoBehaviour:
     Damage: 5
     AttackSpeed: 1.33
     AttackRange: 1
-    Speed: 5
+    Speed: 10
     Defence: 0
     ThreatLevel: 1
     IsBoss: 0

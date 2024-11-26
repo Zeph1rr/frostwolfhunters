@@ -19,5 +19,5 @@ MonoBehaviour:
     CurrentStamina: 120
     Damage: 10
     AttackSpeed: 1.33
-    Speed: 1.5
+    Speed: 1
     Defence: 0
