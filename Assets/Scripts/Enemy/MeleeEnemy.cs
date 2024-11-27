@@ -2,11 +2,15 @@ using System.Data.Common;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(PolygonCollider2D))]
 public class MeleeEnemy : Enemy
 {
     [SerializeField] Transform _target;
     [SerializeField] private State _currentState = State.Idle;
     private Rigidbody2D _rigidBody;
+    private BoxCollider2D _hitBox;
+    private PolygonCollider2D _attackCollider;
 
     private enum State {
         Idle,
@@ -17,12 +21,15 @@ public class MeleeEnemy : Enemy
 
     private void Awake() {
         _rigidBody = GetComponent<Rigidbody2D>();
+        _hitBox = GetComponent<BoxCollider2D>();
+        _attackCollider = GetComponent<PolygonCollider2D>();
     }
 
     private void Start() {
         stats.Stats.CurrentHealth = stats.Stats.MaxHealth;
-        OnTakeHit += HandleOnTakaHit;
+        OnTakeHit += HandleOnTakeHit;
         OnDeath += HandleOnDeath;
+        OnAttack += HandleOnAttack;
         if (_target == null) {
              GameObject player = GameObject.FindGameObjectWithTag("Player");
             if (player != null) {
@@ -33,13 +40,15 @@ public class MeleeEnemy : Enemy
     }
 
     private void OnDestroy() {
-        OnTakeHit -= HandleOnTakaHit;
+        OnTakeHit -= HandleOnTakeHit;
         OnDeath -= HandleOnDeath;
+        OnAttack -= HandleOnAttack;
     }
 
     protected override void Update() {
         base.Update();
         StateHandler();
+        ChangeFacingDirection(_target.position, transform.position);
     }
 
     private void StateHandler() {
@@ -62,6 +71,7 @@ public class MeleeEnemy : Enemy
         if (_currentState != State.Dead) {
             if (distanceToTarget > stats.Stats.AttackRange) {
                 _currentState = State.Chasing;
+                PolygonColliderTurnOff();
             } else {
                 _currentState = State.Attacking;
             }
@@ -73,7 +83,7 @@ public class MeleeEnemy : Enemy
         _rigidBody.MovePosition(_rigidBody.position + direction * (stats.Stats.Speed * Time.deltaTime));
     }
 
-    private void HandleOnTakaHit(object sender, System.EventArgs e) {
+    private void HandleOnTakeHit(object sender, System.EventArgs e) {
         Debug.Log("Took hit. Current health: " + stats.Stats.CurrentHealth);
     }
 
@@ -82,5 +92,32 @@ public class MeleeEnemy : Enemy
         Destroy(gameObject);
     }
 
+    private void HandleOnAttack(object sender, System.EventArgs e) {
+        PolygonColliderTurnOn();
+    }
+
+    private void ChangeFacingDirection(Vector3 sourcePosition, Vector3 targetPosition) {
+        if (sourcePosition.x < targetPosition.x) {
+            transform.rotation = Quaternion.Euler(0, -180, 0);
+        } else {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+    }
+
+    private void PolygonColliderTurnOn() {
+        _attackCollider.enabled = true;
+    }
+
+    private void PolygonColliderTurnOff() {
+        _attackCollider.enabled = false;
+    }
+
+    private void OnTriggerStay2D(Collider2D collision) {
+        Player player = collision.GetComponent<Player>();
+        if (player != null)
+        {
+            player.TakeDamage(stats.Stats.Damage);
+        }
+    }
 
 }

@@ -1,4 +1,5 @@
 using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 [SelectionBase]
@@ -19,6 +20,7 @@ public class Player : MonoBehaviour
     private void Awake() {
         Instance = this;
         _rigidBody = GetComponent<Rigidbody2D>();
+        _characterStats.Stats.CurrentHealth = _characterStats.Stats.MaxHealth;
     }
 
     private void Update() {
@@ -45,5 +47,10 @@ public class Player : MonoBehaviour
     public Vector3 GetPlayerScreenPosition() {
         Vector3 playerScreenPosition = Camera.main.WorldToScreenPoint(transform.position);
         return playerScreenPosition;
+    }
+
+    public void TakeDamage(int damage) {
+        _characterStats.Stats.CurrentHealth -= damage;
+        Debug.Log("Current health: " + _characterStats.Stats.CurrentHealth);
     }
 }
