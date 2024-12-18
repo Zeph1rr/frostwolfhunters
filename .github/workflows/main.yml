@@ -55,6 +55,13 @@ jobs:
           # Выводим имя билда для проверки
           echo "Build name is: $BUILD_NAME"
 
+      - name: Compile .ISS to .EXE Installer
+        if: matrix.targetPlatform == 'StandaloneWindows64' || matrix.targetPlatform == 'StandaloneWindows'
+        uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
+        with:
+          path: ./frostwolf.iss
+          options: /O+ /DMyAppVersion="${GITHUB_REF##*/}" /DMySourcePath="." /DMyOutputDir="setup/{{ matrix.targetPlatform }}" /DMyPassword="1"
+
       # Шаг для создания zip архива с использованием имени билда
       - name: Create zip archive from build folder
         run: |
@@ -74,3 +81,10 @@ jobs:
           files: ${{ env.BUILD_NAME }}.zip  # Указываем путь к zip архиву
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Используем стандартный GITHUB_TOKEN для работы с GitHub API
+      
+      - name: Upload windows insteller to GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: setup/{{ matrix.targetPlatform }}/frostwolfhunters-setup-${GITHUB_REF##*/}.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

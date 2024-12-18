@@ -365,8 +365,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &996203689
-CircleCollider2D:
+--- !u!70 &996203689
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -394,12 +394,12 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.7184807}
-  serializedVersion: 2
-  m_Radius: 1.2184807
+  m_Offset: {x: -0.054896474, y: 0.74894285}
+  m_Size: {x: 0.48431516, y: 1.5254364}
+  m_Direction: 0
 --- !u!1 &1229403171
 GameObject:
   m_ObjectHideFlags: 0
