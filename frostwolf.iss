@@ -42,10 +42,10 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: "{#MySourcePath}\build\FrostwolfHunters.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "F:\FrostwolfHunters\build\UnityCrashHandler64.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "F:\FrostwolfHunters\build\UnityPlayer.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "F:\FrostwolfHunters\build\FrostwolfHunters_Data\*"; DestDir: "{app}\FrostwolfHunters_Data"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "F:\FrostwolfHunters\build\MonoBleedingEdge\*"; DestDir: "{app}\MonoBleedingEdge"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#MySourcePath}\build\UnityCrashHandler64.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MySourcePath}\build\UnityPlayer.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MySourcePath}\build\FrostwolfHunters_Data\*"; DestDir: "{app}\FrostwolfHunters_Data"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#MySourcePath}\build\MonoBleedingEdge\*"; DestDir: "{app}\MonoBleedingEdge"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
