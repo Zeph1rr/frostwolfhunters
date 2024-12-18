@@ -1,9 +1,8 @@
 name: Build project
 
-# Триггер на создание релиза
 on:
   release:
-    types: [published]  # Сработает при публикации релиза
+    types: [published]
 
 jobs:
   buildForAllSupportedPlatforms:
@@ -36,7 +35,6 @@ jobs:
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
 
-      # Объединённый шаг для создания имени билда (репозиторий + версия)
       - name: Set build name
         id: set_build_name
         run: |
@@ -55,36 +53,76 @@ jobs:
           # Выводим имя билда для проверки
           echo "Build name is: $BUILD_NAME"
 
-      - name: Compile .ISS to .EXE Installer
-        if: matrix.targetPlatform == 'StandaloneWindows64' || matrix.targetPlatform == 'StandaloneWindows'
-        uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
+      - name: Upload build folder as artifact
+        uses: actions/upload-artifact@v3
         with:
-          path: ./frostwolf.iss
-          options: /O+ /DMyAppVersion="${GITHUB_REF##*/}" /DMySourcePath="." /DMyOutputDir="setup/{{ matrix.targetPlatform }}" /DMyPassword="1"
+          name: build-${{ matrix.targetPlatform }}
+          path: build/${{ matrix.targetPlatform }}
 
-      # Шаг для создания zip архива с использованием имени билда
       - name: Create zip archive from build folder
         run: |
           zip -r ${{ env.BUILD_NAME }}.zip build/${{ matrix.targetPlatform }}
 
-      # Шаг для загрузки артефакта в GitHub Actions
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ env.BUILD_NAME }}-archive
-          path: ${{ env.BUILD_NAME }}.zip  # Путь к zip архиву
-
-      # Добавляем шаг для прикрепления zip архива к релизу
       - name: Upload zip archive to GitHub Release
         uses: softprops/action-gh-release@v1
         with:
           files: ${{ env.BUILD_NAME }}.zip  # Указываем путь к zip архиву
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Используем стандартный GITHUB_TOKEN для работы с GitHub API
-      
-      - name: Upload windows insteller to GitHub Release
+
+
+
+  createWindowsInstaller:
+    name: Compile Installer on Windows
+    runs-on: windows-latest
+    needs: buildForAllSupportedPlatforms
+    if: contains(needs.buildForAllSupportedPlatforms.outputs.matrix.targetPlatform, 'StandaloneWindows') && contains(needs.buildForAllSupportedPlatforms.outputs.matrix.targetPlatform, 'StandaloneWindows64')
+    strategy:
+      fail-fast: false
+      matrix:
+        targetPlatform:
+          - StandaloneWindows64
+          - StandaloneWindows
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: build-${{ matrix.targetPlatform }}  # Имя артефакта для Windows
+          path: build/${{ matrix.targetPlatform }}
+
+      - name: Compile .ISS to .EXE Installer
+        uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
+        with:
+          path: ./frostwolf.iss
+          options: /O+ /DMyAppVersion="${GITHUB_REF##*/}" /DMySourcePath="build/${{ matrix.targetPlatform }}" /DMyOutputDir="setup/${{ matrix.targetPlatform }}" /DMyPassword="1"
+
+      - name: Upload installer as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-installer
+          path: setup/StandaloneWindows64/frostwolfhunters-setup-${GITHUB_REF##*/}.exe
+
+  uploadWindowsInstallerToRelease:
+    name: Upload Windows Installer to Release
+    runs-on: ubuntu-latest
+    needs: createWindowsInstaller
+    strategy:
+      fail-fast: false
+      matrix:
+        targetPlatform:
+          - StandaloneWindows64
+          - StandaloneWindows
+    steps:
+      - name: Download installer artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: windows-installer
+
+      - name: Upload installer to GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          files: setup/{{ matrix.targetPlatform }}/frostwolfhunters-setup-${GITHUB_REF##*/}.exe
+          files: setup/${{ matrix.targetPlatform }}/frostwolfhunters-setup-${GITHUB_REF##*/}.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
