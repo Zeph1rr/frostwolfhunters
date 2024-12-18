@@ -53,6 +53,9 @@ jobs:
           # Выводим имя билда для проверки
           echo "Build name is: $BUILD_NAME"
 
+      - name: Remove do_not_ship folder
+        run: rm -rf *DoNotShip
+
       - name: Upload build folder as artifact
         uses: actions/upload-artifact@v3
         with:
@@ -76,7 +79,6 @@ jobs:
     name: Compile Installer on Windows
     runs-on: windows-latest
     needs: buildForAllSupportedPlatforms
-    if: contains(needs.buildForAllSupportedPlatforms.outputs.matrix.targetPlatform, 'StandaloneWindows') && contains(needs.buildForAllSupportedPlatforms.outputs.matrix.targetPlatform, 'StandaloneWindows64')
     strategy:
       fail-fast: false
       matrix:

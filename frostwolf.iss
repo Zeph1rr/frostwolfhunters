@@ -41,11 +41,12 @@ Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "{#MySourcePath}\build\FrostwolfHunters.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourcePath}\build\UnityCrashHandler64.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourcePath}\build\UnityPlayer.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourcePath}\build\FrostwolfHunters_Data\*"; DestDir: "{app}\FrostwolfHunters_Data"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "{#MySourcePath}\build\MonoBleedingEdge\*"; DestDir: "{app}\MonoBleedingEdge"; Flags: ignoreversion recursesubdirs createallsubdirs
+;Source: "{#MySourcePath}\build\FrostwolfHunters.exe"; DestDir: "{app}"; Flags: ignoreversion
+;Source: "{#MySourcePath}\build\UnityCrashHandler64.exe"; DestDir: "{app}"; Flags: ignoreversion
+;Source: "{#MySourcePath}\build\UnityPlayer.dll"; DestDir: "{app}"; Flags: ignoreversion
+;Source: "{#MySourcePath}\build\FrostwolfHunters_Data\*"; DestDir: "{app}\FrostwolfHunters_Data"; Flags: ignoreversion recursesubdirs createallsubdirs
+;Source: "{#MySourcePath}\build\MonoBleedingEdge\*"; DestDir: "{app}\MonoBleedingEdge"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#MySourcePath}\build\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
