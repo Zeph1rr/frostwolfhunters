@@ -49,6 +49,7 @@ jobs:
           
           # Сохранение в переменной окружения
           echo "BUILD_NAME=${BUILD_NAME}" >> $GITHUB_ENV
+          echo "MY_APP_VERSION=${VERSION}" >> $GITHUB_ENV
           
           # Выводим имя билда для проверки
           echo "Build name is: $BUILD_NAME"
@@ -95,10 +96,12 @@ jobs:
           path: build/${{ matrix.targetPlatform }}
 
       - name: Compile .ISS to .EXE Installer
+        env: 
+          MY_APP_VERSION: ${{ env.MY_APP_VERSION }}
         uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
         with:
           path: ./frostwolf.iss
-          options: /O+ /DMyAppVersion="${GITHUB_REF##*/}" /DMySourcePath="build/${{ matrix.targetPlatform }}" /DMyOutputDir="setup/${{ matrix.targetPlatform }}" /DMyPassword="1"
+          options: /O+ /DMyAppVersion="${{ env.MY_APP_VERSION }}" /DMySourcePath="build/${{ matrix.targetPlatform }}" /DMyOutputDir="setup/${{ matrix.targetPlatform }}" /DMyPassword="1"
 
       - name: Upload installer as artifact
         uses: actions/upload-artifact@v3
@@ -125,6 +128,7 @@ jobs:
       - name: Upload installer to GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          files: setup/${{ matrix.targetPlatform }}/frostwolfhunters-setup-${GITHUB_REF##*/}.exe
+          files: setup/${{ matrix.targetPlatform }}/frostwolfhunters-setup-${{ env.MY_APP_VERSION }}.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MY_APP_VERSION: ${{ env.MY_APP_VERSION }}

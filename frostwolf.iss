@@ -30,8 +30,6 @@ Password={#MyPassword}
 Encryption=yes
 Compression=lzma
 SolidCompression=yes
-VersionInfoVersion={#MyAppVersion}
-VersionInfoCompany={#MyAppPublisher}
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl";
