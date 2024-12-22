@@ -101,12 +101,12 @@ jobs:
         uses: Minionguyjpro/Inno-Setup-Action@main
         with:
           path: ./frostwolf.iss
-          options: |
-            /DMyAppVersion="${{ env.MY_APP_VERSION }}" 
-            /DMySourcePath="." 
-            /DMyBuildPath="build/${{ matrix.targetPlatform }}" 
-            /DMyOutputDir="setup/${{ matrix.targetPlatform }}" 
-            /DMyPassword="1" 
+          options: | 
+            /DMyAppVersion="${{ env.MY_APP_VERSION }}"
+            /DMySourcePath=".\"
+            /DMyBuildPath="build\${{ matrix.targetPlatform }}"
+            /DMyOutputDir="setup\${{ matrix.targetPlatform }}"
+            /DMyPassword="1"
             /O+
 
       - name: Upload installer as artifact
