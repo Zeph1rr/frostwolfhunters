@@ -98,7 +98,7 @@ jobs:
       - name: Compile .ISS to .EXE Installer
         env: 
           MY_APP_VERSION: ${{ env.MY_APP_VERSION }}
-        uses: Minionguyjpro/Inno-Setup-Action@v1.2.5
+        uses: Minionguyjpro/Inno-Setup-Action@main
         with:
           path: ./frostwolf.iss
           options: '/DMyAppVersion="${{ env.MY_APP_VERSION }}" /DDMySourcePath="." /DMySourcePath="build/${{ matrix.targetPlatform }}" /DMyOutputDir="setup/${{ matrix.targetPlatform }}" /DMyPassword="1" O+'
