@@ -17,6 +17,10 @@ public class Player : MonoBehaviour
     private bool _isRunning = false;
     private Vector2 _movementVector;
 
+    public bool IsRunning() {
+        return _isRunning;
+    }
+
     private void Awake() {
         Instance = this;
         _rigidBody = GetComponent<Rigidbody2D>();
@@ -38,10 +42,6 @@ public class Player : MonoBehaviour
 
     public void Move(Vector2 direction) {
         _rigidBody.MovePosition(_rigidBody.position + direction * (_characterStats.Stats.Speed * Time.deltaTime));
-    }
-
-    public bool IsRunning() {
-        return _isRunning;
     }
 
     public Vector3 GetPlayerScreenPosition() {

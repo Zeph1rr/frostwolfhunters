@@ -93,6 +93,7 @@ public class MeleeEnemy : Enemy
     }
 
     private void HandleOnAttack(object sender, System.EventArgs e) {
+        PolygonColliderTurnOff();
         PolygonColliderTurnOn();
     }
 
@@ -112,7 +113,7 @@ public class MeleeEnemy : Enemy
         _attackCollider.enabled = false;
     }
 
-    private void OnTriggerStay2D(Collider2D collision) {
+    private void OnTriggerEnter2D(Collider2D collision) {
         Player player = collision.GetComponent<Player>();
         if (player != null)
         {
