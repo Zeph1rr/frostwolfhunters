@@ -101,13 +101,13 @@ jobs:
         uses: Minionguyjpro/Inno-Setup-Action@v1.2.5
         with:
           path: ./frostwolf.iss
-          options: /DMyAppVersion="3.2.2" /DMySourcePath="build/${{ matrix.targetPlatform }}" /DMyOutputDir="setup/${{ matrix.targetPlatform }}" /DMyPassword="1"
+          options: '/DMyAppVersion="${{ env.MY_APP_VERSION }}" /DDMySourcePath="." /DMySourcePath="build/${{ matrix.targetPlatform }}" /DMyOutputDir="setup/${{ matrix.targetPlatform }}" /DMyPassword="1" O+'
 
       - name: Upload installer as artifact
         uses: actions/upload-artifact@v3
         with:
           name: windows-installer
-          path: setup/StandaloneWindows64/frostwolfhunters-setup-${GITHUB_REF##*/}.exe
+          path: setup/${{ matrix.targetPlatform }}/frostwolfhunters-setup-${GITHUB_REF##*/}.exe
 
   uploadWindowsInstallerToRelease:
     name: Upload Windows Installer to Release
