@@ -13,6 +13,18 @@ public class GameInput : MonoBehaviour
         _playerInputActions = new PlayerInputActions();
     }
 
+    private void Start() {
+        Player.Instance.OnPlayerDied += HandlePlayerDeath;
+    }
+
+    private void OnDestroy() {
+        Player.Instance.OnPlayerDied -= HandlePlayerDeath;
+    }
+
+    private void HandlePlayerDeath(object sender, System.EventArgs e) {
+        _playerInputActions.Disable();
+    }
+
     private void OnEnable()
     {
         // Включаем контролы

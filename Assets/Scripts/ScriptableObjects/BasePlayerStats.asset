@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Stats:
     MaxHealth: 100
-    CurrentHealth: -295
+    CurrentHealth: 0
     MaxStamina: 120
     CurrentStamina: 120
     Damage: 10

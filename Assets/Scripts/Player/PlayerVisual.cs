@@ -6,17 +6,29 @@ public class PlayerVisual : MonoBehaviour
 {
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
+
+    private bool _isPlayerDead = false;
     
     private const string IS_RUNNING = "IsRunning";
+    private const string IS_DEAD = "IsDead";
 
     private void Awake() {
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
+    private void Start() {
+        Player.Instance.OnPlayerDied += HandleDie;
+    }
+
+    private void OnDestroy() {
+        Player.Instance.OnPlayerDied -= HandleDie;
+    }
+
     private void Update() {
         _animator.SetBool(IS_RUNNING, Player.Instance.IsRunning());
-        AdjustPlayerFacingDirection();
+        if (!_isPlayerDead)
+            AdjustPlayerFacingDirection();
     }
 
     private void AdjustPlayerFacingDirection() {
@@ -28,5 +40,10 @@ public class PlayerVisual : MonoBehaviour
         } else {
             _spriteRenderer.flipX = false;
         }
+    }
+
+    private void HandleDie(object sender, System.EventArgs e) {
+        Debug.Log("Player is dead!");
+        _isPlayerDead = true;
     }
 }

@@ -1,12 +1,13 @@
-using Unity.VisualScripting;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
+using System;
 
 [SelectionBase]
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
     public static Player Instance {get; private set;}
+
+    public event EventHandler OnPlayerDied;
 
     [Header("Character Stats")]
     [SerializeField] private PlayerStatsSO _characterStats;
@@ -15,6 +16,7 @@ public class Player : MonoBehaviour
 
     private float _minMovingSpeed = 0.1f;
     private bool _isRunning = false;
+    private bool _isDead = false;
     private Vector2 _movementVector;
 
 
@@ -39,7 +41,11 @@ public class Player : MonoBehaviour
         } else {
             _isRunning = false;
         }
+    }
 
+    private void Die() {
+        OnPlayerDied?.Invoke(this, EventArgs.Empty);
+        _isDead = true;
     }
 
     public void Move(Vector2 direction) {
@@ -52,8 +58,13 @@ public class Player : MonoBehaviour
     }
 
     public void TakeDamage(int damage) {
-        _characterStats.Stats.CurrentHealth -= damage;
-        Debug.Log("Current health: " + _characterStats.Stats.CurrentHealth);
+        if (!_isDead){
+            _characterStats.Stats.CurrentHealth -= damage;
+            Debug.Log("Current health: " + _characterStats.Stats.CurrentHealth);
+            if (_characterStats.Stats.CurrentHealth <= 0) {
+                Die();
+            }
+        }
     }
 
 }
