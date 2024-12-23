@@ -61,6 +61,9 @@ jobs:
           if [ "${{ matrix.targetPlatform }}" != "StandaloneLinux64" ]; then
             sudo mv build/${{ matrix.targetPlatform }}/${{ matrix.targetPlatform }}.exe build/${{ matrix.targetPlatform }}/FrostwolfHunters.exe
             sudo mv build/${{ matrix.targetPlatform }}/${{ matrix.targetPlatform }}_Data build/${{ matrix.targetPlatform }}/FrostwolfHunters_Data
+          else
+            sudo mv build/${{ matrix.targetPlatform }}/${{ matrix.targetPlatform }} build/${{ matrix.targetPlatform }}/FrostwolfHunters
+            sudo mv build/${{ matrix.targetPlatform }}/${{ matrix.targetPlatform }}_Data build/${{ matrix.targetPlatform }}/FrostwolfHunters_Data
           fi
 
       - name: Upload build folder as artifact
