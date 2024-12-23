@@ -100,7 +100,7 @@ jobs:
         with:
           path: ./frostwolf.iss
           options: |
-            /DMyAppVersion="${{ github.ref_name }}"
+            /DMyAppVersion="${{ env.MY_APP_VERSION }}"
             /DMySourcePath="."
             /DMyBuildPath="build/${{ matrix.targetPlatform }}"
             /DMyOutputDir="setup/${{ matrix.targetPlatform }}"
@@ -113,7 +113,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: windows-installer
-          path: setup/${{ matrix.targetPlatform }}/frostwolfhunters-setup-${GITHUB_REF##*/}.exe
+          path: setup/${{ matrix.targetPlatform }}/frostwolfhunters-setup-${{ matrix.targetPlatform }}-${{ env.MY_APP_VERSION }}.exe
 
   uploadWindowsInstallerToRelease:
     name: Upload Windows Installer to Release
@@ -124,7 +124,7 @@ jobs:
       matrix:
         targetPlatform:
           - StandaloneWindows64
-          - StandaloneWindows
+         # - StandaloneWindows
     steps:
       - name: Download installer artifact
         uses: actions/download-artifact@v3
@@ -134,7 +134,9 @@ jobs:
       - name: Upload installer to GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          files: setup/${{ matrix.targetPlatform }}/frostwolfhunters-setup-${{ env.MY_APP_VERSION }}.exe
+          files: setup/${{ matrix.targetPlatform }}/frostwolfhunters-setup-${{ matrix.targetPlatform }}-${{ env.MY_APP_VERSION }}.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MY_APP_VERSION: ${{ env.MY_APP_VERSION }}
+
+
+        
