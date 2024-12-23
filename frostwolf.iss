@@ -27,9 +27,9 @@ OutputDir={#MyOutputDir}
 OutputBaseFilename=frostwolfhunters-setup-{#MyAppPlatform}-{#MyAppVersion}
 SetupIconFile={#MySourcePath}\assets\images\icon.ico
 Password={#MyPassword}
-Encryption=yes
-Compression=lzma
-SolidCompression=yes
+;Encryption=yes
+;Compression=lzma
+;SolidCompression=yes
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl";
