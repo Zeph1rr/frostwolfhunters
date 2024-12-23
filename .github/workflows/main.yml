@@ -101,12 +101,12 @@ jobs:
           path: frostwolf.iss
           options: |
             /O+
-            /DMyAppVersion="${{ github.ref_name }}"
-            /DMySourcePath="${{ github.workspace }}"
-            /DMyBuildPath="${{ github.workspace }}\build\${{ matrix.targetPlatform }}"
-            /DMyOutputDir="${{ github.workspace }}\setup\${{ matrix.targetPlatform }}"
-            /DMyPassword="1"
-            /DMyAppPlatform="${{ matrix.targetPlatform }}"
+            /DMyAppVersion=${{ github.ref_name }}
+            /DMySourcePath=${{ github.workspace }}
+            /DMyBuildPath=${{ github.workspace }}\build\${{ matrix.targetPlatform }}
+            /DMyOutputDir=${{ github.workspace }}\setup\${{ matrix.targetPlatform }}
+            /DMyPassword=1
+            /DMyAppPlatform=${{ matrix.targetPlatform }}
 
 
       - name: Upload installer as artifact
