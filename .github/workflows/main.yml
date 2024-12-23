@@ -13,8 +13,8 @@ jobs:
       matrix:
         targetPlatform:
           - StandaloneWindows64
-          # - StandaloneWindows
-          # - StandaloneLinux64
+          - StandaloneWindows
+          - StandaloneLinux64
     steps:
       - uses: actions/checkout@v2
         with:
@@ -61,7 +61,7 @@ jobs:
           sudo mv build/${{ matrix.targetPlatform }}/${{ matrix.targetPlatform }}_Data build/${{ matrix.targetPlatform }}/FrostwolfHunters_Data
 
       - name: Upload build folder as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-${{ matrix.targetPlatform }}
           path: build/${{ matrix.targetPlatform }}
@@ -88,7 +88,7 @@ jobs:
       matrix:
         targetPlatform:
           - StandaloneWindows64
-          # - StandaloneWindows
+          - StandaloneWindows
     steps:
       - uses: actions/checkout@v2
 
@@ -104,7 +104,7 @@ jobs:
           path: frostwolf.iss
           options: |
             /O+
-            /DMyAppVersion="${{ github.ref_name }}"
+            /DMyAppVersion=${{ github.ref_name }}
             /DMySourcePath=${{ github.workspace }}
             /DMyBuildPath=${{ github.workspace }}\build\${{ matrix.targetPlatform }}
             /DMyOutputDir=${{ github.workspace }}\setup\${{ matrix.targetPlatform }}
@@ -113,7 +113,7 @@ jobs:
 
 
       - name: Upload installer as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.targetPlatform }}-installer
           path: setup/${{ matrix.targetPlatform }}/frostwolfhunters-setup-${{ matrix.targetPlatform }}-${{ github.ref_name }}.exe
@@ -127,7 +127,7 @@ jobs:
       matrix:
         targetPlatform:
           - StandaloneWindows64
-         # - StandaloneWindows
+          - StandaloneWindows
     steps:
       - name: Download installer artifact
         uses: actions/download-artifact@v3
