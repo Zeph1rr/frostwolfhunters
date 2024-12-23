@@ -100,7 +100,7 @@ jobs:
         with:
           path: ./frostwolf.iss
           options: |
-            /DMyAppVersion="${GITHUB_REF##*/}"
+            /DMyAppVersion="${{ github.ref_name }}"
             /DMySourcePath="."
             /DMyBuildPath="build/${{ matrix.targetPlatform }}"
             /DMyOutputDir="setup/${{ matrix.targetPlatform }}"
