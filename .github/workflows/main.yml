@@ -1,9 +1,8 @@
 name: Build project
 
-# Триггер на создание релиза
 on:
   release:
-    types: [published]  # Сработает при публикации релиза
+    types: [published]
 
 jobs:
   buildForAllSupportedPlatforms:
@@ -36,7 +35,6 @@ jobs:
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
 
-      # Объединённый шаг для создания имени билда (репозиторий + версия)
       - name: Set build name
         id: set_build_name
         run: |
@@ -51,26 +49,103 @@ jobs:
           
           # Сохранение в переменной окружения
           echo "BUILD_NAME=${BUILD_NAME}" >> $GITHUB_ENV
+          echo "MY_APP_VERSION=${VERSION}" >> $GITHUB_ENV
           
           # Выводим имя билда для проверки
           echo "Build name is: $BUILD_NAME"
 
-      # Шаг для создания zip архива с использованием имени билда
+      - name: Changes in build folder
+        run: |
+          sudo rm -rf build/${{ matrix.targetPlatform }}/*DoNotShip
+      
+          if [ "${{ matrix.targetPlatform }}" != "StandaloneLinux64" ]; then
+            sudo mv build/${{ matrix.targetPlatform }}/${{ matrix.targetPlatform }}.exe build/${{ matrix.targetPlatform }}/FrostwolfHunters.exe
+            sudo mv build/${{ matrix.targetPlatform }}/${{ matrix.targetPlatform }}_Data build/${{ matrix.targetPlatform }}/FrostwolfHunters_Data
+          else
+            sudo mv build/${{ matrix.targetPlatform }}/${{ matrix.targetPlatform }} build/${{ matrix.targetPlatform }}/FrostwolfHunters
+            sudo mv build/${{ matrix.targetPlatform }}/${{ matrix.targetPlatform }}_Data build/${{ matrix.targetPlatform }}/FrostwolfHunters_Data
+          fi
+
+      - name: Upload build folder as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-${{ matrix.targetPlatform }}
+          path: build/${{ matrix.targetPlatform }}
+
       - name: Create zip archive from build folder
         run: |
           zip -r ${{ env.BUILD_NAME }}.zip build/${{ matrix.targetPlatform }}
 
-      # Шаг для загрузки артефакта в GitHub Actions
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ env.BUILD_NAME }}-archive
-          path: ${{ env.BUILD_NAME }}.zip  # Путь к zip архиву
-
-      # Добавляем шаг для прикрепления zip архива к релизу
       - name: Upload zip archive to GitHub Release
         uses: softprops/action-gh-release@v1
         with:
           files: ${{ env.BUILD_NAME }}.zip  # Указываем путь к zip архиву
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Используем стандартный GITHUB_TOKEN для работы с GitHub API
+
+
+
+  createWindowsInstaller:
+    name: Compile Installer on Windows
+    runs-on: windows-latest
+    needs: buildForAllSupportedPlatforms
+    strategy:
+      fail-fast: false
+      matrix:
+        targetPlatform:
+          - StandaloneWindows64
+          - StandaloneWindows
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: build-${{ matrix.targetPlatform }}  # Имя артефакта для Windows
+          path: build/${{ matrix.targetPlatform }}
+
+      - name: Compile .ISS to .EXE Installer
+        uses: Minionguyjpro/Inno-Setup-Action@main
+        with:
+          path: frostwolf.iss
+          options: |
+            /O+
+            /DMyAppVersion=${{ github.ref_name }}
+            /DMySourcePath=${{ github.workspace }}
+            /DMyBuildPath=${{ github.workspace }}\build\${{ matrix.targetPlatform }}
+            /DMyOutputDir=${{ github.workspace }}\setup\${{ matrix.targetPlatform }}
+            /DMyPassword=1
+            /DMyAppPlatform=${{ matrix.targetPlatform }}
+
+
+      - name: Upload installer as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.targetPlatform }}-installer
+          path: setup/${{ matrix.targetPlatform }}/frostwolfhunters-setup-${{ matrix.targetPlatform }}-${{ github.ref_name }}.exe
+
+  uploadWindowsInstallerToRelease:
+    name: Upload Windows Installer to Release
+    runs-on: ubuntu-latest
+    needs: createWindowsInstaller
+    strategy:
+      fail-fast: false
+      matrix:
+        targetPlatform:
+          - StandaloneWindows64
+          - StandaloneWindows
+    steps:
+      - name: Download installer artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ matrix.targetPlatform }}-installer
+
+      - name: Upload installer to GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: frostwolfhunters-setup-${{ matrix.targetPlatform }}-${{ github.ref_name }}.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+        

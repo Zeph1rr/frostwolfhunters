@@ -1,12 +1,15 @@
+using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
+[SelectionBase]
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
     public static Player Instance {get; private set;}
 
     [Header("Character Stats")]
-    [SerializeField] private CharacterStats _characterStats;
+    [SerializeField] private PlayerStatsSO _characterStats;
 
     private Rigidbody2D _rigidBody;
 
@@ -14,9 +17,15 @@ public class Player : MonoBehaviour
     private bool _isRunning = false;
     private Vector2 _movementVector;
 
+
+    public bool IsRunning() {
+        return _isRunning;
+    }
+
     private void Awake() {
         Instance = this;
         _rigidBody = GetComponent<Rigidbody2D>();
+        _characterStats.Stats.CurrentHealth = _characterStats.Stats.MaxHealth;
     }
 
     private void Update() {
@@ -30,20 +39,21 @@ public class Player : MonoBehaviour
         } else {
             _isRunning = false;
         }
-        Debug.Log(_isRunning);
+
     }
 
     public void Move(Vector2 direction) {
-        _rigidBody.MovePosition(_rigidBody.position + direction * (_characterStats.stats.Speed * Time.deltaTime));   
-    }
-
-    public bool IsRunning() {
-        return _isRunning;
+        _rigidBody.MovePosition(_rigidBody.position + direction * (_characterStats.Stats.Speed * Time.deltaTime));
     }
 
     public Vector3 GetPlayerScreenPosition() {
         Vector3 playerScreenPosition = Camera.main.WorldToScreenPoint(transform.position);
         return playerScreenPosition;
+    }
+
+    public void TakeDamage(int damage) {
+        _characterStats.Stats.CurrentHealth -= damage;
+        Debug.Log("Current health: " + _characterStats.Stats.CurrentHealth);
     }
 
 }

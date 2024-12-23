@@ -1,22 +1,26 @@
 [System.Serializable]
-public struct PlayerStats {
+public struct EnemyStats
+{
     public int MaxHealth;
     public int CurrentHealth;
-    public int MaxStamina;
-    public int CurrentStamina;
     public int Damage;
     public float AttackSpeed;
+    public float AttackRange;
     public float Speed;
     public int Defence;
+    public int ThreatLevel;
+    public bool IsBoss;
 
-    public PlayerStats(int maxHealth, int maxStamina, int damage, int attackSpeed, int speed, int defence) {
+    public EnemyStats(int maxHealth, int damage, float attackSpeed, float attackRange, float speed, int defence, int threatLevel, bool isBoss) {
         MaxHealth = maxHealth;
         CurrentHealth = maxHealth;
-        MaxStamina = maxStamina;
-        CurrentStamina = maxStamina;
         Damage = damage;
         AttackSpeed = attackSpeed;
+        AttackRange = attackRange;
         Speed = speed;
         Defence = defence;
+        ThreatLevel = threatLevel;
+        IsBoss = isBoss;
     }
+
 }
