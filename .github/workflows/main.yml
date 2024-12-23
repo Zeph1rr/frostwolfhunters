@@ -14,7 +14,7 @@ jobs:
         targetPlatform:
           - StandaloneWindows64
           - StandaloneWindows
-          - StandaloneLinux64
+        #  - StandaloneLinux64
     steps:
       - uses: actions/checkout@v2
         with:
@@ -55,6 +55,7 @@ jobs:
           echo "Build name is: $BUILD_NAME"
 
       - name: Changes in build folder
+        if: ${{ matrix.targetPlatform }} != 'StandaloneLinux64'
         run: |
           sudo rm -rf build/${{ matrix.targetPlatform }}/*DoNotShip
           sudo mv build/${{ matrix.targetPlatform }}/${{ matrix.targetPlatform }}.exe build/${{ matrix.targetPlatform }}/FrostwolfHunters.exe
@@ -104,7 +105,7 @@ jobs:
           path: frostwolf.iss
           options: |
             /O+
-            /DMyAppVersion=${{ github.ref_name }}
+            /DMyAppVersion="${{ github.ref_name }}"
             /DMySourcePath=${{ github.workspace }}
             /DMyBuildPath=${{ github.workspace }}\build\${{ matrix.targetPlatform }}
             /DMyOutputDir=${{ github.workspace }}\setup\${{ matrix.targetPlatform }}
