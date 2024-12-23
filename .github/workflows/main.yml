@@ -13,8 +13,8 @@ jobs:
       matrix:
         targetPlatform:
           - StandaloneWindows64
-          - StandaloneWindows
-          - StandaloneLinux64
+          # - StandaloneWindows
+          # - StandaloneLinux64
     steps:
       - uses: actions/checkout@v2
         with:
@@ -85,7 +85,7 @@ jobs:
       matrix:
         targetPlatform:
           - StandaloneWindows64
-          - StandaloneWindows
+          # - StandaloneWindows
     steps:
       - uses: actions/checkout@v2
 
@@ -103,11 +103,11 @@ jobs:
           path: ./frostwolf.iss
           options: |
             /DMyAppVersion="${{ env.MY_APP_VERSION }}" ^
-            /DMySourcePath="." ^
-            /DMyBuildPath="build/${{ matrix.targetPlatform }}" ^
-            /DMyOutputDir="setup/${{ matrix.targetPlatform }}" ^
-            /DMyPassword="1" ^
-            /O+
+# /DMySourcePath="." ^
+# /DMyBuildPath="build/${{ matrix.targetPlatform }}" ^
+# /DMyOutputDir="setup/${{ matrix.targetPlatform }}" ^
+# /DMyPassword="1" ^
+# /O+
 
 
       - name: Upload installer as artifact
