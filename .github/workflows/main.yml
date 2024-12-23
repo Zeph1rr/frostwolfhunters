@@ -105,7 +105,7 @@ jobs:
           path: frostwolf.iss
           options: |
             /O+
-            /DMyAppVersion="${{ github.ref_name }}"
+            /DMyAppVersion=${{ github.ref_name }}
             /DMySourcePath=${{ github.workspace }}
             /DMyBuildPath=${{ github.workspace }}\build\${{ matrix.targetPlatform }}
             /DMyOutputDir=${{ github.workspace }}\setup\${{ matrix.targetPlatform }}
