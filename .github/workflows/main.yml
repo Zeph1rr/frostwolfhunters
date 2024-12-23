@@ -54,8 +54,10 @@ jobs:
           # Выводим имя билда для проверки
           echo "Build name is: $BUILD_NAME"
 
-      - name: Remove do_not_ship folder
-        run: rm -rf *DoNotShip
+      - name: Changes into build folder
+        run: |
+          rm -rf *DoNotShip
+          mv ${{ matrix.targetPlatform }}.exe FrostwolfHunters.exe
 
       - name: Upload build folder as artifact
         uses: actions/upload-artifact@v3
@@ -112,7 +114,7 @@ jobs:
       - name: Upload installer as artifact
         uses: actions/upload-artifact@v3
         with:
-          name: windows-installer
+          name: ${{ matrix.targetPlatform }}-installer
           path: setup/${{ matrix.targetPlatform }}/frostwolfhunters-setup-${{ matrix.targetPlatform }}-${{ github.ref_name }}.exe
 
   uploadWindowsInstallerToRelease:
@@ -129,12 +131,12 @@ jobs:
       - name: Download installer artifact
         uses: actions/download-artifact@v3
         with:
-          name: windows-installer
+          name: ${{ matrix.targetPlatform }}-installer
 
       - name: Upload installer to GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          files: setup/${{ matrix.targetPlatform }}/frostwolfhunters-setup-${{ matrix.targetPlatform }}-${{ github.ref_name }}.exe
+          files: frostwolfhunters-setup-${{ matrix.targetPlatform }}-${{ github.ref_name }}.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
