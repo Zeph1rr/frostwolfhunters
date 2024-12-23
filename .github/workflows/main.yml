@@ -96,17 +96,16 @@ jobs:
           path: build/${{ matrix.targetPlatform }}
 
       - name: Compile .ISS to .EXE Installer
-        env: 
-          MY_APP_VERSION: ${{ env.MY_APP_VERSION }}
         uses: Minionguyjpro/Inno-Setup-Action@main
         with:
           path: ./frostwolf.iss
           options: |
-            /DMyAppVersion="${{ env.MY_APP_VERSION }}"
+            /DMyAppVersion="${GITHUB_REF##*/}"
             /DMySourcePath="."
             /DMyBuildPath="build/${{ matrix.targetPlatform }}"
             /DMyOutputDir="setup/${{ matrix.targetPlatform }}"
             /DMyPassword="1"
+            /DMyAppPlatform="${{ matrix.targetPlatform }}"
             /O+
 
 
