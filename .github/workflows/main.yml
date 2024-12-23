@@ -102,9 +102,9 @@ jobs:
           options: |
             /O+
             /DMyAppVersion="${{ github.ref_name }}"
-            /DMySourcePath="."
-            /DMyBuildPath="build/${{ matrix.targetPlatform }}"
-            /DMyOutputDir="setup/${{ matrix.targetPlatform }}"
+            /DMySourcePath="${{ github.action_path }}"
+            /DMyBuildPath="${{ github.action_path }}\build\${{ matrix.targetPlatform }}"
+            /DMyOutputDir="${{ github.action_path }}\setup\${{ matrix.targetPlatform }}"
             /DMyPassword="1"
             /DMyAppPlatform="${{ matrix.targetPlatform }}"
 
