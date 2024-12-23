@@ -54,10 +54,10 @@ jobs:
           # Выводим имя билда для проверки
           echo "Build name is: $BUILD_NAME"
 
-      - name: Changes into build folder
+      - name: Changes in build folder
         run: |
-          rm -rf *DoNotShip
-          mv ${{ matrix.targetPlatform }}.exe FrostwolfHunters.exe
+          rm -rf build/${{ matrix.targetPlatform }}/*DoNotShip
+          mv build/${{ matrix.targetPlatform }}/${{ matrix.targetPlatform }}.exe build/${{ matrix.targetPlatform }}/FrostwolfHunters.exe
 
       - name: Upload build folder as artifact
         uses: actions/upload-artifact@v3
