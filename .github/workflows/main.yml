@@ -56,8 +56,9 @@ jobs:
 
       - name: Changes in build folder
         run: |
-          rm -rf build/${{ matrix.targetPlatform }}/*DoNotShip
-          mv build/${{ matrix.targetPlatform }}/${{ matrix.targetPlatform }}.exe build/${{ matrix.targetPlatform }}/FrostwolfHunters.exe
+          sudo rm -rf build/${{ matrix.targetPlatform }}/*DoNotShip
+          sudo mv build/${{ matrix.targetPlatform }}/${{ matrix.targetPlatform }}.exe build/${{ matrix.targetPlatform }}/FrostwolfHunters.exe
+          sudo mv build/${{ matrix.targetPlatform }}/${{ matrix.targetPlatform }}_Data build/${{ matrix.targetPlatform }}/FrostwolfHunters_Data
 
       - name: Upload build folder as artifact
         uses: actions/upload-artifact@v3
@@ -103,7 +104,7 @@ jobs:
           path: frostwolf.iss
           options: |
             /O+
-            /DMyAppVersion=${{ github.ref_name }}
+            /DMyAppVersion="${{ github.ref_name }}"
             /DMySourcePath=${{ github.workspace }}
             /DMyBuildPath=${{ github.workspace }}\build\${{ matrix.targetPlatform }}
             /DMyOutputDir=${{ github.workspace }}\setup\${{ matrix.targetPlatform }}
