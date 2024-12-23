@@ -54,14 +54,14 @@ jobs:
           # Выводим имя билда для проверки
           echo "Build name is: $BUILD_NAME"
 
-          - name: Changes in build folder
-          run: |
-            sudo rm -rf build/${{ matrix.targetPlatform }}/*DoNotShip
-        
-            if [ "${{ matrix.targetPlatform }}" != "StandaloneLinux64" ]; then
-              sudo mv build/${{ matrix.targetPlatform }}/${{ matrix.targetPlatform }}.exe build/${{ matrix.targetPlatform }}/FrostwolfHunters.exe
-              sudo mv build/${{ matrix.targetPlatform }}/${{ matrix.targetPlatform }}_Data build/${{ matrix.targetPlatform }}/FrostwolfHunters_Data
-            fi
+      - name: Changes in build folder
+        run: |
+          sudo rm -rf build/${{ matrix.targetPlatform }}/*DoNotShip
+      
+          if [ "${{ matrix.targetPlatform }}" != "StandaloneLinux64" ]; then
+            sudo mv build/${{ matrix.targetPlatform }}/${{ matrix.targetPlatform }}.exe build/${{ matrix.targetPlatform }}/FrostwolfHunters.exe
+            sudo mv build/${{ matrix.targetPlatform }}/${{ matrix.targetPlatform }}_Data build/${{ matrix.targetPlatform }}/FrostwolfHunters_Data
+          fi
 
       - name: Upload build folder as artifact
         uses: actions/upload-artifact@v3
