@@ -7,11 +7,6 @@
 #define MyAppURL "https://github.com/Zeph1rr/frostwolfhunters"
 #define MyAppExeName "FrostwolfHunters.exe"
 
-#define MySourcePath "."
-#define MyBuildPath "build/StandaloneWindows64"
-#define MyOutputDir "setup/StandaloneWindows64"
-#define MyPassword "1"
-
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.

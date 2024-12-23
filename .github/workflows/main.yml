@@ -103,11 +103,11 @@ jobs:
           path: ./frostwolf.iss
           options: |
             /DMyAppVersion="${{ env.MY_APP_VERSION }}" ^
-# /DMySourcePath="." ^
-# /DMyBuildPath="build/${{ matrix.targetPlatform }}" ^
-# /DMyOutputDir="setup/${{ matrix.targetPlatform }}" ^
-# /DMyPassword="1" ^
-# /O+
+            /DMySourcePath="." ^
+            /DMyBuildPath="build/${{ matrix.targetPlatform }}" ^
+            /DMyOutputDir="setup/${{ matrix.targetPlatform }}" ^
+            /DMyPassword="1" ^
+            /O+
 
 
       - name: Upload installer as artifact
