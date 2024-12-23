@@ -411,10 +411,7 @@ GameObject:
   - component: {fileID: 1229403172}
   - component: {fileID: 1229403173}
   - component: {fileID: 1229403174}
-<<<<<<< HEAD
-=======
   - component: {fileID: 1229403175}
->>>>>>> develop
   m_Layer: 0
   m_Name: PlayerVisual
   m_TagString: Untagged
@@ -478,11 +475,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-<<<<<<< HEAD
-  m_Sprite: {fileID: 21300000, guid: f87879bc90dda0f41b973bc40c57fc60, type: 3}
-=======
   m_Sprite: {fileID: 347957810, guid: c784e2fadde8dbe4caea5b38820497e3, type: 3}
->>>>>>> develop
+  m_Sprite: {fileID: 347957810, guid: c784e2fadde8dbe4caea5b38820497e3, type: 3}
+>>>>>>> fde61a64a9d07a15c11b18c359b10e4bc0eddaa3
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -506,8 +501,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
 <<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!1 &1571375270
 =======
+=======
+>>>>>>> fde61a64a9d07a15c11b18c359b10e4bc0eddaa3
 --- !u!95 &1229403175
 Animator:
   serializedVersion: 5
@@ -530,7 +528,6 @@ Animator:
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1320375216
->>>>>>> develop
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -913,4 +910,3 @@ SceneRoots:
   - {fileID: 251843118}
   - {fileID: 1914153732}
   - {fileID: 1927988985}
->>>>>>> develop
