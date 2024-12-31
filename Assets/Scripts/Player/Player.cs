@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     public static Player Instance {get; private set;}
 
     public event EventHandler OnPlayerDied;
+    public event EventHandler<HealthChangedArgs> OnHealthChanged;
 
     [Header("Character Stats")]
     [SerializeField] private PlayerStatsSO _characterStats;
@@ -28,6 +29,17 @@ public class Player : MonoBehaviour
         Instance = this;
         _rigidBody = GetComponent<Rigidbody2D>();
         _characterStats.Stats.CurrentHealth = _characterStats.Stats.MaxHealth;
+
+    }
+
+    private void Start() {
+        OnHealthChanged?.Invoke(
+                this, 
+                new HealthChangedArgs(
+                    _characterStats.Stats.CurrentHealth, 
+                    _characterStats.Stats.MaxHealth
+                    )
+            );
     }
 
     private void Update() {
@@ -59,12 +71,33 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage) {
         if (!_isDead){
+            if (damage < 0) {
+                throw new ArgumentOutOfRangeException();
+            }
             _characterStats.Stats.CurrentHealth -= damage;
             Debug.Log("Current health: " + _characterStats.Stats.CurrentHealth);
+            OnHealthChanged?.Invoke(
+                this, 
+                new HealthChangedArgs(
+                    _characterStats.Stats.CurrentHealth, 
+                    _characterStats.Stats.MaxHealth
+                    )
+            );
             if (_characterStats.Stats.CurrentHealth <= 0) {
                 Die();
             }
         }
     }
 
+}
+
+public class HealthChangedArgs : EventArgs
+{
+    public HealthChangedArgs(int currentHealth, int maxHealth) {
+        CurrentHealth = currentHealth;
+        MaxHealth = maxHealth;
+    }
+
+    public int CurrentHealth;
+    public int MaxHealth;
 }

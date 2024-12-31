@@ -44,6 +44,7 @@ public class PlayerVisual : MonoBehaviour
 
     private void HandleDie(object sender, System.EventArgs e) {
         Debug.Log("Player is dead!");
+        _animator.SetBool(IS_DEAD, true);
         _isPlayerDead = true;
     }
 }
