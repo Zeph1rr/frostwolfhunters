@@ -1,6 +1,6 @@
 # Frostwolf Hunters
 
-Rogue like survival game
+
 
 <p align="center">
       <img src="https://i.imgur.com/WqOgNAO.png" alt="Project Logo" width="726">
@@ -14,10 +14,11 @@ Rogue like survival game
 
 ## About
 
-2D multi-genre game about Plague Doctor named Augustin Dias
+2D Rogue like survival game
 
 - Unity Engine: 2022.3.53f1
-- Author: Zeph1rr <grianton535@gmail.com>
+- Developer: Zeph1rr <grianton535@gmail.com> TG: [zeph1rr](https://t.me/zeph1rr)
+- Artist: BobaWorry (Discord: bobaworry)
 
 ## Installation
 
