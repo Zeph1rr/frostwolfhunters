@@ -29,6 +29,7 @@ public class MeleeEnemy : Enemy
         OnTakeHit += HandleOnTakeHit;
         OnDeath += HandleOnDeath;
         OnAttack += HandleOnAttack;
+        Player.Instance.OnPlayerDied += HandlePlayerDie;
         if (_target == null) {
              GameObject player = GameObject.FindGameObjectWithTag("Player");
             if (player != null) {
@@ -42,6 +43,7 @@ public class MeleeEnemy : Enemy
         OnTakeHit -= HandleOnTakeHit;
         OnDeath -= HandleOnDeath;
         OnAttack -= HandleOnAttack;
+        Player.Instance.OnPlayerDied -= HandlePlayerDie;
     }
 
     protected override void Update() {
@@ -66,6 +68,9 @@ public class MeleeEnemy : Enemy
     }
 
     private void ChangeStateByDistance() {
+        if (_currentState == State.Idle) {
+            return;
+        }
         float distanceToTarget = Vector2.Distance(_target.position, transform.position);
         if (_currentState != State.Dead) {
             if (distanceToTarget > _stats.AttackRange) {
@@ -74,8 +79,7 @@ public class MeleeEnemy : Enemy
             } else {
                 _currentState = State.Attacking;
             }
-        }
-        
+        }   
     }
     private void Chase() {
         Vector2 direction = (_target.position - transform.position).normalized;
@@ -94,6 +98,10 @@ public class MeleeEnemy : Enemy
     private void HandleOnAttack(object sender, System.EventArgs e) {
         PolygonColliderTurnOff();
         PolygonColliderTurnOn();
+    }
+
+    private void HandlePlayerDie(object sender, System.EventArgs e) {
+        _currentState = State.Idle;
     }
 
     private void ChangeFacingDirection(Vector3 sourcePosition, Vector3 targetPosition) {
