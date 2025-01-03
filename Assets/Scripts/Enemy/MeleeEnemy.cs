@@ -1,4 +1,3 @@
-using System.Data.Common;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -26,7 +25,7 @@ public class MeleeEnemy : Enemy
     }
 
     private void Start() {
-        stats.Stats.CurrentHealth = stats.Stats.MaxHealth;
+        _stats.CurrentHealth = _stats.MaxHealth;
         OnTakeHit += HandleOnTakeHit;
         OnDeath += HandleOnDeath;
         OnAttack += HandleOnAttack;
@@ -69,7 +68,7 @@ public class MeleeEnemy : Enemy
     private void ChangeStateByDistance() {
         float distanceToTarget = Vector2.Distance(_target.position, transform.position);
         if (_currentState != State.Dead) {
-            if (distanceToTarget > stats.Stats.AttackRange) {
+            if (distanceToTarget > _stats.AttackRange) {
                 _currentState = State.Chasing;
                 PolygonColliderTurnOff();
             } else {
@@ -80,11 +79,11 @@ public class MeleeEnemy : Enemy
     }
     private void Chase() {
         Vector2 direction = (_target.position - transform.position).normalized;
-        _rigidBody.MovePosition(_rigidBody.position + direction * (stats.Stats.Speed * Time.deltaTime));
+        _rigidBody.MovePosition(_rigidBody.position + direction * (_stats.Speed * Time.deltaTime));
     }
 
     private void HandleOnTakeHit(object sender, System.EventArgs e) {
-        Debug.Log("Took hit. Current health: " + stats.Stats.CurrentHealth);
+        Debug.Log("Took hit. Current health: " + _stats.CurrentHealth);
     }
 
     private void HandleOnDeath(object sender, System.EventArgs e) {
@@ -117,7 +116,7 @@ public class MeleeEnemy : Enemy
         Player player = collision.GetComponent<Player>();
         if (player != null)
         {
-            player.TakeDamage(stats.Stats.Damage);
+            player.TakeDamage(_stats.Damage);
         }
     }
 

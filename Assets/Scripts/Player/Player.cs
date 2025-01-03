@@ -28,7 +28,8 @@ public class Player : MonoBehaviour
     private void Awake() {
         Instance = this;
         _rigidBody = GetComponent<Rigidbody2D>();
-        _characterStats.Stats.CurrentHealth = _characterStats.Stats.MaxHealth;
+        _characterStats.CurrentHealth = _characterStats.MaxHealth;
+        _characterStats.CurrentStamina = _characterStats.MaxStamina;
 
     }
 
@@ -36,8 +37,9 @@ public class Player : MonoBehaviour
         OnHealthChanged?.Invoke(
                 this, 
                 new HealthChangedArgs(
-                    _characterStats.Stats.CurrentHealth, 
-                    _characterStats.Stats.MaxHealth
+                    _characterStats.CurrentHealth,
+                    _characterStats.CurrentHealth, 
+                    _characterStats.MaxHealth
                     )
             );
     }
@@ -61,7 +63,7 @@ public class Player : MonoBehaviour
     }
 
     public void Move(Vector2 direction) {
-        _rigidBody.MovePosition(_rigidBody.position + direction * (_characterStats.Stats.Speed * Time.deltaTime));
+        _rigidBody.MovePosition(_rigidBody.position + direction * (_characterStats.Speed * Time.deltaTime));
     }
 
     public Vector3 GetPlayerScreenPosition() {
@@ -74,16 +76,17 @@ public class Player : MonoBehaviour
             if (damage < 0) {
                 throw new ArgumentOutOfRangeException();
             }
-            _characterStats.Stats.CurrentHealth -= damage;
-            Debug.Log("Current health: " + _characterStats.Stats.CurrentHealth);
+            _characterStats.CurrentHealth -= damage;
+            Debug.Log("Current health: " + _characterStats.CurrentHealth);
             OnHealthChanged?.Invoke(
                 this, 
                 new HealthChangedArgs(
-                    _characterStats.Stats.CurrentHealth, 
-                    _characterStats.Stats.MaxHealth
+                    _characterStats.CurrentHealth - damage,
+                    _characterStats.CurrentHealth, 
+                    _characterStats.MaxHealth
                     )
             );
-            if (_characterStats.Stats.CurrentHealth <= 0) {
+            if (_characterStats.CurrentHealth <= 0) {
                 Die();
             }
         }
@@ -93,11 +96,14 @@ public class Player : MonoBehaviour
 
 public class HealthChangedArgs : EventArgs
 {
-    public HealthChangedArgs(int currentHealth, int maxHealth) {
+    public HealthChangedArgs(int beforeHealth, int currentHealth, int maxHealth) {
         CurrentHealth = currentHealth;
         MaxHealth = maxHealth;
+        BeforeHealth = beforeHealth;
     }
 
     public int CurrentHealth;
     public int MaxHealth;
+
+    public int BeforeHealth;
 }

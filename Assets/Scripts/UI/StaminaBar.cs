@@ -2,18 +2,18 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Image))]
-public class HealthBar : MonoBehaviour
+public class StaminaBar : MonoBehaviour
 {
     [SerializeField] private PlayerStatsSO _playerStats;
-    private Image _healthBar;
+    private Image _staminaBar;
 
     private void Awake()
     {
-        _healthBar = GetComponent<Image>();
+        _staminaBar = GetComponent<Image>();
     }
 
     private void Update()
     {
-        _healthBar.fillAmount = (float) _playerStats.CurrentHealth / _playerStats.MaxHealth;
+        _staminaBar.fillAmount = (float) _playerStats.CurrentStamina / _playerStats.MaxStamina;
     }
 }

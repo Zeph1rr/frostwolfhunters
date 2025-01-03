@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e4bec13aeed9c86469858e4892dea21a
+guid: 0da8f21a9a3025f4fa28337b4882e1a9
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -110,85 +110,127 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PlayerIdle_0
+      name: healthbars_segments_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 10
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 1, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63de94398b5e3ab45a5fca5e3716d12b
+      internalID: 630827548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: healthbars_segments_1
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 11
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 2, y: 0, z: 2, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d03746212f69f3f458938a7a4037b7b6
+      internalID: 1867401814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: healthbars_segments_2
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 10
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 1, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a115ed237d315a8418ac6191462e7c89
+      internalID: -1193495132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: healthbars_segments_3
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 64
-      alignment: 9
-      pivot: {x: 0.6, y: 0.009}
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ae381e0c99ab0c940be8e3a44101a0f3
-      internalID: -1053553065
+      spriteID: 28a45a2ce33982b41a431a0dbab07a64
+      internalID: -157508006
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerIdle_1
+      name: healthbars_segments_4
       rect:
         serializedVersion: 2
-        x: 32
+        x: 10
         y: 0
-        width: 32
-        height: 64
-      alignment: 9
-      pivot: {x: 0.6, y: 0.009}
-      border: {x: 0, y: 0, z: 0, w: 0}
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 2, y: 0, z: 2, w: 1}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2ebed90fc5234a249bce5e0d4a162de6
-      internalID: 1874276943
+      spriteID: 3f54fd9964163a64bb50e197680d0d0a
+      internalID: 1746487208
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerIdle_2
+      name: healthbars_segments_5
       rect:
         serializedVersion: 2
-        x: 64
+        x: 18
         y: 0
-        width: 32
-        height: 64
-      alignment: 9
-      pivot: {x: 0.6, y: 0.009}
-      border: {x: 0, y: 0, z: 0, w: 0}
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 1}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1959da73a2008fe4ba39a9d3e2ff8a42
-      internalID: 1954128910
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerIdle_3
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 32
-        height: 64
-      alignment: 9
-      pivot: {x: 0.6, y: 0.009}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6a86b409fd711a5489d2f53f91da71d3
-      internalID: -2034108104
+      spriteID: 09a74da50ec37c1479e3a16384003f7e
+      internalID: 1198316275
       vertices: []
       indices: 
       edges: []
@@ -204,10 +246,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      PlayerIdle_0: -1053553065
-      PlayerIdle_1: 1874276943
-      PlayerIdle_2: 1954128910
-      PlayerIdle_3: -2034108104
+      healthbars_segments_0: 630827548
+      healthbars_segments_1: 1867401814
+      healthbars_segments_2: -1193495132
+      healthbars_segments_3: -157508006
+      healthbars_segments_4: 1746487208
+      healthbars_segments_5: 1198316275
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
