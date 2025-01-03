@@ -104,6 +104,5 @@ public class HealthChangedArgs : EventArgs
 
     public int CurrentHealth;
     public int MaxHealth;
-
     public int BeforeHealth;
 }
