@@ -12,12 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d339511d23d31bf4b910664c1ad62bcc, type: 3}
   m_Name: BasePlayerStats
   m_EditorClassIdentifier: 
-  Stats:
-    MaxHealth: 100
-    CurrentHealth: 0
-    MaxStamina: 120
-    CurrentStamina: 120
-    Damage: 10
-    AttackSpeed: 1.33
-    Speed: 5
-    Defence: 0
+  MaxHealth: 100
+  CurrentHealth: 100
+  MaxStamina: 110
+  CurrentStamina: 110
+  Damage: 5
+  AttackSpeed: 1.4
+  Speed: 5
+  Defence: 0

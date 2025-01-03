@@ -1,4 +1,3 @@
-using System.Data.Common;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -26,10 +25,11 @@ public class MeleeEnemy : Enemy
     }
 
     private void Start() {
-        stats.Stats.CurrentHealth = stats.Stats.MaxHealth;
+        _stats.CurrentHealth = _stats.MaxHealth;
         OnTakeHit += HandleOnTakeHit;
         OnDeath += HandleOnDeath;
         OnAttack += HandleOnAttack;
+        Player.Instance.OnPlayerDied += HandlePlayerDie;
         if (_target == null) {
              GameObject player = GameObject.FindGameObjectWithTag("Player");
             if (player != null) {
@@ -43,6 +43,7 @@ public class MeleeEnemy : Enemy
         OnTakeHit -= HandleOnTakeHit;
         OnDeath -= HandleOnDeath;
         OnAttack -= HandleOnAttack;
+        Player.Instance.OnPlayerDied -= HandlePlayerDie;
     }
 
     protected override void Update() {
@@ -67,24 +68,26 @@ public class MeleeEnemy : Enemy
     }
 
     private void ChangeStateByDistance() {
+        if (_currentState == State.Idle) {
+            return;
+        }
         float distanceToTarget = Vector2.Distance(_target.position, transform.position);
         if (_currentState != State.Dead) {
-            if (distanceToTarget > stats.Stats.AttackRange) {
+            if (distanceToTarget > _stats.AttackRange) {
                 _currentState = State.Chasing;
                 PolygonColliderTurnOff();
             } else {
                 _currentState = State.Attacking;
             }
-        }
-        
+        }   
     }
     private void Chase() {
         Vector2 direction = (_target.position - transform.position).normalized;
-        _rigidBody.MovePosition(_rigidBody.position + direction * (stats.Stats.Speed * Time.deltaTime));
+        _rigidBody.MovePosition(_rigidBody.position + direction * (_stats.Speed * Time.deltaTime));
     }
 
     private void HandleOnTakeHit(object sender, System.EventArgs e) {
-        Debug.Log("Took hit. Current health: " + stats.Stats.CurrentHealth);
+        Debug.Log("Took hit. Current health: " + _stats.CurrentHealth);
     }
 
     private void HandleOnDeath(object sender, System.EventArgs e) {
@@ -95,6 +98,10 @@ public class MeleeEnemy : Enemy
     private void HandleOnAttack(object sender, System.EventArgs e) {
         PolygonColliderTurnOff();
         PolygonColliderTurnOn();
+    }
+
+    private void HandlePlayerDie(object sender, System.EventArgs e) {
+        _currentState = State.Idle;
     }
 
     private void ChangeFacingDirection(Vector3 sourcePosition, Vector3 targetPosition) {
@@ -117,7 +124,7 @@ public class MeleeEnemy : Enemy
         Player player = collision.GetComponent<Player>();
         if (player != null)
         {
-            player.TakeDamage(stats.Stats.Damage);
+            player.TakeDamage(_stats.Damage);
         }
     }
 

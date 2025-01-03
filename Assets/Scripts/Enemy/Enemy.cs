@@ -6,10 +6,10 @@ public abstract class Enemy : MonoBehaviour
     public event EventHandler OnTakeHit;
     public event EventHandler OnDeath;
     public event EventHandler OnAttack;
-    public bool IsBoss => stats.Stats.IsBoss;
-    public int ThreatLevel => stats.Stats.ThreatLevel;
+    public bool IsBoss => _stats.IsBoss;
+    public int ThreatLevel => _stats.ThreatLevel;
     
-    [SerializeField] protected EnemyStatsSo stats;          
+    [SerializeField] protected EnemyStatsSo _stats;          
      
    // [SerializeField] private Resource dropType;   // Тип ресурса, выпадаемого врагом
 
@@ -25,13 +25,13 @@ public abstract class Enemy : MonoBehaviour
    }
    // protected abstract void Move();
     public void TakeDamage(int damage) {
-        stats.Stats.CurrentHealth -= damage;
+        _stats.CurrentHealth -= damage;
         OnTakeHit?.Invoke(this, EventArgs.Empty);
         DetectDeath();
     }
 
     protected void DetectDeath() {
-        if (stats.Stats.CurrentHealth <= 0) {
+        if (_stats.CurrentHealth <= 0) {
             OnDeath?.Invoke(this, EventArgs.Empty);
         }
     }
@@ -39,7 +39,7 @@ public abstract class Enemy : MonoBehaviour
     protected void Attack() {
         if (attackCooldownTimer == 0) {
             Debug.Log("Attack!");
-            attackCooldownTimer += stats.Stats.AttackSpeed;
+            attackCooldownTimer += _stats.AttackSpeed;
             OnAttack?.Invoke(this, EventArgs.Empty);
         }
     }
