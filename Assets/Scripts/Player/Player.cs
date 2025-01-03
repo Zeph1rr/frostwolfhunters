@@ -63,6 +63,7 @@ public class Player : MonoBehaviour
     }
 
     public void Move(Vector2 direction) {
+        direction = direction.normalized;
         _rigidBody.MovePosition(_rigidBody.position + direction * (_characterStats.Speed * Time.deltaTime));
     }
 
