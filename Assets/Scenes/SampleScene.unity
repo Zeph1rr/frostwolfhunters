@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce3bbab20aa289c4396bbed8649ff94a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthBar: {fileID: 1072254977}
   _playerPrefab: {fileID: 8002140743645943270, guid: 2f3336985dd278e4e85068d416982d16, type: 3}
   _playerStats: {fileID: 11400000, guid: a7204cea441f5664989e3828dbfc1525, type: 2}
 --- !u!4 &37729396
@@ -549,7 +550,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3daa9ba38add981a39f30c04a06a99cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerStats: {fileID: 11400000, guid: a7204cea441f5664989e3828dbfc1525, type: 2}
 --- !u!1 &1320375216
 GameObject:
   m_ObjectHideFlags: 0
