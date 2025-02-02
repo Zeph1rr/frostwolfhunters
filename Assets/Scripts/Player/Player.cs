@@ -8,10 +8,9 @@ public class Player : MonoBehaviour
     public static Player Instance {get; private set;}
 
     public event EventHandler OnPlayerDied;
-    public event EventHandler<HealthChangedArgs> OnHealthChanged;
+    public event EventHandler<StatChangedArgs> OnHealthChanged;
 
-    [Header("Character Stats")]
-    [SerializeField] private PlayerStatsSO _characterStats;
+    private PlayerStatsSO _characterStats;
 
     private Rigidbody2D _rigidBody;
 
@@ -25,18 +24,21 @@ public class Player : MonoBehaviour
         return _isRunning;
     }
 
-    private void Awake() {
-        Instance = this;
+    public void Initialize(PlayerStatsSO stats) {
         _rigidBody = GetComponent<Rigidbody2D>();
+        _characterStats = stats;
         _characterStats.CurrentHealth = _characterStats.MaxHealth;
         _characterStats.CurrentStamina = _characterStats.MaxStamina;
+    }
 
+    private void Awake() {
+        Instance = this;
     }
 
     private void Start() {
         OnHealthChanged?.Invoke(
                 this, 
-                new HealthChangedArgs(
+                new StatChangedArgs(
                     _characterStats.CurrentHealth,
                     _characterStats.CurrentHealth, 
                     _characterStats.MaxHealth
@@ -73,37 +75,14 @@ public class Player : MonoBehaviour
     }
 
     public void TakeDamage(int damage) {
-        if (!_isDead){
-            if (damage < 0) {
-                throw new ArgumentOutOfRangeException();
-            }
-            _characterStats.CurrentHealth -= damage;
-            Debug.Log("Current health: " + _characterStats.CurrentHealth);
-            OnHealthChanged?.Invoke(
-                this, 
-                new HealthChangedArgs(
-                    _characterStats.CurrentHealth - damage,
-                    _characterStats.CurrentHealth, 
-                    _characterStats.MaxHealth
-                    )
-            );
-            if (_characterStats.CurrentHealth <= 0) {
+        if (!_isDead)
+        {
+            _characterStats.TakeDamage(damage);
+            if (_characterStats.CurrentHealth <= 0)
+            {
                 Die();
             }
         }
     }
 
-}
-
-public class HealthChangedArgs : EventArgs
-{
-    public HealthChangedArgs(int beforeHealth, int currentHealth, int maxHealth) {
-        CurrentHealth = currentHealth;
-        MaxHealth = maxHealth;
-        BeforeHealth = beforeHealth;
-    }
-
-    public int CurrentHealth;
-    public int MaxHealth;
-    public int BeforeHealth;
 }
