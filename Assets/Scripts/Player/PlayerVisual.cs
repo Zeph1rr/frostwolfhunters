@@ -6,19 +6,18 @@ public class PlayerVisual : MonoBehaviour
 {
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
+    private Player _player;
 
     private bool _isPlayerDead = false;
     
     private const string IS_RUNNING = "IsRunning";
     private const string IS_DEAD = "IsDead";
 
-    private void Awake() {
+    public void Initialize(Player player) {
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
-    }
-
-    private void Start() {
-        Player.Instance.OnPlayerDied += HandleDie;
+        _player = player;
+        _player.OnPlayerDied += HandleDie;
     }
 
     private void OnDestroy() {
