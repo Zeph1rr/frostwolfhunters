@@ -3,7 +3,7 @@ using UnityEngine;
 public class CompositeRoot : MonoBehaviour
 {
      [Header("UI Elements")]
-    [SerializeField] private HealthBar healthBar;
+    [SerializeField] private GameObject _uiPrefab;
 
      [Header("Player")]
     [SerializeField] private Player _playerPrefab;
@@ -32,6 +32,8 @@ public class CompositeRoot : MonoBehaviour
 
      private void InitializeUI()
     {
+        GameObject uiInstance = Instantiate(_uiPrefab, Vector3.zero, Quaternion.identity);
+        HealthBar healthBar = uiInstance.GetComponentInChildren<HealthBar>();
         // Проверим, что у нас есть ссылки на UI-элементы
         if (healthBar != null)
         {
