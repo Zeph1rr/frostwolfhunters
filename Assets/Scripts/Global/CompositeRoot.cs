@@ -9,11 +9,17 @@ public class CompositeRoot : MonoBehaviour
     [SerializeField] private Player _playerPrefab;
     [SerializeField] private PlayerStatsSO _playerStats;
 
+    [Header ("Enemy")]
+    [SerializeField] private Enemy _enemyPrefab;
+    [SerializeField] private EnemyStatsSo _enemyStats;
+
     private Player _playerInstance;
+    private Enemy _enemyInstance;
 
     private void Awake()
     {
         InitializePlayer();
+        InitializeEnemy();
         InitializeUI();
     }
 
@@ -28,6 +34,12 @@ public class CompositeRoot : MonoBehaviour
         {
             playerVisual.Initialize(_playerInstance);
         }
+    }
+
+    private void InitializeEnemy() 
+    {
+        _enemyInstance = Instantiate(_enemyPrefab, new Vector3(-2, -2, 0), Quaternion.identity);
+        _enemyInstance.Initialize(_enemyStats, _playerInstance);
     }
 
      private void InitializeUI()
