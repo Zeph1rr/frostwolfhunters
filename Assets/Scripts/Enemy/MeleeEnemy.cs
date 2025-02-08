@@ -5,10 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(PolygonCollider2D))]
 public class MeleeEnemy : Enemy
 {
-    public override void Initialize(EnemyStatsSo stats, Player player) {
-        base.Initialize(stats, player);
-    }
-
     private void OnDestroy() {
     }
 

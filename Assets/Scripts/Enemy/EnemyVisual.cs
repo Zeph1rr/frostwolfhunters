@@ -9,17 +9,14 @@ public class EnemyVisual : MonoBehaviour
     private Animator _animator;
     private Enemy _enemy;
 
-    private Transform _target;
-
     private const string ATTACK = "Attack";
     private const string IS_RUNNING = "IsRunning";
     
-    public void Initialize(Enemy enemy, Transform target) {
+    public void Initialize(Enemy enemy) {
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
 
         _enemy = enemy;
-        _target = target;
 
         _enemy.OnAttack += HandleAttack;
     }

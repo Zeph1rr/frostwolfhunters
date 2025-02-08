@@ -3,11 +3,11 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
-     public event EventHandler OnTakeHit;
+    public event EventHandler OnTakeHit;
     public event EventHandler OnDeath;
     public event EventHandler OnAttack;
 
-    protected EnemyStatsSo _stats;
+    [SerializeField] protected EnemyStatsSo _stats;
     private Player _player;
     private Transform _target;
 
@@ -17,6 +17,7 @@ public abstract class Enemy : MonoBehaviour
 
     private bool _isRunning = false;
     public bool IsRunning => _isRunning;
+    private bool _isPlayerDied = false;
 
     private enum State {
         Idle,
@@ -25,19 +26,27 @@ public abstract class Enemy : MonoBehaviour
         Dead
     }
 
-    private State _currentState = State.Idle;
+    public bool IsBoss => _stats.IsBoss;
+    public int ThreatLevel => _stats.ThreatLevel;
 
-    public virtual void Initialize(EnemyStatsSo enemyStats, Player player) {
+    private State _currentState = State.Chasing;
+
+    public virtual void Initialize(Player player) {
         _rigidBody = GetComponent<Rigidbody2D>();
         _attackCollider = GetComponent<PolygonCollider2D>();
 
         _player = player;
         _target = player.transform;
-        _stats = enemyStats;
+        _player.OnPlayerDied += HandlePlayerDie;
     }
 
     private void OnDestroy() {
-        
+        _player.OnPlayerDied -= HandlePlayerDie;
+    }
+
+    private void HandlePlayerDie(object sender, EventArgs e) {
+        _isPlayerDied = true;
+        ChangeState(State.Idle);
     }
 
     private void Update() {
@@ -45,6 +54,7 @@ public abstract class Enemy : MonoBehaviour
         {
             _attackCooldownTimer = Math.Max(_attackCooldownTimer - Time.deltaTime, 0);
         }
+        if (_isPlayerDied) return;
         ChangeFacingDirection(transform.position, _target.position);
         StateHandler();
     }
@@ -58,25 +68,21 @@ public abstract class Enemy : MonoBehaviour
     private void StateHandler() {
         if (_target == null) return;
 
-        float distanceToTarget = Vector2.Distance(_target.position, transform.position);
         float horizontalDistance = Mathf.Abs(_target.position.x - transform.position.x);
         float verticalDistance = Mathf.Abs(_target.position.y - transform.position.y);
 
         _isRunning = _currentState == State.Chasing;
 
         switch (_currentState) {
-            case State.Idle:
-                if (distanceToTarget <= _stats.AttackRange * 2) ChangeState(State.Chasing);
-                break;
             case State.Chasing:
-                if (horizontalDistance <= _stats.AttackRange && verticalDistance <= 0.5f && IsFacingTarget()) { 
+                if (horizontalDistance <= _stats.AttackRange && verticalDistance <= 0.3f && IsFacingTarget()) { 
                     ChangeState(State.Attacking);
                 } else {
                     Chase();
                 }
                 break;
             case State.Attacking:
-                if (horizontalDistance > _stats.AttackRange || verticalDistance > 0.5f || !IsFacingTarget()) {
+                if (horizontalDistance > _stats.AttackRange || verticalDistance > 0.3f || !IsFacingTarget()) {
                     ChangeState(State.Chasing);
                 } else {
                     Attack();

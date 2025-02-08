@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class CompositeRoot : MonoBehaviour
 {
@@ -10,11 +11,12 @@ public class CompositeRoot : MonoBehaviour
     [SerializeField] private PlayerStatsSO _playerStats;
 
     [Header ("Enemy")]
-    [SerializeField] private Enemy _enemyPrefab;
-    [SerializeField] private EnemyStatsSo _enemyStats;
+    [SerializeField] private List<Enemy> _enemyPrefabs;
+    [SerializeField] private Wave _wave;
+    [SerializeField] private int _waveNumber;
 
     private Player _playerInstance;
-    private Enemy _enemyInstance;
+    private Wave _waveInstance;
 
     private void Awake()
     {
@@ -38,14 +40,9 @@ public class CompositeRoot : MonoBehaviour
 
     private void InitializeEnemy() 
     {
-        _enemyInstance = Instantiate(_enemyPrefab, new Vector3(-2, -2, 0), Quaternion.identity);
-        _enemyInstance.Initialize(_enemyStats, _playerInstance);
-
-        EnemyVisual enemyVisual = _enemyInstance.GetComponentInChildren<EnemyVisual>();
-        if (enemyVisual != null)
-        {
-            enemyVisual.Initialize(_enemyInstance, _playerInstance.transform);
-        }
+        _waveInstance = Instantiate(_wave, new Vector3(0, 0, 0), Quaternion.identity);
+        _waveInstance.Initialize(_enemyPrefabs, _playerInstance, _waveNumber);
+        _waveInstance.StartWave();
     }
 
      private void InitializeUI()
