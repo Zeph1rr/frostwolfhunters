@@ -16,8 +16,8 @@ MonoBehaviour:
   CurrentHealth: 30
   Damage: 5
   AttackSpeed: 2
-  AttackRange: 1.5
-  Speed: 5
+  AttackRange: 1
+  Speed: 20
   Defence: 0
   ThreatLevel: 1
   IsBoss: 0

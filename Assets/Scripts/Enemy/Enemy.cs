@@ -15,6 +15,9 @@ public abstract class Enemy : MonoBehaviour
     private PolygonCollider2D _attackCollider;
     private float _attackCooldownTimer = 0f;
 
+    private bool _isRunning = false;
+    public bool IsRunning => _isRunning;
+
     private enum State {
         Idle,
         Chasing,
@@ -42,31 +45,48 @@ public abstract class Enemy : MonoBehaviour
         {
             _attackCooldownTimer = Math.Max(_attackCooldownTimer - Time.deltaTime, 0);
         }
-
+        ChangeFacingDirection(transform.position, _target.position);
         StateHandler();
     }
+
+    private bool IsFacingTarget() {
+        float directionToTarget = Math.Abs(_target.position.x - transform.position.x);
+        return directionToTarget > 0 && transform.localScale.x > 0;
+    }
+
 
     private void StateHandler() {
         if (_target == null) return;
 
         float distanceToTarget = Vector2.Distance(_target.position, transform.position);
-        switch (_currentState)
-        {
+        float horizontalDistance = Mathf.Abs(_target.position.x - transform.position.x);
+        float verticalDistance = Mathf.Abs(_target.position.y - transform.position.y);
+
+        _isRunning = _currentState == State.Chasing;
+
+        switch (_currentState) {
             case State.Idle:
                 if (distanceToTarget <= _stats.AttackRange * 2) ChangeState(State.Chasing);
                 break;
             case State.Chasing:
-                if (distanceToTarget <= _stats.AttackRange) ChangeState(State.Attacking);
-                else Chase();
+                if (horizontalDistance <= _stats.AttackRange && verticalDistance <= 0.5f && IsFacingTarget()) { 
+                    ChangeState(State.Attacking);
+                } else {
+                    Chase();
+                }
                 break;
             case State.Attacking:
-                if (distanceToTarget > _stats.AttackRange) ChangeState(State.Chasing);
-                else Attack();
+                if (horizontalDistance > _stats.AttackRange || verticalDistance > 0.5f || !IsFacingTarget()) {
+                    ChangeState(State.Chasing);
+                } else {
+                    Attack();
+                }
                 break;
             case State.Dead:
                 break;
         }
     }
+
 
     private void ChangeState(State newState)
     {
@@ -102,12 +122,19 @@ public abstract class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    protected void PolygonColliderTurnOn() {
+    public void PolygonColliderTurnOn() {
         _attackCollider.enabled = true;
     }
 
-    protected void PolygonColliderTurnOff() {
+    public void PolygonColliderTurnOff() {
         _attackCollider.enabled = false;
     }
 
+    private void ChangeFacingDirection(Vector3 sourcePosition, Vector3 targetPosition) {
+        if (sourcePosition.x > targetPosition.x) {
+            transform.rotation = Quaternion.Euler(0, -180, 0);
+        } else {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+    }
 }

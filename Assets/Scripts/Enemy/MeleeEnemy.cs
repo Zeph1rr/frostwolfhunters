@@ -7,16 +7,9 @@ public class MeleeEnemy : Enemy
 {
     public override void Initialize(EnemyStatsSo stats, Player player) {
         base.Initialize(stats, player);
-        OnAttack += HandleAttack;
     }
 
     private void OnDestroy() {
-        OnAttack -= HandleAttack;
-    }
-
-    private void HandleAttack(object sender, System.EventArgs e) {
-        PolygonColliderTurnOff();
-        PolygonColliderTurnOn();
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {

@@ -154,7 +154,7 @@ MonoBehaviour:
   _uiPrefab: {fileID: 7175955202319680666, guid: 5a9340ef1d4f0114081e1247ec5d4893, type: 3}
   _playerPrefab: {fileID: 8002140743645943270, guid: 2f3336985dd278e4e85068d416982d16, type: 3}
   _playerStats: {fileID: 11400000, guid: a7204cea441f5664989e3828dbfc1525, type: 2}
-  _enemyPrefab: {fileID: 1627806964177344340, guid: d4dbba85a864b544cadf7af344f9ccac, type: 3}
+  _enemyPrefab: {fileID: 8984649289345513889, guid: 03d7c34b20b596548aaa6f6de0cec3e5, type: 3}
   _enemyStats: {fileID: 11400000, guid: 98f7fdc5cc20ecd4095bc68d5c4597dd, type: 2}
 --- !u!4 &37729396
 Transform:

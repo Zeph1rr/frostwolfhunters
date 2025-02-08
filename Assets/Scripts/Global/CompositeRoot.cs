@@ -40,6 +40,12 @@ public class CompositeRoot : MonoBehaviour
     {
         _enemyInstance = Instantiate(_enemyPrefab, new Vector3(-2, -2, 0), Quaternion.identity);
         _enemyInstance.Initialize(_enemyStats, _playerInstance);
+
+        EnemyVisual enemyVisual = _enemyInstance.GetComponentInChildren<EnemyVisual>();
+        if (enemyVisual != null)
+        {
+            enemyVisual.Initialize(_enemyInstance, _playerInstance.transform);
+        }
     }
 
      private void InitializeUI()
