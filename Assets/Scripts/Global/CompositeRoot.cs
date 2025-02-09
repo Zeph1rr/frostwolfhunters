@@ -14,6 +14,7 @@ public class CompositeRoot : MonoBehaviour
     [SerializeField] private List<Enemy> _enemyPrefabs;
     [SerializeField] private Wave _wave;
     [SerializeField] private int _waveNumber;
+    [SerializeField] private int _waveMultiplier;
 
     private Player _playerInstance;
     private Wave _waveInstance;
@@ -41,7 +42,7 @@ public class CompositeRoot : MonoBehaviour
     private void InitializeEnemy() 
     {
         _waveInstance = Instantiate(_wave, new Vector3(0, 0, 0), Quaternion.identity);
-        _waveInstance.Initialize(_enemyPrefabs, _playerInstance, _waveNumber);
+        _waveInstance.Initialize(_enemyPrefabs, _playerInstance, _waveNumber, _waveMultiplier);
         _waveInstance.StartWave();
     }
 

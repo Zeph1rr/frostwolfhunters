@@ -4,19 +4,21 @@ using UnityEngine;
 public class Wave : MonoBehaviour
 {
     private int _waveNumber;
+    private int _waveMultiplier;
 
     private List<Enemy> _enemyPrefabs;
     private Player _player;
     private List<Enemy> _spawnedEnemies = new List<Enemy>();
 
-    private int GetThreatLimit() => 3 * _waveNumber;
+    private int GetThreatLimit() => _waveMultiplier * _waveNumber;
 
     // Инициализация через метод Initialize
-    public void Initialize(List<Enemy> enemyPrefabs, Player player, int waveNumber)
+    public void Initialize(List<Enemy> enemyPrefabs, Player player, int waveNumber, int waveMultiplier)
     {
         _enemyPrefabs = enemyPrefabs;
         _player = player;
         _waveNumber = waveNumber;
+        _waveMultiplier = waveMultiplier;
     }
 
     public void StartWave()
@@ -80,6 +82,6 @@ public class Wave : MonoBehaviour
     private Vector2 GetRandomSpawnPosition()
     {
         Vector2 randomDirection = Random.insideUnitCircle.normalized;
-        return (Vector2)_player.transform.position + randomDirection * 25f;
+        return (Vector2)_player.transform.position + randomDirection * 15f;
     }
 }

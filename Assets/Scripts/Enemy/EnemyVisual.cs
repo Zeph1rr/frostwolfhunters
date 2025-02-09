@@ -1,11 +1,8 @@
-using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
 public class EnemyVisual : MonoBehaviour
 {
-    private SpriteRenderer _spriteRenderer;
     private Animator _animator;
     private Enemy _enemy;
 
@@ -14,7 +11,6 @@ public class EnemyVisual : MonoBehaviour
     
     public void Initialize(Enemy enemy) {
         _animator = GetComponent<Animator>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
 
         _enemy = enemy;
 
