@@ -3,7 +3,7 @@
 
 
 <p align="center">
-      <img src="https://i.imgur.com/WqOgNAO.png" alt="Project Logo" width="726">
+      <img src="https://i.imgur.com/QMHxLGe.png" alt="Project Logo" width="726">
 </p>
 
 <p align="center">

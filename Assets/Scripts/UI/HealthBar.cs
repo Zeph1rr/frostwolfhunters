@@ -4,16 +4,23 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Image))]
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] private PlayerStatsSO _playerStats;
+    private PlayerStatsSO _playerStats;
     private Image _healthBar;
 
-    private void Awake()
-    {
+    public void Initialize(PlayerStatsSO playerStats) {
         _healthBar = GetComponent<Image>();
+        _playerStats = playerStats;
+        _playerStats.OnHealthChanged += HandleHealthChanged;
+        _healthBar.fillAmount = (float) playerStats.CurrentHealth / playerStats.MaxHealth;
     }
 
-    private void Update()
+    private void OnDestroy() {
+        if (_playerStats != null)
+            _playerStats.OnHealthChanged -= HandleHealthChanged;
+    }
+
+    private void HandleHealthChanged(object sender, StatChangedArgs e)
     {
-        _healthBar.fillAmount = (float) _playerStats.CurrentHealth / _playerStats.MaxHealth;
+        _healthBar.fillAmount = (float) e.CurrentValue / e.MaxValue;
     }
 }
