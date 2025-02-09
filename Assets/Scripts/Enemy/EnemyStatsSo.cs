@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 [CreateAssetMenu(fileName = "BaseEnemyStats", menuName = "Stats/EnemyStats")]
 public class EnemyStatsSo : ScriptableObject
@@ -23,5 +24,17 @@ public class EnemyStatsSo : ScriptableObject
         Defence = defence;
         ThreatLevel = threatLevel;
         IsBoss = isBoss;
+    }
+
+    public event Action<int, int> OnHealthChanged;
+
+    public void TakeDamage(int damage) {
+        if (damage < 0)
+        {
+            throw new ArgumentOutOfRangeException("Damage cannot be negative");
+        }
+        int oldHealth = CurrentHealth;
+        CurrentHealth -= damage;
+        OnHealthChanged?.Invoke(oldHealth, CurrentHealth);
     }
 }
