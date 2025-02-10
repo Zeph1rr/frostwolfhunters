@@ -7,7 +7,8 @@ public abstract class Enemy : MonoBehaviour
     public event EventHandler OnDeath;
     public event EventHandler OnAttack;
 
-    [SerializeField] protected EnemyStatsSo _stats;
+    [SerializeField] private EnemyStatsSo _initialStats;
+    protected EnemyStatsSo _stats;
     private Player _player;
     private Transform _target;
 
@@ -18,6 +19,10 @@ public abstract class Enemy : MonoBehaviour
     private bool _isRunning = false;
     public bool IsRunning => _isRunning;
     private bool _isPlayerDied = false;
+
+    private bool _isDead = false;
+
+    public bool IsDead => _isDead;
 
     private enum State {
         Idle,
@@ -38,6 +43,8 @@ public abstract class Enemy : MonoBehaviour
         _player = player;
         _target = player.transform;
         _player.OnPlayerDied += HandlePlayerDie;
+        _stats = ScriptableObject.CreateInstance<EnemyStatsSo>();
+        _stats.Initialize(_initialStats);
     }
 
     private void OnDestroy() {
@@ -50,11 +57,12 @@ public abstract class Enemy : MonoBehaviour
     }
 
     private void Update() {
+        if (_isDead) return;
+        if (_isPlayerDied) return;
         if (_attackCooldownTimer > 0) 
         {
             _attackCooldownTimer = Math.Max(_attackCooldownTimer - Time.deltaTime, 0);
         }
-        if (_isPlayerDied) return;
         ChangeFacingDirection(transform.position, _target.position);
         StateHandler();
     }
@@ -115,17 +123,19 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    private void TakeDamage(int damage) {
+    public void TakeDamage(int damage) {
         _stats.TakeDamage(damage);
         OnTakeHit?.Invoke(this, EventArgs.Empty);
-        if (_stats.CurrentHealth == 0) {
+        if (_stats.CurrentHealth <= 0) {
             Die();
         }
     }
 
     private void Die() {
         OnDeath?.Invoke(this, EventArgs.Empty);
-        Destroy(gameObject);
+        _isDead = true;
+        ChangeState(State.Dead);
+        // Destroy(gameObject);
     }
 
     public void PolygonColliderTurnOn() {

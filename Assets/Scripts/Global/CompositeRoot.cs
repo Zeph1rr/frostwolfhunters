@@ -1,19 +1,24 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
+using UnityEngine.SceneManagement;
+using System;
 
 public class CompositeRoot : MonoBehaviour
 {
-     [Header("UI Elements")]
+    [Header("GameData")]
+    [SerializeField] private GameData _gameData;
+
+    [Header("UI Elements")]
     [SerializeField] private GameObject _uiPrefab;
 
-     [Header("Player")]
+    [Header("Player")]
     [SerializeField] private Player _playerPrefab;
     [SerializeField] private PlayerStatsSO _playerStats;
 
     [Header ("Enemy")]
     [SerializeField] private List<Enemy> _enemyPrefabs;
     [SerializeField] private Wave _wave;
-    [SerializeField] private int _waveNumber;
     [SerializeField] private int _waveMultiplier;
 
     private Player _playerInstance;
@@ -42,8 +47,18 @@ public class CompositeRoot : MonoBehaviour
     private void InitializeEnemy() 
     {
         _waveInstance = Instantiate(_wave, new Vector3(0, 0, 0), Quaternion.identity);
-        _waveInstance.Initialize(_enemyPrefabs, _playerInstance, _waveNumber, _waveMultiplier);
+        _waveInstance.Initialize(_enemyPrefabs, _playerInstance, _waveMultiplier, _gameData);
+        _waveInstance.OnWaveEnd += HandleWaveEnd;
         _waveInstance.StartWave();
+    }
+
+    private void HandleWaveEnd(object sender, EventArgs e) {
+        NewWave();
+    }
+
+    private void NewWave() {
+        _waveInstance.OnWaveEnd -= HandleWaveEnd;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
      private void InitializeUI()

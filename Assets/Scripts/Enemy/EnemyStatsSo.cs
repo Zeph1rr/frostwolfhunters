@@ -26,6 +26,18 @@ public class EnemyStatsSo : ScriptableObject
         IsBoss = isBoss;
     }
 
+    public void Initialize(EnemyStatsSo newStats) {
+        MaxHealth = newStats.MaxHealth;
+        CurrentHealth = newStats.MaxHealth;
+        Damage = newStats.Damage;
+        AttackSpeed = newStats.AttackSpeed;
+        AttackRange = newStats.AttackRange;
+        Speed = newStats.Speed;
+        Defence = newStats.Defence;
+        ThreatLevel = newStats.ThreatLevel;
+        IsBoss = newStats.IsBoss;
+    }
+
     public event Action<int, int> OnHealthChanged;
 
     public void TakeDamage(int damage) {
@@ -34,7 +46,7 @@ public class EnemyStatsSo : ScriptableObject
             throw new ArgumentOutOfRangeException("Damage cannot be negative");
         }
         int oldHealth = CurrentHealth;
-        CurrentHealth -= damage;
+        CurrentHealth = Math.Max(CurrentHealth - damage, 0);
         OnHealthChanged?.Invoke(oldHealth, CurrentHealth);
     }
 }

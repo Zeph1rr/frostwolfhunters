@@ -8,6 +8,7 @@ public class EnemyVisual : MonoBehaviour
 
     private const string ATTACK = "Attack";
     private const string IS_RUNNING = "IsRunning";
+    private const string IS_DEAD = "IsDead";
     
     public void Initialize(Enemy enemy) {
         _animator = GetComponent<Animator>();
@@ -15,6 +16,7 @@ public class EnemyVisual : MonoBehaviour
         _enemy = enemy;
 
         _enemy.OnAttack += HandleAttack;
+        _enemy.OnDeath += HandeDeath;
     }
 
     private void Update() {
@@ -27,6 +29,10 @@ public class EnemyVisual : MonoBehaviour
     
     private void HandleAttack(object sender, System.EventArgs e) {
        _animator.SetTrigger(ATTACK);
+    }
+
+    private void HandeDeath(object sender, System.EventArgs e) {
+        _animator.SetTrigger(IS_DEAD);
     }
 
     public void AttackColliderTurnOff() {

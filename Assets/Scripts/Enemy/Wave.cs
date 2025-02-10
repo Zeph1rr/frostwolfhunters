@@ -1,11 +1,15 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Wave : MonoBehaviour
 {
+    public event EventHandler OnWaveEnd;
+
     private int _waveNumber;
     private int _waveMultiplier;
-
+    private GameData _gameData;
     private List<Enemy> _enemyPrefabs;
     private Player _player;
     private List<Enemy> _spawnedEnemies = new List<Enemy>();
@@ -13,11 +17,12 @@ public class Wave : MonoBehaviour
     private int GetThreatLimit() => _waveMultiplier * _waveNumber;
 
     // Инициализация через метод Initialize
-    public void Initialize(List<Enemy> enemyPrefabs, Player player, int waveNumber, int waveMultiplier)
+    public void Initialize(List<Enemy> enemyPrefabs, Player player, int waveMultiplier, GameData gameData)
     {
         _enemyPrefabs = enemyPrefabs;
         _player = player;
-        _waveNumber = waveNumber;
+        _gameData = gameData;
+        _waveNumber = _gameData.CurrentWaveNumber;
         _waveMultiplier = waveMultiplier;
     }
 
@@ -47,19 +52,29 @@ public class Wave : MonoBehaviour
         }
 
         Debug.Log($"Wave {_waveNumber} started! Total enemies: {_spawnedEnemies.Count}");
-        // CurrentWave++;
+    }
+
+    public void EndWave() {
+        Debug.Log("End wave!");
+        OnWaveEnd?.Invoke(this, EventArgs.Empty);
+        _gameData.IncreaseWaveNumber();
+        Destroy(gameObject);
+    }
+
+    private void Update() {
+        if (_spawnedEnemies.All(enemy => enemy.IsDead)) EndWave();
     }
 
     private Enemy GetRandomBoss(int maxThreat)
     {
         List<Enemy> possibleBosses = _enemyPrefabs.FindAll(enemy => enemy.IsBoss && enemy.ThreatLevel <= maxThreat);
-        return possibleBosses.Count > 0 ? possibleBosses[Random.Range(0, possibleBosses.Count)] : null;
+        return possibleBosses.Count > 0 ? possibleBosses[UnityEngine.Random.Range(0, possibleBosses.Count)] : null;
     }
 
     private Enemy GetRandomEnemy(int maxThreat)
     {
         List<Enemy> possibleEnemies = _enemyPrefabs.FindAll(enemy => !enemy.IsBoss && enemy.ThreatLevel <= maxThreat);
-        return possibleEnemies.Count > 0 ? possibleEnemies[Random.Range(0, possibleEnemies.Count)] : null;
+        return possibleEnemies.Count > 0 ? possibleEnemies[UnityEngine.Random.Range(0, possibleEnemies.Count)] : null;
     }
 
     private void SpawnEnemy(Enemy enemyPrefab)
@@ -81,7 +96,7 @@ public class Wave : MonoBehaviour
 
     private Vector2 GetRandomSpawnPosition()
     {
-        Vector2 randomDirection = Random.insideUnitCircle.normalized;
-        return (Vector2)_player.transform.position + randomDirection * 15f;
+        Vector2 randomDirection = UnityEngine.Random.insideUnitCircle.normalized;
+        return (Vector2)_player.transform.position + randomDirection * 5f;
     }
 }
