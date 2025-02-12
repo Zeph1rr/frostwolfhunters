@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 10
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -42,8 +42,8 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
-  m_GIWorkflowMode: 1
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -66,9 +66,6 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_FinalGather: 0
-    m_FinalGatherFiltering: 1
-    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 0
@@ -151,14 +148,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce3bbab20aa289c4396bbed8649ff94a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameData: {fileID: 11400000, guid: bb01be6cf57747d4eb3efe60a6dfb046, type: 2}
-  _uiPrefab: {fileID: 7175955202319680666, guid: 5a9340ef1d4f0114081e1247ec5d4893, type: 3}
-  _playerPrefab: {fileID: 8002140743645943270, guid: 2f3336985dd278e4e85068d416982d16, type: 3}
-  _playerStats: {fileID: 11400000, guid: a7204cea441f5664989e3828dbfc1525, type: 2}
-  _enemyPrefabs:
-  - {fileID: 8984649289345513889, guid: 03d7c34b20b596548aaa6f6de0cec3e5, type: 3}
-  _wave: {fileID: 6864642961927639362, guid: cb367a3a04acf454db53f87381135349, type: 3}
-  _waveMultiplier: 4
+  _gameData: {fileID: 0}
+  _uiPrefab: {fileID: 0}
+  _playerPrefab: {fileID: 0}
+  _playerStats: {fileID: 0}
+  _enemyPrefabs: []
+  _wave: {fileID: 0}
+  _waveMultiplier: 0
 --- !u!4 &37729396
 Transform:
   m_ObjectHideFlags: 0

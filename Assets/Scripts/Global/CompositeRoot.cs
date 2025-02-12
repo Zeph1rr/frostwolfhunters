@@ -7,6 +7,7 @@ public class CompositeRoot : MonoBehaviour
 {
     [Header("GameData")]
     [SerializeField] private GameData _gameData;
+    [SerializeField] private GameInput _gameInput;
 
     [Header("UI Elements")]
     [SerializeField] private GameObject _uiPrefab;
@@ -32,14 +33,15 @@ public class CompositeRoot : MonoBehaviour
 
     private void InitializePlayer()
     {
+        _gameInput.Initialize();
         _playerInstance = Instantiate(_playerPrefab, Vector3.zero, Quaternion.identity);
-        _playerInstance.Initialize(_playerStats);
+        _playerInstance.Initialize(_playerStats, _gameInput);
 
         // Передаем Player в PlayerVisual
         PlayerVisual playerVisual = _playerInstance.GetComponentInChildren<PlayerVisual>();
         if (playerVisual != null)
         {
-            playerVisual.Initialize(_playerInstance);
+            playerVisual.Initialize(_playerInstance, _gameInput);
         }
     }
 

@@ -5,7 +5,6 @@ using System;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
-    public static Player Instance {get; private set;}
 
     public event EventHandler OnPlayerDied;
     public event EventHandler<StatChangedArgs> OnHealthChanged;
@@ -13,6 +12,7 @@ public class Player : MonoBehaviour
     private PlayerStatsSO _characterStats;
 
     private Rigidbody2D _rigidBody;
+    private GameInput _gameInput;
 
     private float _minMovingSpeed = 0.1f;
     private bool _isRunning = false;
@@ -24,15 +24,12 @@ public class Player : MonoBehaviour
         return _isRunning;
     }
 
-    public void Initialize(PlayerStatsSO stats) {
+    public void Initialize(PlayerStatsSO stats, GameInput gameInput) {
         _rigidBody = GetComponent<Rigidbody2D>();
         _characterStats = stats;
         _characterStats.CurrentHealth = _characterStats.MaxHealth;
         _characterStats.CurrentStamina = _characterStats.MaxStamina;
-    }
-
-    private void Awake() {
-        Instance = this;
+        _gameInput = gameInput;
     }
 
     private void Start() {
@@ -47,7 +44,7 @@ public class Player : MonoBehaviour
     }
 
     private void Update() {
-        _movementVector = GameInput.Instance.GetMovementVector();
+        _movementVector = _gameInput.GetMovementVector();
     }
 
     private void FixedUpdate() {
