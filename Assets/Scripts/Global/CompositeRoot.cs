@@ -31,6 +31,10 @@ public class CompositeRoot : MonoBehaviour
         InitializeUI();
     }
 
+    private void OnDisable() {
+        _playerInstance.OnPlayerDied -= HandlePlayerDie;
+    }
+
     private void InitializePlayer()
     {
         _gameInput.Initialize();
@@ -43,6 +47,7 @@ public class CompositeRoot : MonoBehaviour
         {
             playerVisual.Initialize(_playerInstance, _gameInput);
         }
+        _playerInstance.OnPlayerDied += HandlePlayerDie;
     }
 
     private void InitializeEnemy() 
@@ -75,5 +80,9 @@ public class CompositeRoot : MonoBehaviour
         {
             Debug.LogError("UI elements are not assigned.");
         }
+    }
+
+    private void HandlePlayerDie(object sender, EventArgs e) {
+        _gameInput.enabled = false;
     }
 }
