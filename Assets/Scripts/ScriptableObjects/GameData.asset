@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: GameData
   m_EditorClassIdentifier: 
   _playerStats: {fileID: 11400000, guid: a7204cea441f5664989e3828dbfc1525, type: 2}
-  _currentWaveNumber: 3
-  _maxWaveNumber: 3
+  _currentWaveNumber: 1
+  _maxWaveNumber: 1
