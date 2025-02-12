@@ -31,8 +31,8 @@ public abstract class Enemy : MonoBehaviour
         Dead
     }
 
-    public bool IsBoss => _stats.IsBoss;
-    public int ThreatLevel => _stats.ThreatLevel;
+    public bool IsBoss => _initialStats.IsBoss;
+    public int ThreatLevel => _initialStats.ThreatLevel;
 
     private State _currentState = State.Chasing;
 
