@@ -83,14 +83,14 @@ public abstract class Enemy : MonoBehaviour
 
         switch (_currentState) {
             case State.Chasing:
-                if (horizontalDistance <= _stats.AttackRange && verticalDistance <= 0.3f && IsFacingTarget()) { 
+                if (horizontalDistance <= _stats.AttackRange && verticalDistance <= _stats.AttackRange / 3f && IsFacingTarget()) { 
                     ChangeState(State.Attacking);
                 } else {
                     Chase();
                 }
                 break;
             case State.Attacking:
-                if (horizontalDistance > _stats.AttackRange || verticalDistance > 0.3f || !IsFacingTarget()) {
+                if (horizontalDistance > _stats.AttackRange || verticalDistance > _stats.AttackRange / 3f || !IsFacingTarget()) {
                     ChangeState(State.Chasing);
                 } else {
                     Attack();

@@ -155,6 +155,7 @@ MonoBehaviour:
   _playerStats: {fileID: 11400000, guid: a7204cea441f5664989e3828dbfc1525, type: 2}
   _enemyPrefabs:
   - {fileID: 8984649289345513889, guid: 03d7c34b20b596548aaa6f6de0cec3e5, type: 3}
+  - {fileID: 1627806964177344340, guid: d4dbba85a864b544cadf7af344f9ccac, type: 3}
   _wave: {fileID: 6864642961927639362, guid: cb367a3a04acf454db53f87381135349, type: 3}
   _waveMultiplier: 4
 --- !u!4 &37729396
