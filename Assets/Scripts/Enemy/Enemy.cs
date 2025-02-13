@@ -18,7 +18,6 @@ public abstract class Enemy : MonoBehaviour
 
     private bool _isRunning = false;
     public bool IsRunning => _isRunning;
-    private bool _isPlayerDied = false;
 
     private bool _isDead = false;
 
@@ -52,13 +51,12 @@ public abstract class Enemy : MonoBehaviour
     }
 
     private void HandlePlayerDie(object sender, EventArgs e) {
-        _isPlayerDied = true;
+        _isRunning = false;
         ChangeState(State.Idle);
     }
 
     private void Update() {
         if (_isDead) return;
-        if (_isPlayerDied) return;
         if (_attackCooldownTimer > 0) 
         {
             _attackCooldownTimer = Math.Max(_attackCooldownTimer - Time.deltaTime, 0);
@@ -82,6 +80,8 @@ public abstract class Enemy : MonoBehaviour
         _isRunning = _currentState == State.Chasing;
 
         switch (_currentState) {
+            case State.Idle:
+                return;
             case State.Chasing:
                 if (horizontalDistance <= _stats.AttackRange && verticalDistance <= _stats.AttackRange / 3f && IsFacingTarget()) { 
                     ChangeState(State.Attacking);

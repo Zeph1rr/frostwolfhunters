@@ -30,6 +30,19 @@ Password={#MyPassword}
 ;Encryption=yes
 ;Compression=lzma
 ;SolidCompression=yes
+VersionInfoVersion={#MyAppVersion}
+VersionInfoCompany={#MyAppPublisher}
+VersionInfoTextVersion={#MyAppVersion}
+VersionInfoProductName={#MyAppName}
+VersionInfoProductVersion={#MyAppVersion}
+VersionInfoProductTextVersion={#MyAppVersion}
+VersionInfoOriginalFileName=frostwolfhunters-setup-{#MyAppPlatform}-{#MyAppVersion}.exe
+VersionInfoCopyright={#MyAppPublisher}
+UninstallDisplayName=frostwolfhunters-unistall-{#MyAppPlatform}-{#MyAppVersion}
+UninstallDisplayIcon={uninstallexe},4
+UninstallDisplaySize=2
+VersionInfoDescription=Setup file for FrostWolfHunters game
+AppCopyright={#MyAppPublisher}
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl";
@@ -39,11 +52,6 @@ Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-;Source: "{#MySourcePath}\build\FrostwolfHunters.exe"; DestDir: "{app}"; Flags: ignoreversion
-;Source: "{#MySourcePath}\build\UnityCrashHandler64.exe"; DestDir: "{app}"; Flags: ignoreversion
-;Source: "{#MySourcePath}\build\UnityPlayer.dll"; DestDir: "{app}"; Flags: ignoreversion
-;Source: "{#MySourcePath}\build\FrostwolfHunters_Data\*"; DestDir: "{app}\FrostwolfHunters_Data"; Flags: ignoreversion recursesubdirs createallsubdirs
-;Source: "{#MySourcePath}\build\MonoBleedingEdge\*"; DestDir: "{app}\MonoBleedingEdge"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "{#MyBuildPath}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
