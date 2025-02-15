@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using System;
+using Cinemachine;
 
 public class CompositeRoot : MonoBehaviour
 {
@@ -21,6 +22,9 @@ public class CompositeRoot : MonoBehaviour
     [SerializeField] private Wave _wave;
     [SerializeField] private int _waveMultiplier;
 
+    [Header("Camera")]
+    [SerializeField] private CinemachineVirtualCamera _cinemachineCamera;
+
     private Player _playerInstance;
     private Wave _waveInstance;
 
@@ -29,6 +33,7 @@ public class CompositeRoot : MonoBehaviour
         InitializePlayer();
         InitializeEnemy();
         InitializeUI();
+        InitializeCamera();
     }
 
     private void OnDisable() {
@@ -56,6 +61,23 @@ public class CompositeRoot : MonoBehaviour
         _waveInstance.Initialize(_enemyPrefabs, _playerInstance, _waveMultiplier, _gameData);
         _waveInstance.OnWaveEnd += HandleWaveEnd;
         _waveInstance.StartWave();
+    }
+
+    private void InitializeCamera()
+    {
+        if (_cinemachineCamera == null)
+        {
+            _cinemachineCamera = FindFirstObjectByType<CinemachineVirtualCamera>();
+        }
+
+        if (_cinemachineCamera != null && _playerInstance != null)
+        {
+            _cinemachineCamera.Follow = _playerInstance.transform;
+        }
+        else
+        {
+            Debug.LogError("Cinemachine Virtual Camera or Player not found!");
+        }
     }
 
     private void HandleWaveEnd(object sender, EventArgs e) {
