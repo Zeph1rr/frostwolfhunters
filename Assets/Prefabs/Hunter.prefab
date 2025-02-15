@@ -49,6 +49,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -98,7 +101,7 @@ GameObject:
   - component: {fileID: 1627806964177344340}
   - component: {fileID: 2201887567440104742}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Hunter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -128,6 +131,7 @@ BoxCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5222151045442143006}
   m_Enabled: 1
+  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -151,7 +155,8 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0.06269561}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -162,12 +167,11 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
   m_Size: {x: 1, y: 0.87460876}
   m_EdgeRadius: 0
 --- !u!50 &258218353230682766
 Rigidbody2D:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -178,8 +182,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -204,6 +208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 045a70c1f6d057640a505426a73dee53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _initialStats: {fileID: 11400000, guid: bde4c59ce3a11c549a386392fcaea0c1, type: 2}
 --- !u!60 &2201887567440104742
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -212,6 +217,7 @@ PolygonCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5222151045442143006}
   m_Enabled: 0
+  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -235,7 +241,8 @@ PolygonCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -248,9 +255,9 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.3619399, y: 0.60439163}
-      - {x: 0.5640392, y: -0.12867773}
-      - {x: 0.42227852, y: -0.9941954}
+    - - {x: 0.04035282, y: 0.5459212}
+      - {x: 0.04949993, y: -0.13452469}
+      - {x: 0.0071388483, y: -0.9883484}
       - {x: 0.8487183, y: -0.91002345}
       - {x: 0.9180684, y: -0.18705621}
       - {x: 0.8921361, y: 0.502613}

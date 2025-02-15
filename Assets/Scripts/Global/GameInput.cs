@@ -3,22 +3,11 @@ using UnityEngine.InputSystem;
 
 public class GameInput : MonoBehaviour
 {
-    public static GameInput Instance { get; private set; }
 
     private PlayerInputActions _playerInputActions;
-    private void Awake()
+    public void Initialize()
     {
-        Instance = this;
-
         _playerInputActions = new PlayerInputActions();
-    }
-
-    private void Start() {
-        Player.Instance.OnPlayerDied += HandlePlayerDeath;
-    }
-
-    private void OnDestroy() {
-        Player.Instance.OnPlayerDied -= HandlePlayerDeath;
     }
 
     private void HandlePlayerDeath(object sender, System.EventArgs e) {

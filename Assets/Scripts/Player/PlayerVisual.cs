@@ -7,32 +7,34 @@ public class PlayerVisual : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
     private Player _player;
+    private GameInput _gameInput;
 
     private bool _isPlayerDead = false;
     
     private const string IS_RUNNING = "IsRunning";
     private const string IS_DEAD = "IsDead";
 
-    public void Initialize(Player player) {
+    public void Initialize(Player player, GameInput gameInput) {
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _player = player;
         _player.OnPlayerDied += HandleDie;
+        _gameInput = gameInput;
     }
 
     private void OnDestroy() {
-        Player.Instance.OnPlayerDied -= HandleDie;
+       _player.OnPlayerDied -= HandleDie;
     }
 
     private void Update() {
-        _animator.SetBool(IS_RUNNING, Player.Instance.IsRunning());
+        _animator.SetBool(IS_RUNNING, _player.IsRunning());
         if (!_isPlayerDead)
             AdjustPlayerFacingDirection();
     }
 
     private void AdjustPlayerFacingDirection() {
-        Vector3 mousePos = GameInput.Instance.GetMousePosition();
-        Vector3 playerPosition = Player.Instance.GetPlayerScreenPosition();
+        Vector3 mousePos = _gameInput.GetMousePosition();
+        Vector3 playerPosition = _player.GetPlayerScreenPosition();
 
         if (mousePos.x < playerPosition.x) {
             _spriteRenderer.flipX = true;

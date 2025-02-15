@@ -7,7 +7,8 @@ public abstract class Enemy : MonoBehaviour
     public event EventHandler OnDeath;
     public event EventHandler OnAttack;
 
-    [SerializeField] protected EnemyStatsSo _stats;
+    [SerializeField] private EnemyStatsSo _initialStats;
+    protected EnemyStatsSo _stats;
     private Player _player;
     private Transform _target;
 
@@ -17,7 +18,10 @@ public abstract class Enemy : MonoBehaviour
 
     private bool _isRunning = false;
     public bool IsRunning => _isRunning;
-    private bool _isPlayerDied = false;
+
+    private bool _isDead = false;
+
+    public bool IsDead => _isDead;
 
     private enum State {
         Idle,
@@ -26,8 +30,8 @@ public abstract class Enemy : MonoBehaviour
         Dead
     }
 
-    public bool IsBoss => _stats.IsBoss;
-    public int ThreatLevel => _stats.ThreatLevel;
+    public bool IsBoss => _initialStats.IsBoss;
+    public int ThreatLevel => _initialStats.ThreatLevel;
 
     private State _currentState = State.Chasing;
 
@@ -38,6 +42,8 @@ public abstract class Enemy : MonoBehaviour
         _player = player;
         _target = player.transform;
         _player.OnPlayerDied += HandlePlayerDie;
+        _stats = ScriptableObject.CreateInstance<EnemyStatsSo>();
+        _stats.Initialize(_initialStats);
     }
 
     private void OnDestroy() {
@@ -45,16 +51,16 @@ public abstract class Enemy : MonoBehaviour
     }
 
     private void HandlePlayerDie(object sender, EventArgs e) {
-        _isPlayerDied = true;
+        _isRunning = false;
         ChangeState(State.Idle);
     }
 
     private void Update() {
+        if (_isDead) return;
         if (_attackCooldownTimer > 0) 
         {
             _attackCooldownTimer = Math.Max(_attackCooldownTimer - Time.deltaTime, 0);
         }
-        if (_isPlayerDied) return;
         ChangeFacingDirection(transform.position, _target.position);
         StateHandler();
     }
@@ -74,15 +80,17 @@ public abstract class Enemy : MonoBehaviour
         _isRunning = _currentState == State.Chasing;
 
         switch (_currentState) {
+            case State.Idle:
+                return;
             case State.Chasing:
-                if (horizontalDistance <= _stats.AttackRange && verticalDistance <= 0.3f && IsFacingTarget()) { 
+                if (horizontalDistance <= _stats.AttackRange && verticalDistance <= _stats.AttackRange / 3f && IsFacingTarget()) { 
                     ChangeState(State.Attacking);
                 } else {
                     Chase();
                 }
                 break;
             case State.Attacking:
-                if (horizontalDistance > _stats.AttackRange || verticalDistance > 0.3f || !IsFacingTarget()) {
+                if (horizontalDistance > _stats.AttackRange || verticalDistance > _stats.AttackRange / 3f || !IsFacingTarget()) {
                     ChangeState(State.Chasing);
                 } else {
                     Attack();
@@ -115,17 +123,19 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    private void TakeDamage(int damage) {
+    public void TakeDamage(int damage) {
         _stats.TakeDamage(damage);
         OnTakeHit?.Invoke(this, EventArgs.Empty);
-        if (_stats.CurrentHealth == 0) {
+        if (_stats.CurrentHealth <= 0) {
             Die();
         }
     }
 
     private void Die() {
         OnDeath?.Invoke(this, EventArgs.Empty);
-        Destroy(gameObject);
+        _isDead = true;
+        ChangeState(State.Dead);
+        // Destroy(gameObject);
     }
 
     public void PolygonColliderTurnOn() {

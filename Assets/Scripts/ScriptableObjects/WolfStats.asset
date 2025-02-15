@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: WolfStats
   m_EditorClassIdentifier: 
   MaxHealth: 30
-  CurrentHealth: 30
+  CurrentHealth: 10
   Damage: 5
   AttackSpeed: 2
   AttackRange: 1
