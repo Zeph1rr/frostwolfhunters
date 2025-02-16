@@ -7,7 +7,6 @@ using Cinemachine;
 public class CompositeRoot : MonoBehaviour
 {
     [Header("GameData")]
-    [SerializeField] private GameData _baseGameData;
     [SerializeField] private GameData _gameData;
     [SerializeField] private GameInput _gameInput;
 
@@ -16,7 +15,6 @@ public class CompositeRoot : MonoBehaviour
 
     [Header("Player")]
     [SerializeField] private Player _playerPrefab;
-    [SerializeField] private PlayerStatsSO _basePlayerStats;
     [SerializeField] private PlayerStatsSO _playerStats;
 
     [Header ("Enemy")]
@@ -32,8 +30,6 @@ public class CompositeRoot : MonoBehaviour
 
     private void Awake()
     {
-        _gameData.Initialize(SaveLoadSystem.LoadGame("test.json", _baseGameData));
-        _playerStats.Initialize(_gameData.PlayerStats);
         InitializePlayer();
         InitializeEnemy();
         InitializeUI();

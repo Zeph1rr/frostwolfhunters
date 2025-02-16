@@ -33,6 +33,7 @@ public class SaveLoadSystem
         string json = File.ReadAllText(saveFilePath);
         GameDataSerializable gameDataSerializable = JsonUtility.FromJson<GameDataSerializable>(json);
         GameData gameData = gameDataSerializable.Deserialize();
+        Debug.Log($"GameData loaded {gameData.CurrentWaveNumber}, {gameData.MaxWaveNumber}");
         return gameData;
     }
 }

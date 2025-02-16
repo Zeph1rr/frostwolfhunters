@@ -56,8 +56,8 @@ public class Wave : MonoBehaviour
 
     public void EndWave() {
         Debug.Log("End wave!");
-        OnWaveEnd?.Invoke(this, EventArgs.Empty);
         _gameData.IncreaseWaveNumber();
+        OnWaveEnd?.Invoke(this, EventArgs.Empty);
         Destroy(gameObject);
     }
 

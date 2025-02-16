@@ -148,11 +148,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce3bbab20aa289c4396bbed8649ff94a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _baseGameData: {fileID: 11400000, guid: 26c213f43eff0014a8998d7c2dd74c48, type: 2}
   _gameData: {fileID: 11400000, guid: bb01be6cf57747d4eb3efe60a6dfb046, type: 2}
   _gameInput: {fileID: 251843117}
   _uiPrefab: {fileID: 7175955202319680666, guid: 5a9340ef1d4f0114081e1247ec5d4893, type: 3}
   _playerPrefab: {fileID: 8002140743645943270, guid: 2f3336985dd278e4e85068d416982d16, type: 3}
-  _playerStats: {fileID: 11400000, guid: a7204cea441f5664989e3828dbfc1525, type: 2}
+  _basePlayerStats: {fileID: 11400000, guid: a7204cea441f5664989e3828dbfc1525, type: 2}
+  _playerStats: {fileID: 11400000, guid: 9529e05eca1f1b841b8defc0d19b356f, type: 2}
   _enemyPrefabs:
   - {fileID: 8984649289345513889, guid: 03d7c34b20b596548aaa6f6de0cec3e5, type: 3}
   - {fileID: 1627806964177344340, guid: d4dbba85a864b544cadf7af344f9ccac, type: 3}
