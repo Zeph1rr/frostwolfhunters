@@ -7,6 +7,7 @@ using Cinemachine;
 public class CompositeRoot : MonoBehaviour
 {
     [Header("GameData")]
+    [SerializeField] private GameData _baseGameData;
     [SerializeField] private GameData _gameData;
     [SerializeField] private GameInput _gameInput;
 
@@ -15,6 +16,7 @@ public class CompositeRoot : MonoBehaviour
 
     [Header("Player")]
     [SerializeField] private Player _playerPrefab;
+    [SerializeField] private PlayerStatsSO _basePlayerStats;
     [SerializeField] private PlayerStatsSO _playerStats;
 
     [Header ("Enemy")]
@@ -30,6 +32,8 @@ public class CompositeRoot : MonoBehaviour
 
     private void Awake()
     {
+        _gameData.Initialize(SaveLoadSystem.LoadGame("test.json", _baseGameData));
+        _playerStats.Initialize(_gameData.PlayerStats);
         InitializePlayer();
         InitializeEnemy();
         InitializeUI();
@@ -40,8 +44,15 @@ public class CompositeRoot : MonoBehaviour
         _playerInstance.OnPlayerDied -= HandlePlayerDie;
     }
 
+    private void SaveGame() {
+        PlayerStatsSerializable playerStats = new PlayerStatsSerializable(_playerStats);
+        GameDataSerializable gameData = new GameDataSerializable(_gameData, playerStats);
+        SaveLoadSystem.SaveGame(gameData, "test.json");
+    }
+
     private void InitializePlayer()
     {
+        
         _gameInput.Initialize();
         _playerInstance = Instantiate(_playerPrefab, Vector3.zero, Quaternion.identity);
         _playerInstance.Initialize(_playerStats, _gameInput);
@@ -81,7 +92,8 @@ public class CompositeRoot : MonoBehaviour
     }
 
     private void HandleWaveEnd(object sender, EventArgs e) {
-        NewWave();
+        SaveGame();
+        //NewWave();
     }
 
     private void NewWave() {

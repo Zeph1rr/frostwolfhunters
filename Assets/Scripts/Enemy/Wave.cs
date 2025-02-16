@@ -62,6 +62,9 @@ public class Wave : MonoBehaviour
     }
 
     private void Update() {
+        // foreach(Enemy enemy in _spawnedEnemies) {
+        //     enemy.TakeDamage(1);
+        // }
         if (_spawnedEnemies.All(enemy => enemy.IsDead)) EndWave();
     }
 

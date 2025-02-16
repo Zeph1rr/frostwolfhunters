@@ -11,11 +11,11 @@ public class GameData : ScriptableObject
     public int CurrentWaveNumber => _currentWaveNumber;
     public int MaxWaveNumber => _maxWaveNumber;
 
-    public void Initialize(PlayerStatsSO playerStats, int RecordWaveNumber)
+    public void Initialize(PlayerStatsSO playerStats, int maxWaveNumber, int currentWaveNumber)
     {
         _playerStats = playerStats;
-        _maxWaveNumber = RecordWaveNumber;
-        ResetWaveNumber();
+        _maxWaveNumber = maxWaveNumber;
+        _currentWaveNumber = currentWaveNumber;
     }
 
     public void Initialize(GameData gameData) {

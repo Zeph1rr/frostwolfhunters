@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 
 [CreateAssetMenu(fileName = "BasePlayerStats", menuName = "Stats/PlayerStats")]
 public class PlayerStatsSO : ScriptableObject
@@ -14,7 +15,7 @@ public class PlayerStatsSO : ScriptableObject
     public float Speed;
     public int Defence;
 
-    public void Initialize(int maxHealth, int maxStamina, int damage, int attackSpeed, int speed, int defence) {
+    public void Initialize(int maxHealth, int maxStamina, int damage, float attackSpeed, float speed, int defence) {
         MaxHealth = maxHealth;
         CurrentHealth = maxHealth;
         MaxStamina = maxStamina;
@@ -23,6 +24,18 @@ public class PlayerStatsSO : ScriptableObject
         AttackSpeed = attackSpeed;
         Speed = speed;
         Defence = defence;
+    }
+
+    public void Initialize(PlayerStatsSO playerStats)
+    {
+        MaxHealth = playerStats.MaxHealth;
+        CurrentHealth = MaxHealth;
+        MaxStamina = playerStats.MaxStamina;
+        CurrentStamina = MaxStamina;
+        Damage = playerStats.Damage;
+        AttackSpeed = playerStats.AttackSpeed;
+        Speed = playerStats.Speed;
+        Defence = playerStats.Defence;
     }
 
     public void TakeDamage(int damage)
