@@ -1,14 +1,27 @@
-using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Menu : MonoBehaviour
 {
-    [SerializeField] GameData _defaultGameData;
-    [SerializeField] GameData _gameData;
+    [SerializeField] private GameData _defaultGameData;
+    [SerializeField] private GameData _gameData;
 
-    [SerializeField] PlayerStatsSO _playerStats;
-    [SerializeField] PlayerStatsSO _basePlayerStats;
+    [SerializeField] private PlayerStatsSO _playerStats;
+    [SerializeField] private PlayerStatsSO _basePlayerStats;
+
+    [SerializeField] private Button _loadButton;
+
+    private void Awake()
+    {
+        _defaultGameData.PlayerStats.Initialize(_basePlayerStats);
+        if (!SaveLoadSystem.GetSaveFiles().Any())
+        {
+            _loadButton.interactable = false;
+        }
+
+    }
 
     public void QuitGame() {
         Application.Quit();
@@ -22,7 +35,6 @@ public class Menu : MonoBehaviour
 
     public void LoadGame() {
         _gameData.Initialize(SaveLoadSystem.LoadGame("test.save", _defaultGameData, _playerStats));
-        Debug.Log(_gameData.PlayerStats);
         _playerStats.Initialize(_gameData.PlayerStats);
         StartGame();
     }

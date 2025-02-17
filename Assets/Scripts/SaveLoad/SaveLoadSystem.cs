@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
@@ -22,6 +23,24 @@ public class SaveLoadSystem
             formatter.Serialize(fileStream, gameData);
         }
         Debug.Log($"Game saved to {saveFilePath}");
+    }
+
+    public static List<string> GetSaveFiles()
+    {
+        if (!Directory.Exists(_saveDirectory))
+        {
+            Debug.LogWarning("Save directory not found!");
+            return new List<string>();
+        }
+
+        string[] files = Directory.GetFiles(_saveDirectory, "*.save");
+        List<string> saveFileNames = new List<string>();
+
+        foreach(string filePath in files)
+        {
+            saveFileNames.Add(Path.GetFileName(filePath));
+        }
+        return saveFileNames;
     }
 
     public static GameData LoadGame(string saveFileName, GameData defaultGameData, PlayerStatsSO stats)

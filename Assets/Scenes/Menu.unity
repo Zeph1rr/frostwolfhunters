@@ -923,6 +923,7 @@ MonoBehaviour:
   _gameData: {fileID: 11400000, guid: bb01be6cf57747d4eb3efe60a6dfb046, type: 2}
   _playerStats: {fileID: 11400000, guid: 9529e05eca1f1b841b8defc0d19b356f, type: 2}
   _basePlayerStats: {fileID: 11400000, guid: a7204cea441f5664989e3828dbfc1525, type: 2}
+  _loadButton: {fileID: 1920423273}
 --- !u!114 &1788734927
 MonoBehaviour:
   m_ObjectHideFlags: 0

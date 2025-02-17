@@ -135,7 +135,6 @@ public abstract class Enemy : MonoBehaviour
         OnDeath?.Invoke(this, EventArgs.Empty);
         _isDead = true;
         ChangeState(State.Dead);
-        // Destroy(gameObject);
     }
 
     public void PolygonColliderTurnOn() {
