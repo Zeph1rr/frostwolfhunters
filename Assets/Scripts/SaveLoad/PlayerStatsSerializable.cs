@@ -19,8 +19,7 @@ public class PlayerStatsSerializable
         _defence = stats.Defence;
     }
 
-    public PlayerStatsSO Deserialize() {
-        PlayerStatsSO stats = ScriptableObject.CreateInstance<PlayerStatsSO>();
+    public PlayerStatsSO Deserialize(PlayerStatsSO stats) {
         stats.Initialize(_maxHealth, _maxStamina,  _damage, _attackSpeed, _speed, _defence);
         return stats;
     }

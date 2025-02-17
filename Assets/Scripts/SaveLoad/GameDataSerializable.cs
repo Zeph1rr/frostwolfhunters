@@ -14,9 +14,9 @@ public class GameDataSerializable
         _playerStats = playerStats;
     }
 
-    public GameData Deserialize() {
+    public GameData Deserialize(PlayerStatsSO stats) {
         GameData gameData = ScriptableObject.CreateInstance<GameData>();
-        PlayerStatsSO playerStats = _playerStats.Deserialize();
+        PlayerStatsSO playerStats = _playerStats.Deserialize(stats);
         gameData.Initialize(playerStats, _maxWaveNumber, _currentWaveNumber);
         return gameData;
     }

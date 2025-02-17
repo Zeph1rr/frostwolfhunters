@@ -21,10 +21,9 @@ public class Menu : MonoBehaviour
     }
 
     public void LoadGame() {
-        _gameData.Initialize(SaveLoadSystem.LoadGame("test.json", _defaultGameData));
+        _gameData.Initialize(SaveLoadSystem.LoadGame("test.save", _defaultGameData, _playerStats));
         Debug.Log(_gameData.PlayerStats);
         _playerStats.Initialize(_gameData.PlayerStats);
-        _gameData.Initialize(_playerStats,_gameData.MaxWaveNumber, _gameData.CurrentWaveNumber);
         StartGame();
     }
 
