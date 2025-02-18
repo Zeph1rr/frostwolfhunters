@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
-using System;
+using System.Linq;
 
 public class MainMenu : MonoBehaviour
 {
@@ -31,6 +31,13 @@ public class MainMenu : MonoBehaviour
         _menu.SetActive(false);
         _playerName.SetActive(true);
         _playerNameInputField.text = $"Player{SaveLoadSystem.GetSaveFiles().Length + 1}";
+    }
+
+    public void ReturnToMenu()
+    {
+        _playerName.SetActive(false);
+        _saveSelector.SetActive(false);
+        _menu.SetActive(true);
     }
 
     public void ApplyPlayerName()
@@ -68,9 +75,17 @@ public class MainMenu : MonoBehaviour
     private void CreateLoadList()
     {
         string[] saveFiles = SaveLoadSystem.GetSaveFiles();
+        saveFiles = saveFiles
+            .OrderByDescending(file => File.GetLastWriteTime(file)) 
+            .ToArray();
+        GridLayoutGroup saveSelector = _saveSelector.GetComponentInChildren<GridLayoutGroup>();
+        foreach (Transform child in saveSelector.transform)
+        {
+            Destroy(child.gameObject);
+        }
         foreach(string filePath in saveFiles)
         {
-            GameObject newButton = Instantiate(_loadButtonPrefab, _saveSelector.transform);
+            GameObject newButton = Instantiate(_loadButtonPrefab, saveSelector.transform);
             newButton.name = Path.GetFileNameWithoutExtension(filePath);
 
             Button button = newButton.GetComponent<Button>();
