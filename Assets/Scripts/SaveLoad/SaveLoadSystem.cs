@@ -12,6 +12,11 @@ public class SaveLoadSystem
         }
     }
 
+    public static bool IsSaveExists(string playerName)
+    {
+        return File.Exists(Path.Combine(_saveDirectory, $"{playerName}.save"));
+    }
+
     public static void SaveGame(GameDataSerializable gameData, string saveFileName)
     {
         CreateSaveDirectory();
@@ -25,22 +30,33 @@ public class SaveLoadSystem
         Debug.Log($"Game saved to {saveFilePath}");
     }
 
-    public static List<string> GetSaveFiles()
+    public static string[] GetSaveFiles()
     {
         if (!Directory.Exists(_saveDirectory))
         {
             Debug.LogWarning("Save directory not found!");
-            return new List<string>();
+            return new string[0];
         }
 
-        string[] files = Directory.GetFiles(_saveDirectory, "*.save");
-        List<string> saveFileNames = new List<string>();
+        return Directory.GetFiles(_saveDirectory, "*.save");
+    }
 
-        foreach(string filePath in files)
+    public static string GetSaveFileLastWriteTime(string filePath)
+    {
+        if (File.Exists(filePath))
         {
-            saveFileNames.Add(Path.GetFileName(filePath));
+            return File.GetLastWriteTime(filePath).ToString("yyyy-MM-dd HH:mm:ss");
         }
-        return saveFileNames;
+        else
+        {
+            Debug.LogWarning($"File not found: {filePath}");
+            return "File not found";
+        }
+    }
+
+    public static string GetSaveFileName(string filePath)
+    {
+        return Path.GetFileName(filePath);
     }
 
     public static GameData LoadGame(string saveFileName, GameData defaultGameData, PlayerStatsSO stats)

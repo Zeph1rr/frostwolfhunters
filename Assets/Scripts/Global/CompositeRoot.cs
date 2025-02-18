@@ -43,7 +43,7 @@ public class CompositeRoot : MonoBehaviour
     private void SaveGame() {
         PlayerStatsSerializable playerStats = new PlayerStatsSerializable(_playerStats);
         GameDataSerializable gameData = new GameDataSerializable(_gameData, playerStats);
-        SaveLoadSystem.SaveGame(gameData, "test.save");
+        SaveLoadSystem.SaveGame(gameData, $"{_gameData.PlayerName}.save");
     }
 
     private void InitializePlayer()
