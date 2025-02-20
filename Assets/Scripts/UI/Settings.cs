@@ -6,6 +6,7 @@ using TMPro;
 public class Settings : MonoBehaviour
 {
     [SerializeField] private TMP_Dropdown _resolutionDropdown;
+    [SerializeField] private GameSettings _gameSettings;
     private Resolution[] _resolutions;
 
     private void Start()
@@ -33,12 +34,14 @@ public class Settings : MonoBehaviour
     public void SetFullscreen(bool isFullscreen)
     {
         Screen.fullScreen = isFullscreen;
+        _gameSettings.setFullscreen(isFullscreen);
     }
 
     public void SetResolution(int resolutionIndex)
     {
         Resolution resolution = _resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+        _gameSettings.SetResolution(resolutionIndex);
     }
 
     public void SaveSettings() 
