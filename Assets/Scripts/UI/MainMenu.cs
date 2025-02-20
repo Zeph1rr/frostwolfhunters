@@ -13,11 +13,12 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private PlayerStatsSO _playerStats;
     [SerializeField] private PlayerStatsSO _basePlayerStats;
 
-    [Header("UI prefabs")]
+    [Header("UI")]
     [SerializeField] private GameObject _menu;
     [SerializeField] private GameObject _saveSelector;
     [SerializeField] private GameObject _playerName;
     [SerializeField] private GameObject _loadButtonPrefab;
+    [SerializeField] private GameObject _settings;
     [SerializeField] private Button _loadButton;
     [SerializeField] private TMP_InputField _playerNameInputField;
 
@@ -37,7 +38,14 @@ public class MainMenu : MonoBehaviour
     {
         _playerName.SetActive(false);
         _saveSelector.SetActive(false);
+        _settings.SetActive(false);
         _menu.SetActive(true);
+    }
+
+    public void OpenSettings()
+    {
+        _menu.SetActive(false);
+        _settings.SetActive(true);
     }
 
     public void ApplyPlayerName()
