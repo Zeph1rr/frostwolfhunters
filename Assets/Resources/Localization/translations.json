@@ -1,0 +1,36 @@
+{
+    "languages": [
+        {
+            "language": "English",
+            "entries": [
+                { "key": "new_game", "value": "New Game" },
+                { "key": "load_game", "value": "Load Game" },
+                { "key": "settings", "value": "Settings" },
+                { "key": "quit", "value": "Quit" },
+                { "key": "language", "value": "Language" },
+                { "key": "resolution", "value": "Resolution" },
+                { "key": "volume", "value": "Volume" },
+                { "key": "fullscreen", "value": "Fullscreen" },
+                { "key": "hunter_name", "value": "Enter your hunter's name" },
+                { "key": "apply", "value": "Apply" },
+                { "key": "hunter", "value": "Hunter"}
+            ]
+        },
+        {
+            "language": "Русский",
+            "entries": [
+                { "key": "new_game", "value": "Новая игра" },
+                { "key": "load_game", "value": "Загрузить игру" },
+                { "key": "settings", "value": "Настройки" },
+                { "key": "quit", "value": "Выход" },
+                { "key": "language", "value": "Язык" },
+                { "key": "resolution", "value": "Разрешение экрана" },
+                { "key": "volume", "value": "Громкость" },
+                { "key": "fullscreen", "value": "Полноэкранный режим" },
+                { "key": "hunter_name", "value": "Введите имя вашего игрока" },
+                { "key": "apply", "value": "Принять" },
+                { "key": "hunter", "value": "Охотник"}
+            ]
+        }
+    ]
+}
