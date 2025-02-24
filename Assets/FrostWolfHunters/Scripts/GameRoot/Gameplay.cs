@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using System;
 using Cinemachine;
 
-public class CompositeRoot : MonoBehaviour
+public class Gameplay : MonoBehaviour, ISceeneRoot
 {
     [Header("GameData")]
     [SerializeField] private GameData _gameData;
@@ -28,7 +28,7 @@ public class CompositeRoot : MonoBehaviour
     private Player _playerInstance;
     private Wave _waveInstance;
 
-    private void Awake()
+    public void StartScene()
     {
         InitializePlayer();
         InitializeEnemy();
@@ -57,7 +57,7 @@ public class CompositeRoot : MonoBehaviour
         PlayerVisual playerVisual = _playerInstance.GetComponentInChildren<PlayerVisual>();
         if (playerVisual != null)
         {
-            playerVisual.Initialize(_playerInstance, _gameInput);
+            playerVisual.Initialize(_playerInstance);
         }
         _playerInstance.OnPlayerDied += HandlePlayerDie;
     }
@@ -89,7 +89,7 @@ public class CompositeRoot : MonoBehaviour
 
     private void HandleWaveEnd(object sender, EventArgs e) {
         SaveGame();
-        //NewWave();
+        // NewWave();
     }
 
     private void NewWave() {

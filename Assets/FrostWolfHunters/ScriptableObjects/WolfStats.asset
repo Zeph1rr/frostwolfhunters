@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d235f0cfb9b8af24f9b5a134b3ca1693, type: 3}
   m_Name: WolfStats
   m_EditorClassIdentifier: 
-  MaxHealth: 30
+  MaxHealth: 20
   CurrentHealth: 10
   Damage: 5
   AttackSpeed: 2

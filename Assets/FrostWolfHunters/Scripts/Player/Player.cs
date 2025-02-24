@@ -7,7 +7,13 @@ public class Player : MonoBehaviour
 {
 
     public event EventHandler OnPlayerDied;
+    public event EventHandler OnPlayerAttack;
     public event EventHandler<StatChangedArgs> OnHealthChanged;
+
+    [SerializeField] Weapon _weaponPrefab;
+    private Weapon _weapon;
+
+    public string WeaponName => _weapon.Name;
 
     private PlayerStatsSO _characterStats;
 
@@ -18,6 +24,8 @@ public class Player : MonoBehaviour
     private bool _isRunning = false;
     private bool _isDead = false;
     private Vector2 _movementVector;
+
+    private float _attackCooldownTimer = 0;
 
 
     public bool IsRunning() {
@@ -30,6 +38,9 @@ public class Player : MonoBehaviour
         _characterStats.CurrentHealth = _characterStats.MaxHealth;
         _characterStats.CurrentStamina = _characterStats.MaxStamina;
         _gameInput = gameInput;
+        _gameInput.OnAttackPressed += Attack;
+        _weapon = Instantiate(_weaponPrefab, transform);
+        _weapon.Initialize(this, _characterStats.Damage);
     }
 
     private void Start() {
@@ -45,6 +56,11 @@ public class Player : MonoBehaviour
 
     private void Update() {
         _movementVector = _gameInput.GetMovementVector();
+        Vector3 mousePos = _gameInput.GetMousePosition();
+        ChangeFacingDirection(transform.position, Camera.main.ScreenToWorldPoint(mousePos));
+        if (_attackCooldownTimer != 0) {
+            _attackCooldownTimer = Math.Max(_attackCooldownTimer - Time.deltaTime, 0);
+        }
     }
 
     private void FixedUpdate() {
@@ -59,16 +75,12 @@ public class Player : MonoBehaviour
     private void Die() {
         OnPlayerDied?.Invoke(this, EventArgs.Empty);
         _isDead = true;
+        _gameInput.OnAttackPressed -= Attack;
     }
 
     public void Move(Vector2 direction) {
         direction = direction.normalized;
         _rigidBody.MovePosition(_rigidBody.position + direction * (_characterStats.Speed * Time.deltaTime));
-    }
-
-    public Vector3 GetPlayerScreenPosition() {
-        Vector3 playerScreenPosition = Camera.main.WorldToScreenPoint(transform.position);
-        return playerScreenPosition;
     }
 
     public void TakeDamage(int damage) {
@@ -82,4 +94,17 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void Attack(object sender, EventArgs e) {
+        if (_attackCooldownTimer > 0) return;
+        OnPlayerAttack?.Invoke(this, EventArgs.Empty);
+        _attackCooldownTimer = _characterStats.AttackSpeed;
+    }
+
+    private void ChangeFacingDirection(Vector3 sourcePosition, Vector3 targetPosition) {
+        if (sourcePosition.x > targetPosition.x) {
+            transform.rotation = Quaternion.Euler(0, -180, 0);
+        } else {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+    }
 }

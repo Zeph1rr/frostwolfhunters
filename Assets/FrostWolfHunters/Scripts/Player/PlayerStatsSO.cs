@@ -1,6 +1,5 @@
 using UnityEngine;
 using System;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 
 [CreateAssetMenu(fileName = "BasePlayerStats", menuName = "Stats/PlayerStats")]
 public class PlayerStatsSO : ScriptableObject

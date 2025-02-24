@@ -1,9 +1,10 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UI : MonoBehaviour
 {
-    public void CloseGame() {
-        Debug.Log("quit game");
-        Application.Quit();
+    public void QuitScene() {
+        Debug.Log("quit scene");
+        SceneManager.LoadScene("Menu");
     }
 }

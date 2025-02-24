@@ -124,6 +124,7 @@ public abstract class Enemy : MonoBehaviour
     }
 
     public void TakeDamage(int damage) {
+        if (_isDead) return;
         _stats.TakeDamage(damage);
         OnTakeHit?.Invoke(this, EventArgs.Empty);
         if (_stats.CurrentHealth <= 0) {

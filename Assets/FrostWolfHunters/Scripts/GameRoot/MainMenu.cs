@@ -5,14 +5,13 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using System.Linq;
 
-public class MainMenu : MonoBehaviour
+public class MainMenu : MonoBehaviour, ISceeneRoot
 {
     [Header("Stats")]
     [SerializeField] private GameData _defaultGameData;
     [SerializeField] private GameData _gameData;
     [SerializeField] private PlayerStatsSO _playerStats;
     [SerializeField] private PlayerStatsSO _basePlayerStats;
-    [SerializeField] private GameSettings _gameSettings;
 
     [Header("UI")]
     [SerializeField] private GameObject _menu;
@@ -23,17 +22,19 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button _loadButton;
     [SerializeField] private TMP_InputField _playerNameInputField;
 
+    public void StartScene()
+    {
+        _menu.SetActive(true);
+        UpdateLocalizedText();
+        _defaultGameData.PlayerStats.Initialize(_basePlayerStats);
+        if (SaveLoadSystem.GetSaveFiles().Length == 0)
+        {
+            _loadButton.interactable = false;
+        }
+    }
 
     public void QuitGame() {
         Application.Quit();
-    }
-
-    private void UpdateLocalizedText()
-    {
-        foreach (var localizedText in FindObjectsByType<LocalizedText>(FindObjectsSortMode.None))
-        {
-            localizedText.UpdateText();
-        }
     }
 
     public void NewGameButton()
@@ -87,14 +88,14 @@ public class MainMenu : MonoBehaviour
 
     private void Awake()
     {
-        LocalizationSystem.SetLanguage(_gameSettings.Language);
-        Utils.SetResolution(_gameSettings.CurrentResolution);
-        Utils.SetFullScreen(_gameSettings.IsFullscreen);
-        UpdateLocalizedText();
-        _defaultGameData.PlayerStats.Initialize(_basePlayerStats);
-        if (SaveLoadSystem.GetSaveFiles().Length == 0)
+        
+    }
+
+    private void UpdateLocalizedText()
+    {
+        foreach (var localizedText in FindObjectsByType<LocalizedText>(FindObjectsSortMode.None))
         {
-            _loadButton.interactable = false;
+            localizedText.UpdateText();
         }
     }
 

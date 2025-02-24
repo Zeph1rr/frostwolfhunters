@@ -7,45 +7,38 @@ public class PlayerVisual : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
     private Player _player;
-    private GameInput _gameInput;
 
-    private bool _isPlayerDead = false;
+    private string _weaponName;
     
     private const string IS_RUNNING = "IsRunning";
     private const string IS_DEAD = "IsDead";
 
-    public void Initialize(Player player, GameInput gameInput) {
+    public void Initialize(Player player) {
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _player = player;
+        _weaponName = _player.WeaponName;
         _player.OnPlayerDied += HandleDie;
-        _gameInput = gameInput;
+        _player.OnPlayerAttack += HandleAttack;
     }
 
     private void OnDestroy() {
        _player.OnPlayerDied -= HandleDie;
+       _player.OnPlayerAttack -= HandleAttack;
     }
 
     private void Update() {
         _animator.SetBool(IS_RUNNING, _player.IsRunning());
-        if (!_isPlayerDead)
-            AdjustPlayerFacingDirection();
     }
 
-    private void AdjustPlayerFacingDirection() {
-        Vector3 mousePos = _gameInput.GetMousePosition();
-        Vector3 playerPosition = _player.GetPlayerScreenPosition();
-
-        if (mousePos.x < playerPosition.x) {
-            _spriteRenderer.flipX = true;
-        } else {
-            _spriteRenderer.flipX = false;
-        }
-    }
-
-    private void HandleDie(object sender, System.EventArgs e) {
+    private void HandleDie(object sender, System.EventArgs e)
+     {
         Debug.Log("Player is dead!");
         _animator.SetBool(IS_DEAD, true);
-        _isPlayerDead = true;
+    }
+
+    private void HandleAttack(object sender, System.EventArgs e)
+    {
+        _animator.SetTrigger($"{_weaponName.ToUpper()}_ATTACK");
     }
 }

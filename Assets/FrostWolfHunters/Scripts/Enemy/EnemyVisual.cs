@@ -5,7 +5,6 @@ public class EnemyVisual : MonoBehaviour
 {
     private Animator _animator;
     private Enemy _enemy;
-
     private const string ATTACK = "Attack";
     private const string IS_RUNNING = "IsRunning";
     private const string IS_DEAD = "IsDead";
