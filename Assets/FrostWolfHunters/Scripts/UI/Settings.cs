@@ -73,11 +73,6 @@ public class Settings : MonoBehaviour
 
     public void SaveSettings() 
     {
-        throw new NotImplementedException();
-    }
-
-    public void LoadSettings(int currentResolutionIndex)
-    {
-        throw new NotImplementedException();
+        SaveLoadSystem.SaveSettings(new SettingsSerializable(_gameSettings));
     }
 }

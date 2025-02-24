@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
@@ -136,6 +137,7 @@ public abstract class Enemy : MonoBehaviour
         OnDeath?.Invoke(this, EventArgs.Empty);
         _isDead = true;
         ChangeState(State.Dead);
+        StartCoroutine(DestroyEnemy());
     }
 
     public void PolygonColliderTurnOn() {
@@ -144,6 +146,12 @@ public abstract class Enemy : MonoBehaviour
 
     public void PolygonColliderTurnOff() {
         _attackCollider.enabled = false;
+    }
+
+    private IEnumerator DestroyEnemy()
+    {
+        yield return new WaitForSeconds(5f);
+        Destroy(gameObject);
     }
 
     private void ChangeFacingDirection(Vector3 sourcePosition, Vector3 targetPosition) {

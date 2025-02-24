@@ -375,6 +375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameSettings: {fileID: 11400000, guid: f1d94fff65e99064e813a20f91062a03, type: 2}
+  _defaultSettings: {fileID: 11400000, guid: de48c02d324f88843a3102c1dd3f55a5, type: 2}
   _sceneRoot: {fileID: 37729394}
 --- !u!4 &679107359
 Transform:

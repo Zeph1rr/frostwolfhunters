@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
@@ -6,6 +5,7 @@ using UnityEngine;
 public class SaveLoadSystem
 {
     private static string _saveDirectory = Path.Combine(Application.persistentDataPath, "save"); 
+    private static string _settingsFilePath = Path.Combine(Application.persistentDataPath, "settings.json");
     private static void CreateSaveDirectory() {
         if (!Directory.Exists(_saveDirectory)) {
             Directory.CreateDirectory(_saveDirectory);
@@ -75,5 +75,26 @@ public class SaveLoadSystem
             GameDataSerializable gameDataSerializable = (GameDataSerializable)formatter.Deserialize(fileStream);
             return gameDataSerializable.Deserialize(stats);
         }
+    }
+
+    public static void SaveSettings(SettingsSerializable settings)
+    {
+
+        string json = JsonUtility.ToJson(settings, true);
+        File.WriteAllText(_settingsFilePath, json);
+        Debug.Log($"Settings saved to {_settingsFilePath}");
+    }
+
+    public static GameSettings LoadSettings(GameSettings defaultGameSettings)
+    {
+        if (!File.Exists(_settingsFilePath)) {
+            Debug.LogWarning("Settings file not found! Returning default settings");
+            SaveSettings(new SettingsSerializable(defaultGameSettings));
+            return defaultGameSettings;
+        }
+        string json = File.ReadAllText(_settingsFilePath);
+        SettingsSerializable settings = JsonUtility.FromJson<SettingsSerializable>(json);
+        GameSettings gameSettings = settings.Desirialize();
+        return gameSettings;
     }
 }

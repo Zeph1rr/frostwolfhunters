@@ -14,11 +14,19 @@ public class GameSettings : ScriptableObject
     public float Volume => _volume;
     public string Language => _language;
 
-    public void Initialize(string currentResolution, bool isFullscreen, float volume)
+    public void Initialize(string currentResolution, bool isFullscreen, float volume, string language)
     {
         _currentResolution = currentResolution;
         _isFullscreen = isFullscreen;
         _volume = volume;
+        _language = language;
+    }
+
+    public void Initialize(GameSettings settings) {
+        _currentResolution = settings.CurrentResolution;
+        _isFullscreen = settings.IsFullscreen;
+        _volume = settings.Volume;
+        _language = settings.Language;
     }
 
     public void SetVolume(float value)
