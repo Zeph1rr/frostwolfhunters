@@ -89,7 +89,7 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
 
     private void HandleWaveEnd(object sender, EventArgs e) {
         SaveGame();
-        // NewWave();
+        NewWave();
     }
 
     private void NewWave() {

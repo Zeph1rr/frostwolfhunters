@@ -32,9 +32,9 @@ public class Weapon : MonoBehaviour
 
     private IEnumerator Attack()
     {
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.20f);
         _attackCollider.enabled = true;
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.15f);
         _attackCollider.enabled = false;
     }
 
