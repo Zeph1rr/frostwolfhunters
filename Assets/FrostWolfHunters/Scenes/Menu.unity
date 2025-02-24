@@ -3232,6 +3232,7 @@ MonoBehaviour:
   _resolutionDropdown: {fileID: 782464855}
   _gameSettings: {fileID: 11400000, guid: f1d94fff65e99064e813a20f91062a03, type: 2}
   _languagesDropdown: {fileID: 1096652430}
+  _fullscreenToggle: {fileID: 1062595263}
 --- !u!1 &977312828
 GameObject:
   m_ObjectHideFlags: 0

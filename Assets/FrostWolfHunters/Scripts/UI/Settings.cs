@@ -2,58 +2,62 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class Settings : MonoBehaviour
 {
     [SerializeField] private TMP_Dropdown _resolutionDropdown;
     [SerializeField] private GameSettings _gameSettings;
     [SerializeField] private TMP_Dropdown _languagesDropdown;
+    [SerializeField] private Toggle _fullscreenToggle;
     private Resolution[] _resolutions;
     private List<string> _languages;
 
     private void Start()
     {
-        LocalizationSystem.SetLanguage(_gameSettings.Language);
-        SetFullscreen(_gameSettings.IsFullscreen);
         List<string> resolutionOptions = new List<string>();
         _resolutions = Screen.resolutions;
-        SetResolution(_gameSettings.CurrentResolutionIndex);
         int currentResolutionIndex = 0;
+        string[] currentResolutionData = _gameSettings.CurrentResolution.Split('x');
 
         for (int i = 0; i < _resolutions.Length; i++)
         {
             string option = _resolutions[i].width + "x" + _resolutions[i].height;
             resolutionOptions.Add(option);
-            if (_resolutions[i].width == Screen.currentResolution.width && _resolutions[i].height == Screen.currentResolution.height)
+            
+            if (_resolutions[i].width == int.Parse(currentResolutionData[0]) && _resolutions[i].height == int.Parse(currentResolutionData[1]))
             {
+                Debug.Log(i);
                 currentResolutionIndex = i;
             }
         }
-
         _resolutionDropdown.ClearOptions();
         _resolutionDropdown.AddOptions(resolutionOptions);
         _resolutionDropdown.SetValueWithoutNotify(currentResolutionIndex);
         _resolutionDropdown.RefreshShownValue();
-
+        
         _languagesDropdown.ClearOptions();
         _languages = LocalizationSystem.GetAllKeys();
         _languagesDropdown.AddOptions(_languages);
         _languagesDropdown.SetValueWithoutNotify(_languages.FindIndex(a => a == _gameSettings.Language));
         _languagesDropdown.RefreshShownValue();
 
+        _fullscreenToggle.SetIsOnWithoutNotify(_gameSettings.IsFullscreen);
+
     }
 
     public void SetFullscreen(bool isFullscreen)
     {
-        Screen.fullScreen = isFullscreen;
+        Utils.SetFullScreen(isFullscreen);
         _gameSettings.setFullscreen(isFullscreen);
     }
 
     public void SetResolution(int resolutionIndex)
     {
         Resolution resolution = _resolutions[resolutionIndex];
-        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
-        _gameSettings.SetResolution(resolutionIndex);
+        string resolution_string = resolution.width + "x" + resolution.height;
+        Utils.SetResolution(resolution_string);
+        _gameSettings.SetResolution(resolution_string);
     }
 
     public void SetLanguage(int languageIndex)

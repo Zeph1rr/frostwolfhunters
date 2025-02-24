@@ -88,6 +88,8 @@ public class MainMenu : MonoBehaviour
     private void Awake()
     {
         LocalizationSystem.SetLanguage(_gameSettings.Language);
+        Utils.SetResolution(_gameSettings.CurrentResolution);
+        Utils.SetFullScreen(_gameSettings.IsFullscreen);
         UpdateLocalizedText();
         _defaultGameData.PlayerStats.Initialize(_basePlayerStats);
         if (SaveLoadSystem.GetSaveFiles().Length == 0)

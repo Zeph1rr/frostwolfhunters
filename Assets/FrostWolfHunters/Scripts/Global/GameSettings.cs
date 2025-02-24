@@ -4,19 +4,19 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Settings", menuName = "Game/Settings")]
 public class GameSettings : ScriptableObject
 {
-    [SerializeField] private int _currentResolutionIndex;
+    [SerializeField] private string _currentResolution;
     [SerializeField] private bool _isFullscreen;
     [SerializeField][Range(0,1)] private float _volume;
     [SerializeField] private string _language;
 
-    public int CurrentResolutionIndex => _currentResolutionIndex;
+    public string CurrentResolution => _currentResolution;
     public bool IsFullscreen => _isFullscreen;
     public float Volume => _volume;
     public string Language => _language;
 
-    public void Initialize(int currentResolutionIndex, bool isFullscreen, float volume)
+    public void Initialize(string currentResolution, bool isFullscreen, float volume)
     {
-        _currentResolutionIndex = currentResolutionIndex;
+        _currentResolution = currentResolution;
         _isFullscreen = isFullscreen;
         _volume = volume;
     }
@@ -27,8 +27,8 @@ public class GameSettings : ScriptableObject
         _volume = value;
     }
 
-    public void SetResolution(int resolutionIndex) {
-        _currentResolutionIndex = resolutionIndex;
+    public void SetResolution(string resolution) {
+        _currentResolution = resolution;
     }
 
     public void setFullscreen(bool fullscreen)
