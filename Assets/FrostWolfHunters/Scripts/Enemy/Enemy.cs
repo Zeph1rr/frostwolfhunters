@@ -16,6 +16,7 @@ public abstract class Enemy : MonoBehaviour
     private Rigidbody2D _rigidBody;
     private PolygonCollider2D _attackCollider;
     private float _attackCooldownTimer = 0f;
+    private bool _isPlayerDied = false;
 
     private bool _isRunning = false;
     public bool IsRunning => _isRunning;
@@ -37,7 +38,7 @@ public abstract class Enemy : MonoBehaviour
     private State _currentState = State.Chasing;
 
     public void TogglePause() {
-        if (_currentState == State.Idle) 
+        if (_currentState == State.Idle && !_isPlayerDied) 
         {
             ChangeState(State.Chasing);
         } else {
@@ -63,6 +64,7 @@ public abstract class Enemy : MonoBehaviour
     private void HandlePlayerDie(object sender, EventArgs e) {
         _isRunning = false;
         ChangeState(State.Idle);
+        _isPlayerDied = true;
     }
 
     private void Update() {
