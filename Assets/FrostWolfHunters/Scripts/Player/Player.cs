@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
 {
 
     public event EventHandler OnPlayerDied;
-    public event EventHandler OnPlayerAttack;
+    public event EventHandler<float> OnPlayerAttack;
     public event EventHandler<StatChangedArgs> OnHealthChanged;
 
     [SerializeField] Weapon _weaponPrefab;
@@ -66,7 +66,7 @@ public class Player : MonoBehaviour
 
     private void Update() 
     {
-        if (_isPaused) return;
+        if (_isPaused || _isDead) return;
         _movementVector = _gameInput.GetMovementVector();
         Vector3 mousePos = _gameInput.GetMousePosition();
         ChangeFacingDirection(transform.position, Camera.main.ScreenToWorldPoint(mousePos));
@@ -77,7 +77,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_isPaused) return;
+        if (_isPaused || _isDead) return;
         if (Mathf.Abs(_movementVector.x) > _minMovingSpeed || Mathf.Abs(_movementVector.y) > _minMovingSpeed) {
             _isRunning = true;
             Move(_movementVector);
@@ -115,7 +115,7 @@ public class Player : MonoBehaviour
     {
         if (_isPaused) return;
         if (_attackCooldownTimer > 0) return;
-        OnPlayerAttack?.Invoke(this, EventArgs.Empty);
+        OnPlayerAttack?.Invoke(this, _characterStats.AttackSpeed);
         _attackCooldownTimer = _characterStats.AttackSpeed;
     }
 

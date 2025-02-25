@@ -37,7 +37,7 @@ public class PlayerVisual : MonoBehaviour
         _animator.SetBool(IS_DEAD, true);
     }
 
-    private void HandleAttack(object sender, System.EventArgs e)
+    private void HandleAttack(object sender, float AttackSpeed)
     {
         _animator.SetTrigger($"{_weaponName.ToUpper()}_ATTACK");
     }

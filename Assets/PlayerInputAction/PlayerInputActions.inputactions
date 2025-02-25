@@ -22,15 +22,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Pause",
-                    "type": "Button",
-                    "id": "e8e3906a-b1b1-48e5-88eb-0abc4ee0bc77",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -99,15 +90,32 @@
                     "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
+                }
+            ]
+        },
+        {
+            "name": "Global",
+            "id": "3f9a5cfe-dd16-4eb6-8838-86a05fa178e6",
+            "actions": [
+                {
+                    "name": "Escape",
+                    "type": "Button",
+                    "id": "1b6a3265-f6de-4acc-a7c8-49ab98385088",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
                 {
                     "name": "",
-                    "id": "bfae99fe-4516-4fa8-be3b-245aa76b074b",
+                    "id": "4e6ca553-9d81-462f-bf6d-2dc86f55af75",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Player",
-                    "action": "Pause",
+                    "groups": "",
+                    "action": "Escape",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

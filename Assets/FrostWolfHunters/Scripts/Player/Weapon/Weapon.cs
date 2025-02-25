@@ -25,7 +25,7 @@ public class Weapon : MonoBehaviour
         _player.OnPlayerAttack -= HandlePlayerAttack;        
     }
 
-    private void HandlePlayerAttack(object sender, EventArgs damage)
+    private void HandlePlayerAttack(object sender, float attackSpeed)
     {
         StartCoroutine(Attack());
     }

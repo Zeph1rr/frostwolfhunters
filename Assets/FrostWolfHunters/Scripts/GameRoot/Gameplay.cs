@@ -101,7 +101,7 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
     {
         GameObject uiInstance = Instantiate(_uiPrefab, Vector3.zero, Quaternion.identity);
         UI ui = uiInstance.GetComponent<UI>();
-        ui.Initialize(_gameInput);
+        ui.Initialize(_gameInput, _playerInstance);
         HealthBar healthBar = uiInstance.GetComponentInChildren<HealthBar>();
         // Проверим, что у нас есть ссылки на UI-элементы
         if (healthBar != null)

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System.Linq;
+using UnityEngine.InputSystem;
 
 public class MainMenu : MonoBehaviour, ISceeneRoot
 {
@@ -21,9 +22,13 @@ public class MainMenu : MonoBehaviour, ISceeneRoot
     [SerializeField] private GameObject _settings;
     [SerializeField] private Button _loadButton;
     [SerializeField] private TMP_InputField _playerNameInputField;
+    private PlayerInputActions _playerInput;
 
     public void StartScene()
     {
+        _playerInput = new PlayerInputActions();
+        _playerInput.Enable();
+        _playerInput.Global.Escape.performed += Escape_performed;
         _menu.SetActive(true);
         UpdateLocalizedText();
         _defaultGameData.PlayerStats.Initialize(_basePlayerStats);
@@ -44,6 +49,11 @@ public class MainMenu : MonoBehaviour, ISceeneRoot
         _playerName.SetActive(true);
         _playerNameInputField.text = $"{LocalizationSystem.Translate("hunter")}{SaveLoadSystem.GetSaveFiles().Length + 1}";
         
+    }
+
+    public void Escape_performed(InputAction.CallbackContext context)
+    {
+        ReturnToMenu();
     }
 
     public void ReturnToMenu()
@@ -86,9 +96,9 @@ public class MainMenu : MonoBehaviour, ISceeneRoot
         UpdateLocalizedText();
     }
 
-    private void Awake()
+    private void OnDestroy()
     {
-        
+        _playerInput.Disable();
     }
 
     private void UpdateLocalizedText()

@@ -14,7 +14,7 @@ public class GameInput : MonoBehaviour
         _playerInputActions.Enable();
         
         _playerInputActions.Player.Attack.performed += Attack_performed;
-        _playerInputActions.Player.Pause.performed += Pause_performed;
+        _playerInputActions.Global.Escape.performed += Pause_performed;
     }
 
     private void Attack_performed(InputAction.CallbackContext context) {
