@@ -36,6 +36,15 @@ public abstract class Enemy : MonoBehaviour
 
     private State _currentState = State.Chasing;
 
+    public void TogglePause() {
+        if (_currentState == State.Idle) 
+        {
+            ChangeState(State.Chasing);
+        } else {
+            ChangeState(State.Idle);
+        }
+    }
+
     public virtual void Initialize(Player player) {
         _rigidBody = GetComponent<Rigidbody2D>();
         _attackCollider = GetComponent<PolygonCollider2D>();

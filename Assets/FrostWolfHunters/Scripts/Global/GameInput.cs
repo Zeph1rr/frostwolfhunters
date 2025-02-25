@@ -5,6 +5,7 @@ using System;
 public class GameInput : MonoBehaviour
 {
     public event EventHandler OnAttackPressed;
+    public event EventHandler OnPausePressed;
     private PlayerInputActions _playerInputActions;
  
     public void Initialize()
@@ -13,10 +14,21 @@ public class GameInput : MonoBehaviour
         _playerInputActions.Enable();
         
         _playerInputActions.Player.Attack.performed += Attack_performed;
+        _playerInputActions.Player.Pause.performed += Pause_performed;
     }
 
     private void Attack_performed(InputAction.CallbackContext context) {
         OnAttackPressed?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void Pause_performed(InputAction.CallbackContext context) 
+    {
+        OnPausePressed?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void Unpause()
+    {
+        OnPausePressed?.Invoke(this, EventArgs.Empty);
     }
 
     private void HandlePlayerDeath(object sender, EventArgs e) {

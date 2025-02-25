@@ -65,7 +65,7 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
     private void InitializeEnemy() 
     {
         _waveInstance = Instantiate(_wave, new Vector3(0, 0, 0), Quaternion.identity);
-        _waveInstance.Initialize(_enemyPrefabs, _playerInstance, _waveMultiplier, _gameData);
+        _waveInstance.Initialize(_enemyPrefabs, _playerInstance, _waveMultiplier, _gameData, _gameInput);
         _waveInstance.OnWaveEnd += HandleWaveEnd;
         _waveInstance.StartWave();
     }
@@ -100,6 +100,8 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
      private void InitializeUI()
     {
         GameObject uiInstance = Instantiate(_uiPrefab, Vector3.zero, Quaternion.identity);
+        UI ui = uiInstance.GetComponent<UI>();
+        ui.Initialize(_gameInput);
         HealthBar healthBar = uiInstance.GetComponentInChildren<HealthBar>();
         // Проверим, что у нас есть ссылки на UI-элементы
         if (healthBar != null)

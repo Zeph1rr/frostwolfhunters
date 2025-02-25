@@ -23,27 +23,32 @@ public class Player : MonoBehaviour
     private float _minMovingSpeed = 0.1f;
     private bool _isRunning = false;
     private bool _isDead = false;
+    private bool _isPaused = false;
     private Vector2 _movementVector;
 
     private float _attackCooldownTimer = 0;
 
 
-    public bool IsRunning() {
+    public bool IsRunning() 
+    {
         return _isRunning;
     }
 
-    public void Initialize(PlayerStatsSO stats, GameInput gameInput) {
+    public void Initialize(PlayerStatsSO stats, GameInput gameInput) 
+    {
         _rigidBody = GetComponent<Rigidbody2D>();
         _characterStats = stats;
         _characterStats.CurrentHealth = _characterStats.MaxHealth;
         _characterStats.CurrentStamina = _characterStats.MaxStamina;
         _gameInput = gameInput;
         _gameInput.OnAttackPressed += Attack;
+        _gameInput.OnPausePressed += TogglePause;
         _weapon = Instantiate(_weaponPrefab, transform);
         _weapon.Initialize(this, _characterStats.Damage);
     }
 
-    private void Start() {
+    private void Start() 
+    {
         OnHealthChanged?.Invoke(
                 this, 
                 new StatChangedArgs(
@@ -54,7 +59,14 @@ public class Player : MonoBehaviour
             );
     }
 
-    private void Update() {
+    private void TogglePause(object sender, EventArgs e)
+    {
+        _isPaused = !_isPaused;
+    }
+
+    private void Update() 
+    {
+        if (_isPaused) return;
         _movementVector = _gameInput.GetMovementVector();
         Vector3 mousePos = _gameInput.GetMousePosition();
         ChangeFacingDirection(transform.position, Camera.main.ScreenToWorldPoint(mousePos));
@@ -63,7 +75,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
+        if (_isPaused) return;
         if (Mathf.Abs(_movementVector.x) > _minMovingSpeed || Mathf.Abs(_movementVector.y) > _minMovingSpeed) {
             _isRunning = true;
             Move(_movementVector);
@@ -72,18 +86,21 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void Die() {
+    private void Die() 
+    {
         OnPlayerDied?.Invoke(this, EventArgs.Empty);
         _isDead = true;
         _gameInput.OnAttackPressed -= Attack;
     }
 
-    public void Move(Vector2 direction) {
+    public void Move(Vector2 direction) 
+    {
         direction = direction.normalized;
         _rigidBody.MovePosition(_rigidBody.position + direction * (_characterStats.Speed * Time.deltaTime));
     }
 
-    public void TakeDamage(int damage) {
+    public void TakeDamage(int damage) 
+    {
         if (!_isDead)
         {
             _characterStats.TakeDamage(damage);
@@ -94,13 +111,16 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void Attack(object sender, EventArgs e) {
+    private void Attack(object sender, EventArgs e) 
+    {
+        if (_isPaused) return;
         if (_attackCooldownTimer > 0) return;
         OnPlayerAttack?.Invoke(this, EventArgs.Empty);
         _attackCooldownTimer = _characterStats.AttackSpeed;
     }
 
-    private void ChangeFacingDirection(Vector3 sourcePosition, Vector3 targetPosition) {
+    private void ChangeFacingDirection(Vector3 sourcePosition, Vector3 targetPosition) 
+    {
         if (sourcePosition.x > targetPosition.x) {
             transform.rotation = Quaternion.Euler(0, -180, 0);
         } else {
