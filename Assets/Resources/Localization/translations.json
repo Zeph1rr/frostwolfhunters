@@ -13,7 +13,10 @@
                 { "key": "fullscreen", "value": "Fullscreen" },
                 { "key": "hunter_name", "value": "Enter your hunter's name" },
                 { "key": "apply", "value": "Apply" },
-                { "key": "hunter", "value": "Hunter"}
+                { "key": "hunter", "value": "Hunter"},
+                { "key": "current_wave", "value": "Current wave"},
+                { "key": "max_wave", "value": "Best wave"},
+                { "key": "play", "value": "Play"}
             ]
         },
         {
@@ -27,9 +30,12 @@
                 { "key": "resolution", "value": "Разрешение экрана" },
                 { "key": "volume", "value": "Громкость" },
                 { "key": "fullscreen", "value": "Полноэкранный режим" },
-                { "key": "hunter_name", "value": "Введите имя вашего игрока" },
+                { "key": "hunter_name", "value": "Введите имя вашего охотника" },
                 { "key": "apply", "value": "Принять" },
-                { "key": "hunter", "value": "Охотник"}
+                { "key": "hunter", "value": "Охотник"},
+                { "key": "current_wave", "value": "Текущая волна"},
+                { "key": "max_wave", "value": "Рекорд"},
+                { "key": "play", "value": "Вернуться"}
             ]
         }
     ]

@@ -822,6 +822,7 @@ GameObject:
   - component: {fileID: 1319370452278814727}
   - component: {fileID: 6625199039211280885}
   - component: {fileID: 5374520539731579185}
+  - component: {fileID: 2367475461044772408}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -947,6 +948,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2367475461044772408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4021283823575730016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1daeaa07c6bdfde408c16f3eee6c9dba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _key: play
 --- !u!1 &4368840747936584872
 GameObject:
   m_ObjectHideFlags: 0
@@ -1331,6 +1345,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _pauseMenu: {fileID: 5690621352652197042}
   _cooldownImage: {fileID: 6732237912309725517}
+  _currentWaveText: {fileID: 365279397212769860}
+  _maxWaveText: {fileID: 5202603118489752745}
 --- !u!1 &7245985077034771729
 GameObject:
   m_ObjectHideFlags: 0
@@ -1430,6 +1446,7 @@ GameObject:
   - component: {fileID: 4421286558898795772}
   - component: {fileID: 8311316490074815670}
   - component: {fileID: 2269451189466073618}
+  - component: {fileID: 1501861589399414160}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -1484,7 +1501,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Exit
+  m_text: Quit
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1517,7 +1534,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -1555,6 +1572,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1501861589399414160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7267645611242017600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1daeaa07c6bdfde408c16f3eee6c9dba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _key: quit
 --- !u!1 &7864731173587373370
 GameObject:
   m_ObjectHideFlags: 0
