@@ -62,6 +62,7 @@ public class Player : MonoBehaviour
     private void TogglePause(object sender, EventArgs e)
     {
         _isPaused = !_isPaused;
+        _isRunning = false;
     }
 
     private void Update() 
