@@ -31,15 +31,12 @@ public class GameInput : MonoBehaviour
         OnPausePressed?.Invoke(this, EventArgs.Empty);
     }
 
-    private void HandlePlayerDeath(object sender, EventArgs e) {
-        _playerInputActions.Disable();
-    }
-
     private void OnDisable()
     {
         // Отключаем контролы
         _playerInputActions.Disable();
         _playerInputActions.Player.Attack.performed -= Attack_performed;
+        _playerInputActions.Global.Escape.performed -= Pause_performed;
     }
 
     public Vector2 GetMovementVector() {

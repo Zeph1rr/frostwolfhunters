@@ -37,12 +37,12 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
     }
 
     private void OnDisable() {
-        _playerInstance.OnPlayerDied -= HandlePlayerDie;
+        //_playerInstance.OnPlayerDied -= HandlePlayerDie;
     }
 
     private void SaveGame() {
-        PlayerStatsSerializable playerStats = new PlayerStatsSerializable(_playerStats);
-        GameDataSerializable gameData = new GameDataSerializable(_gameData, playerStats);
+        PlayerStatsSerializable playerStats = new(_playerStats);
+        GameDataSerializable gameData = new(_gameData, playerStats);
         SaveLoadSystem.SaveGame(gameData, $"{_gameData.PlayerName}.save");
     }
 
@@ -59,7 +59,7 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
         {
             playerVisual.Initialize(_playerInstance);
         }
-        _playerInstance.OnPlayerDied += HandlePlayerDie;
+        //_playerInstance.OnPlayerDied += HandlePlayerDie;
     }
 
     private void InitializeEnemy() 

@@ -127,7 +127,6 @@ public abstract class Enemy : MonoBehaviour
     private void Attack() {
         if (_attackCooldownTimer <= 0)
         {
-            Debug.Log("attack");
             _attackCooldownTimer = _stats.AttackSpeed;
             OnAttack?.Invoke(this, EventArgs.Empty);
         }
