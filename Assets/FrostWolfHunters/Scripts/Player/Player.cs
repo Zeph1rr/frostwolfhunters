@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 
     public event EventHandler OnPlayerDied;
     public event EventHandler<float> OnPlayerAttack;
-    public event EventHandler<StatChangedArgs> OnHealthChanged;
+    
 
     [SerializeField] Weapon _weaponPrefab;
     private Weapon _weapon;
@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
 
     private Rigidbody2D _rigidBody;
     private GameInput _gameInput;
+    private Gameplay _compositeRoot;
 
     private float _minMovingSpeed = 0.1f;
     private bool _isRunning = false;
@@ -34,35 +35,30 @@ public class Player : MonoBehaviour
         return _isRunning;
     }
 
-    public void Initialize(PlayerStatsSO stats, GameInput gameInput) 
+    public void Initialize(PlayerStatsSO stats, GameInput gameInput, Gameplay compositeRoot) 
     {
         _rigidBody = GetComponent<Rigidbody2D>();
         _characterStats = stats;
         _characterStats.CurrentHealth = _characterStats.MaxHealth;
         _characterStats.CurrentStamina = _characterStats.MaxStamina;
         _gameInput = gameInput;
-        _gameInput.OnAttackPressed += Attack;
-        _gameInput.OnPausePressed += TogglePause;
+        _gameInput.OnAttackPressed += Attack; 
+        _compositeRoot = compositeRoot;
+        _compositeRoot.OnPausePressed += TogglePause;
         _weapon = Instantiate(_weaponPrefab, transform);
         _weapon.Initialize(this, _characterStats.Damage);
-    }
-
-    private void Start() 
-    {
-        OnHealthChanged?.Invoke(
-                this, 
-                new StatChangedArgs(
-                    _characterStats.CurrentHealth,
-                    _characterStats.CurrentHealth, 
-                    _characterStats.MaxHealth
-                    )
-            );
     }
 
     private void TogglePause(object sender, EventArgs e)
     {
         _isPaused = !_isPaused;
         _isRunning = false;
+    }
+
+    private void OnDestroy()
+    {
+        _gameInput.OnAttackPressed -= Attack;
+        _compositeRoot.OnPausePressed -= TogglePause;
     }
 
     private void Update() 
@@ -116,6 +112,7 @@ public class Player : MonoBehaviour
     {
         if (_isPaused) return;
         if (_attackCooldownTimer > 0) return;
+        if (!_characterStats.UseStamina(10)) return;
         OnPlayerAttack?.Invoke(this, _characterStats.AttackSpeed);
         _attackCooldownTimer = _characterStats.AttackSpeed;
     }

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Wave : MonoBehaviour
 {
@@ -14,20 +13,20 @@ public class Wave : MonoBehaviour
     private List<Enemy> _enemyPrefabs;
     private Player _player;
     private List<Enemy> _spawnedEnemies = new List<Enemy>();
-    private GameInput _gameInput;
+    private Gameplay _compositeRoot;
 
     private int GetThreatLimit() => _waveMultiplier * _waveNumber;
 
     // Инициализация через метод Initialize
-    public void Initialize(List<Enemy> enemyPrefabs, Player player, int waveMultiplier, GameData gameData, GameInput gameInput)
+    public void Initialize(List<Enemy> enemyPrefabs, Player player, int waveMultiplier, GameData gameData, Gameplay compositeRoot)
     {
         _enemyPrefabs = enemyPrefabs;
         _player = player;
         _gameData = gameData;
         _waveNumber = _gameData.CurrentWaveNumber;
         _waveMultiplier = waveMultiplier;
-        _gameInput = gameInput;
-        _gameInput.OnPausePressed += HandlePause;
+        _compositeRoot = compositeRoot;
+        _compositeRoot.OnPausePressed += HandlePause;
     }
 
     public void StartWave()
@@ -84,7 +83,7 @@ public class Wave : MonoBehaviour
 
     private void OnDestroy()
     {
-        _gameInput.OnPausePressed -= HandlePause;
+        _compositeRoot.OnPausePressed -= HandlePause;
     }
 
     private Enemy GetRandomBoss(int maxThreat)

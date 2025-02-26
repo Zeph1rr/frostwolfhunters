@@ -5,6 +5,7 @@ using System;
 public class PlayerStatsSO : ScriptableObject
 {
     public event EventHandler<StatChangedArgs> OnHealthChanged;
+    public event EventHandler<StatChangedArgs> OnStaminaChanged;
     public int MaxHealth;
     public int CurrentHealth;
     public int MaxStamina;
@@ -43,9 +44,25 @@ public class PlayerStatsSO : ScriptableObject
         {
             throw new ArgumentOutOfRangeException("Damage cannot be negative");
         }
+        int beforeHealth = CurrentHealth;
         CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
-        OnHealthChanged?.Invoke(this, new StatChangedArgs(CurrentHealth - damage, CurrentHealth, MaxHealth));
+        OnHealthChanged?.Invoke(this, new StatChangedArgs(beforeHealth, CurrentHealth, MaxHealth));
         Debug.Log("Current health: " + CurrentHealth);
+    }
+
+    public bool UseStamina(int stamina) {
+        if (stamina < 0) {
+            throw new ArgumentOutOfRangeException("Stamina cannot be negative");
+        }
+        if (CurrentStamina - stamina < 0) {
+            Debug.LogWarning("Not enough stamina!");
+            return false;
+        }
+        int beforeStamina = CurrentStamina;
+        CurrentStamina -= stamina;
+        OnStaminaChanged?.Invoke(this, new StatChangedArgs(beforeStamina, CurrentStamina, MaxStamina));
+        Debug.Log("Current stamina: " + CurrentStamina);
+        return true;
     }
 }
 

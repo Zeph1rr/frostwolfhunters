@@ -26,11 +26,6 @@ public class GameInput : MonoBehaviour
         OnPausePressed?.Invoke(this, EventArgs.Empty);
     }
 
-    public void Unpause()
-    {
-        OnPausePressed?.Invoke(this, EventArgs.Empty);
-    }
-
     private void OnDisable()
     {
         // Отключаем контролы

@@ -16,7 +16,10 @@
                 { "key": "hunter", "value": "Hunter"},
                 { "key": "current_wave", "value": "Current wave"},
                 { "key": "max_wave", "value": "Best wave"},
-                { "key": "play", "value": "Play"}
+                { "key": "play", "value": "Play"},
+                { "key": "next_wave", "value": "Next wave"},
+                { "key": "wave_win", "value": "Wave passed!"},
+                { "key": "pause", "value": "Pause"}
             ]
         },
         {
@@ -35,7 +38,10 @@
                 { "key": "hunter", "value": "Охотник"},
                 { "key": "current_wave", "value": "Текущая волна"},
                 { "key": "max_wave", "value": "Рекорд"},
-                { "key": "play", "value": "Вернуться"}
+                { "key": "play", "value": "Вернуться"},
+                { "key": "next_wave", "value": "Следующая волна"},
+                { "key": "wave_win", "value": "Волна пройдена!"},
+                { "key": "pause", "value": "Пауза"}
             ]
         }
     ]

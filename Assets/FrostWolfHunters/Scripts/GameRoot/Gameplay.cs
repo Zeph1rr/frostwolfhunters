@@ -25,8 +25,11 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
     [Header("Camera")]
     [SerializeField] private CinemachineVirtualCamera _cinemachineCamera;
 
+    public event EventHandler OnPausePressed;
+
     private Player _playerInstance;
     private Wave _waveInstance;
+    private GameplayUI _uiInstance;
 
     public void StartScene()
     {
@@ -36,8 +39,16 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
         InitializeCamera();
     }
 
-    private void OnDisable() {
-        //_playerInstance.OnPlayerDied -= HandlePlayerDie;
+    public void Unpause()
+    {
+        OnPausePressed?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void OnDestroy()
+    {
+        _uiInstance.OnNewWavePressed -= HandleNewWavePressed;
+        _gameInput.OnPausePressed -= HandlePausePressed;
+        _waveInstance.OnWaveEnd -= HandleWaveEnd;
     }
 
     private void SaveGame() {
@@ -50,8 +61,9 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
     {
         
         _gameInput.Initialize();
+        _gameInput.OnPausePressed += HandlePausePressed;
         _playerInstance = Instantiate(_playerPrefab, Vector3.zero, Quaternion.identity);
-        _playerInstance.Initialize(_playerStats, _gameInput);
+        _playerInstance.Initialize(_playerStats, _gameInput, this);
 
         // Передаем Player в PlayerVisual
         PlayerVisual playerVisual = _playerInstance.GetComponentInChildren<PlayerVisual>();
@@ -65,7 +77,7 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
     private void InitializeEnemy() 
     {
         _waveInstance = Instantiate(_wave, new Vector3(0, 0, 0), Quaternion.identity);
-        _waveInstance.Initialize(_enemyPrefabs, _playerInstance, _waveMultiplier, _gameData, _gameInput);
+        _waveInstance.Initialize(_enemyPrefabs, _playerInstance, _waveMultiplier, _gameData, this);
         _waveInstance.OnWaveEnd += HandleWaveEnd;
         _waveInstance.StartWave();
     }
@@ -89,7 +101,8 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
 
     private void HandleWaveEnd(object sender, EventArgs e) {
         SaveGame();
-        NewWave();
+        OnPausePressed?.Invoke(this, EventArgs.Empty);
+        _uiInstance.ShowWinMenu();
     }
 
     private void NewWave() {
@@ -97,24 +110,36 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-     private void InitializeUI()
+    private void InitializeUI()
     {
         GameObject uiInstance = Instantiate(_uiPrefab, Vector3.zero, Quaternion.identity);
-        UI ui = uiInstance.GetComponent<UI>();
-        ui.Initialize(_gameInput, _playerInstance, _gameData);
+        _uiInstance = uiInstance.GetComponent<GameplayUI>();
+        _uiInstance.Initialize(this, _playerInstance, _gameData);
         HealthBar healthBar = uiInstance.GetComponentInChildren<HealthBar>();
-        // Проверим, что у нас есть ссылки на UI-элементы
-        if (healthBar != null)
+        StaminaBar staminaBar = uiInstance.GetComponentInChildren<StaminaBar>();
+        if (staminaBar != null && healthBar != null)
         {
             healthBar.Initialize(_playerStats);
+            staminaBar.Initialize(_playerStats);
         }
         else
         {
             Debug.LogError("UI elements are not assigned.");
         }
+        _uiInstance.OnNewWavePressed += HandleNewWavePressed;
     }
 
     private void HandlePlayerDie(object sender, EventArgs e) {
         _gameInput.enabled = false;
+    }
+
+    private void HandleNewWavePressed(object sender, EventArgs e)
+    {
+        NewWave();
+    }
+
+    private void HandlePausePressed(object sender, EventArgs e) 
+    {
+        OnPausePressed?.Invoke(this, EventArgs.Empty);
     }
 }
