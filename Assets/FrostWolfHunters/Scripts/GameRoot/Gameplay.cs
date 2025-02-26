@@ -71,7 +71,7 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
         {
             playerVisual.Initialize(_playerInstance);
         }
-        //_playerInstance.OnPlayerDied += HandlePlayerDie;
+        _playerInstance.OnPlayerDied += HandlePlayerDie;
     }
 
     private void InitializeEnemy() 
@@ -130,7 +130,8 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
     }
 
     private void HandlePlayerDie(object sender, EventArgs e) {
-        _gameInput.enabled = false;
+        OnPausePressed?.Invoke(this, EventArgs.Empty);
+        _uiInstance.ShowLoseMenu();
     }
 
     private void HandleNewWavePressed(object sender, EventArgs e)

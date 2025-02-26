@@ -16,6 +16,7 @@ public class GameplayUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _maxWaveText;
     [SerializeField] private Image _weaponImage;
     [SerializeField] private GameObject _winMenu;
+    [SerializeField] private GameObject _loseMenu;
     
     private GameData _gameData;
     private float _attackCooldown;
@@ -87,5 +88,12 @@ public class GameplayUI : MonoBehaviour
         _pauseMenu.SetActive(false);
         _compositeRoot.OnPausePressed -= HandlePause;
         _winMenu.SetActive(true);
+    }
+
+    public void ShowLoseMenu()
+    {
+        _pauseMenu.SetActive(false);
+        _compositeRoot.OnPausePressed -= HandlePause;
+        _loseMenu.SetActive(true);
     }
 }

@@ -112,7 +112,7 @@ public class Player : MonoBehaviour
     {
         if (_isPaused) return;
         if (_attackCooldownTimer > 0) return;
-        if (!_characterStats.UseStamina(10)) return;
+        if (!_characterStats.UseStamina(10)) Die();
         OnPlayerAttack?.Invoke(this, _characterStats.AttackSpeed);
         _attackCooldownTimer = _characterStats.AttackSpeed;
     }
