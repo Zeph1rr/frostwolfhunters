@@ -36,7 +36,7 @@ public class EnemyVisual : MonoBehaviour
         _enemy.OnDeath -= HandeDeath;
     }
     
-    private void HandleAttack(object sender, System.EventArgs e)
+    private void HandleAttack(object sender, int damage)
     {
        _animator.SetTrigger(ATTACK);
     }
@@ -56,15 +56,5 @@ public class EnemyVisual : MonoBehaviour
         _sprite.color = Color.red;
         yield return new WaitForSeconds(.4f);
         _sprite.color = Color.white;
-    }
-
-    public void AttackColliderTurnOff() 
-    {
-        _enemy.PolygonColliderTurnOff();
-    }
-
-    public void AttackColliderTurnOffOn() 
-    {
-        _enemy.PolygonColliderTurnOn();
     }
 }

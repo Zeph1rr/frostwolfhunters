@@ -113,6 +113,12 @@ public class Wave : MonoBehaviour
             enemyVisual.Initialize(newEnemy);
         }
 
+        EnemyMeleeAttack enemyAttack = newEnemy.GetComponentInChildren<EnemyMeleeAttack>();
+        if (enemyAttack != null)
+        {
+            enemyAttack.Initialize(newEnemy);
+        }
+
         _spawnedEnemies.Add(newEnemy); // Добавляем врага в список
     }
 

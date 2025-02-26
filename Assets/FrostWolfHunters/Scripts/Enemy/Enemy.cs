@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public abstract class Enemy : MonoBehaviour
+[RequireComponent(typeof(BoxCollider2D))]
+public class Enemy : MonoBehaviour
 {
     public event EventHandler OnTakeHit;
     public event EventHandler OnDeath;
-    public event EventHandler OnAttack;
+    public event EventHandler<int> OnAttack;
 
     [SerializeField] private EnemyStatsSo _initialStats;
     protected EnemyStatsSo _stats;
@@ -14,7 +15,6 @@ public abstract class Enemy : MonoBehaviour
     private Transform _target;
 
     private Rigidbody2D _rigidBody;
-    private PolygonCollider2D _attackCollider;
     private float _attackCooldownTimer = 0f;
     private bool _isPlayerDied = false;
 
@@ -48,7 +48,6 @@ public abstract class Enemy : MonoBehaviour
 
     public virtual void Initialize(Player player) {
         _rigidBody = GetComponent<Rigidbody2D>();
-        _attackCollider = GetComponent<PolygonCollider2D>();
 
         _player = player;
         _target = player.transform;
@@ -130,7 +129,7 @@ public abstract class Enemy : MonoBehaviour
         if (_attackCooldownTimer <= 0)
         {
             _attackCooldownTimer = _stats.AttackSpeed;
-            OnAttack?.Invoke(this, EventArgs.Empty);
+            OnAttack?.Invoke(this, _stats.Damage);
         }
     }
 
@@ -148,14 +147,6 @@ public abstract class Enemy : MonoBehaviour
         _isDead = true;
         ChangeState(State.Dead);
         StartCoroutine(DestroyEnemy());
-    }
-
-    public void PolygonColliderTurnOn() {
-        _attackCollider.enabled = true;
-    }
-
-    public void PolygonColliderTurnOff() {
-        _attackCollider.enabled = false;
     }
 
     private IEnumerator DestroyEnemy()
