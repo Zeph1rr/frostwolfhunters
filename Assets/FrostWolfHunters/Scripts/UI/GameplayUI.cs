@@ -19,7 +19,6 @@ public class GameplayUI : MonoBehaviour
     [SerializeField] private GameObject _winMenu;
     [SerializeField] private GameObject _loseMenu;
     [SerializeField] private GameObject _resourcePrefab;
-    [SerializeField] private GameObject _resourcesList;
     
     private GameData _gameData;
     private float _attackCooldown;
@@ -72,9 +71,9 @@ public class GameplayUI : MonoBehaviour
         }
     }
 
-    private void InitializeResources()
+    private void InitializeResources(GameObject menu)
     {
-        GridLayoutGroup resourcesContainer = _resourcesList.GetComponent<GridLayoutGroup>();
+        GridLayoutGroup resourcesContainer = menu.GetComponentInChildren<GridLayoutGroup>();
         foreach (Transform child in resourcesContainer.transform)
         {
             Destroy(child.gameObject);
@@ -102,7 +101,6 @@ public class GameplayUI : MonoBehaviour
     {
         OnNewWavePressed?.Invoke(this, EventArgs.Empty);
     }
-
     public void Play()
     {
         _compositeRoot.Unpause();
@@ -118,7 +116,7 @@ public class GameplayUI : MonoBehaviour
     {
         _pauseMenu.SetActive(false);
         _compositeRoot.OnPausePressed -= HandlePause;
-        InitializeResources();
+        InitializeResources(_winMenu);
         _winMenu.SetActive(true);
     }
 
@@ -126,6 +124,7 @@ public class GameplayUI : MonoBehaviour
     {
         _pauseMenu.SetActive(false);
         _compositeRoot.OnPausePressed -= HandlePause;
+        InitializeResources(_loseMenu);
         _loseMenu.SetActive(true);
     }
 }

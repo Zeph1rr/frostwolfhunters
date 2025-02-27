@@ -16,6 +16,7 @@ public class Wave : MonoBehaviour
     private Gameplay _compositeRoot;
 
     private ResourceStorage _resourceStorage = new();
+    public ResourceStorage ResourceStorage => _resourceStorage;
 
     private int GetThreatLimit() => _waveMultiplier * _waveNumber;
 

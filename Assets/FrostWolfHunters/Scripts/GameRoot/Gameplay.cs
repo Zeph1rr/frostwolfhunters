@@ -37,7 +37,6 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
         InitializeEnemy();
         InitializeUI();
         InitializeCamera();
-        _gameData.ResourceStorage.PrintResources();
     }
 
     public void Unpause()
@@ -132,7 +131,9 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
         _uiInstance.OnNewWavePressed += HandleNewWavePressed;
     }
 
-    private void HandlePlayerDie(object sender, EventArgs e) {
+    private void HandlePlayerDie(object sender, EventArgs e) {        
+        _waveInstance.ResourceStorage.DecreaseAll(0.85f);
+        _gameData.ResourceStorage.AddResources(_waveInstance.ResourceStorage.Resources);
         OnPausePressed?.Invoke(this, EventArgs.Empty);
         _uiInstance.ShowLoseMenu();
     }

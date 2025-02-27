@@ -50,6 +50,21 @@ public class ResourceStorage
         _resources[key] += value;
     }
 
+    public void DecreaseAll(float multyiplier)
+    {
+        foreach(string key in _resources.Keys.ToList())
+        {
+            if(!Enum.IsDefined(typeof(ResourceType), key))
+            {
+                Debug.LogWarning($"Unknown resource type: {key}");
+                continue;
+            }
+            if (_resources[key] == 0) return;
+            _resources[key] = Mathf.FloorToInt(_resources[key] * multyiplier);
+            Debug.Log($"{key}: {_resources[key]}");
+        }
+    }
+
     public bool TrySpendResources(Dictionary<string, int> resources)
     {
         Dictionary<string, int>temp_resources = _resources.ToDictionary(entry => entry.Key, entry => entry.Value);
