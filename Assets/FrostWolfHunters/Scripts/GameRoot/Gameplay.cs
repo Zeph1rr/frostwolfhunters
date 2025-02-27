@@ -47,8 +47,13 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
     private void OnDestroy()
     {
         _uiInstance.OnNewWavePressed -= HandleNewWavePressed;
+        _uiInstance.OnSceneQuit -= HandleSceneQuit;
+
         _gameInput.OnPausePressed -= HandlePausePressed;
+
         _waveInstance.OnWaveEnd -= HandleWaveEnd;
+
+        _playerInstance.OnPlayerDied -= HandlePlayerDie;
     }
 
     private void SaveGame() {
@@ -101,7 +106,7 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
 
     private void HandleWaveEnd(object sender, ResourceStorage resourceStorage) {
         resourceStorage.PrintResources();
-        _gameData.ResourceStorage.AddResources(resourceStorage.Resources);
+        _gameData.HuntResourceStorage.AddResources(resourceStorage.Resources);
         SaveGame();
         OnPausePressed?.Invoke(this, EventArgs.Empty);
         _uiInstance.ShowWinMenu();
@@ -116,7 +121,7 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
     {
         GameObject uiInstance = Instantiate(_uiPrefab, Vector3.zero, Quaternion.identity);
         _uiInstance = uiInstance.GetComponent<GameplayUI>();
-        _uiInstance.Initialize(this, _playerInstance, _gameData, _gameData.ResourceStorage);
+        _uiInstance.Initialize(this, _playerInstance, _gameData, _gameData.HuntResourceStorage);
         HealthBar healthBar = uiInstance.GetComponentInChildren<HealthBar>();
         StaminaBar staminaBar = uiInstance.GetComponentInChildren<StaminaBar>();
         if (staminaBar != null && healthBar != null)
@@ -129,11 +134,10 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
             Debug.LogError("UI elements are not assigned.");
         }
         _uiInstance.OnNewWavePressed += HandleNewWavePressed;
+        _uiInstance.OnSceneQuit += HandleSceneQuit;
     }
 
     private void HandlePlayerDie(object sender, EventArgs e) {        
-        _waveInstance.ResourceStorage.DecreaseAll(0.85f);
-        _gameData.ResourceStorage.AddResources(_waveInstance.ResourceStorage.Resources);
         OnPausePressed?.Invoke(this, EventArgs.Empty);
         _uiInstance.ShowLoseMenu();
     }
@@ -146,5 +150,16 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
     private void HandlePausePressed(object sender, EventArgs e) 
     {
         OnPausePressed?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void HandleSceneQuit(object sender, bool playerDied)
+    {
+        if (playerDied)
+        {
+            _gameData.HuntResourceStorage.AddResources(_waveInstance.ResourceStorage.Resources);
+            _gameData.HuntResourceStorage.DecreaseAll(0.85f);
+        }
+        _gameData.ResourceStorage.AddResources(_gameData.HuntResourceStorage.Resources);
+        SceneManager.LoadScene("Menu");
     }
 }

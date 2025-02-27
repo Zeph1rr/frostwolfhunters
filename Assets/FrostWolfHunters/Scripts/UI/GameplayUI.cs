@@ -1,15 +1,14 @@
 using System;
 using System.Collections;
-using Mono.Cecil;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
 public class GameplayUI : MonoBehaviour
 {
     public event EventHandler OnNewWavePressed;
+    public event EventHandler<bool> OnSceneQuit;
 
     [SerializeField] private GameObject _pauseMenu;
     [SerializeField] private Image _cooldownImage; 
@@ -106,10 +105,10 @@ public class GameplayUI : MonoBehaviour
         _compositeRoot.Unpause();
     }
 
-    public void QuitScene() 
+    public void QuitScene(bool playerDied) 
     {
         Debug.Log("quit scene");
-        SceneManager.LoadScene("Menu");
+        OnSceneQuit?.Invoke(this, playerDied);
     }
 
     public void ShowWinMenu()

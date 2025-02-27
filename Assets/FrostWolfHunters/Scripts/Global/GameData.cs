@@ -1,3 +1,4 @@
+using Mono.Cecil;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "GameData", menuName = "Game/GameData")]
@@ -8,12 +9,14 @@ public class GameData : ScriptableObject
     [SerializeField] private int _maxWaveNumber = 1;
     [SerializeField] private string _playerName;
     [SerializeField] private ResourceStorage _resourceStorage;
+    [SerializeField] private ResourceStorage _huntResourceStorage;
 
     public PlayerStatsSO PlayerStats => _playerStats;
     public int CurrentWaveNumber => _currentWaveNumber;
     public int MaxWaveNumber => _maxWaveNumber;
     public string PlayerName => _playerName;
     public ResourceStorage ResourceStorage => _resourceStorage;
+    public ResourceStorage HuntResourceStorage => _huntResourceStorage;
 
     public void Initialize(PlayerStatsSO playerStats, int maxWaveNumber, int currentWaveNumber, string playerName, ResourceStorage resourceStorage)
     {
@@ -22,6 +25,7 @@ public class GameData : ScriptableObject
         _currentWaveNumber = currentWaveNumber;
         _playerName = playerName;
         _resourceStorage = resourceStorage;
+        _huntResourceStorage = new();
     }
 
     public void Initialize(GameData gameData) {
@@ -30,6 +34,7 @@ public class GameData : ScriptableObject
         _currentWaveNumber = gameData.CurrentWaveNumber;
         _playerName = gameData.PlayerName;
         _resourceStorage = gameData.ResourceStorage;
+        _huntResourceStorage = gameData.HuntResourceStorage;
     }
 
     public void IncreaseWaveNumber()
