@@ -64,13 +64,11 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
 
     private void InitializePlayer()
     {
-        
         _gameInput.Initialize();
         _gameInput.OnPausePressed += HandlePausePressed;
         _playerInstance = Instantiate(_playerPrefab, Vector3.zero, Quaternion.identity);
         _playerInstance.Initialize(_playerStats, _gameInput, this);
 
-        // Передаем Player в PlayerVisual
         PlayerVisual playerVisual = _playerInstance.GetComponentInChildren<PlayerVisual>();
         if (playerVisual != null)
         {

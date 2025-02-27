@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameRoot : MonoBehaviour
 {
@@ -14,5 +15,10 @@ public class GameRoot : MonoBehaviour
         Utils.SetResolution(_gameSettings.CurrentResolution);
         Utils.SetFullScreen(_gameSettings.IsFullscreen);
         sceeneRoot.StartScene();
+    }
+
+    public void ChangeScene(string name)
+    {
+        SceneManager.LoadScene(name);
     }
 }
