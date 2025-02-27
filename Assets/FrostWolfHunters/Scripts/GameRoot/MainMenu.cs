@@ -45,8 +45,8 @@ public class MainMenu : MonoBehaviour, ISceeneRoot
     public void NewGameButton()
     {
         _menu.SetActive(false);
-        UpdateLocalizedText();
         _playerName.SetActive(true);
+        UpdateLocalizedText();
         _playerNameInputField.text = $"{LocalizationSystem.Translate("hunter")}{SaveLoadSystem.GetSaveFiles().Length + 1}";
         
     }
