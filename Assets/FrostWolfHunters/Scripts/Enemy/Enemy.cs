@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     protected EnemyStatsSo _stats;
     private Player _player;
     private Transform _target;
+    private ResourceStorage _resourceStorage;
 
     private Rigidbody2D _rigidBody;
     private float _attackCooldownTimer = 0f;
@@ -46,7 +47,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public virtual void Initialize(Player player) {
+    public virtual void Initialize(Player player, ResourceStorage resourceStorage) {
         _rigidBody = GetComponent<Rigidbody2D>();
 
         _player = player;
@@ -54,6 +55,7 @@ public class Enemy : MonoBehaviour
         _player.OnPlayerDied += HandlePlayerDie;
         _stats = ScriptableObject.CreateInstance<EnemyStatsSo>();
         _stats.Initialize(_initialStats);
+        _resourceStorage = resourceStorage;
     }
 
     private void OnDestroy() {
@@ -146,6 +148,7 @@ public class Enemy : MonoBehaviour
         OnDeath?.Invoke(this, EventArgs.Empty);
         _isDead = true;
         ChangeState(State.Dead);
+        _resourceStorage.AddResource(_stats.Resource.ToString(), _stats.ResourceCount);
         StartCoroutine(DestroyEnemy());
     }
 

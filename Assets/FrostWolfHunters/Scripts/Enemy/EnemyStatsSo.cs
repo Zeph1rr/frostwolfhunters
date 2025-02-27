@@ -13,8 +13,11 @@ public class EnemyStatsSo : ScriptableObject
     public int Defence;
     public int ThreatLevel;
     public bool IsBoss;
+    public ResourceType Resource;
+    public int ResourceCount;
 
-    public void Initialize(int maxHealth, int damage, float attackSpeed, float attackRange, float speed, int defence, int threatLevel, bool isBoss) {
+    public void Initialize(int maxHealth, int damage, float attackSpeed, float attackRange, float speed, int defence, int threatLevel, bool isBoss, ResourceType resource, int resourceCount) 
+    {
         MaxHealth = maxHealth;
         CurrentHealth = maxHealth;
         Damage = damage;
@@ -24,6 +27,8 @@ public class EnemyStatsSo : ScriptableObject
         Defence = defence;
         ThreatLevel = threatLevel;
         IsBoss = isBoss;
+        Resource = resource;
+        ResourceCount = resourceCount;
     }
 
     public void Initialize(EnemyStatsSo newStats) {
@@ -36,6 +41,8 @@ public class EnemyStatsSo : ScriptableObject
         Defence = newStats.Defence;
         ThreatLevel = newStats.ThreatLevel;
         IsBoss = newStats.IsBoss;
+        Resource = newStats.Resource;
+        ResourceCount = newStats.ResourceCount;
     }
 
     public event Action<int, int> OnHealthChanged;

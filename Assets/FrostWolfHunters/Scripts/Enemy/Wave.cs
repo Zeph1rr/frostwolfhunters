@@ -5,19 +5,20 @@ using UnityEngine;
 
 public class Wave : MonoBehaviour
 {
-    public event EventHandler OnWaveEnd;
+    public event EventHandler<ResourceStorage> OnWaveEnd;
 
     private int _waveNumber;
     private int _waveMultiplier;
     private GameData _gameData;
     private List<Enemy> _enemyPrefabs;
     private Player _player;
-    private List<Enemy> _spawnedEnemies = new List<Enemy>();
+    private List<Enemy> _spawnedEnemies = new();
     private Gameplay _compositeRoot;
+
+    private ResourceStorage _resourceStorage = new();
 
     private int GetThreatLimit() => _waveMultiplier * _waveNumber;
 
-    // Инициализация через метод Initialize
     public void Initialize(List<Enemy> enemyPrefabs, Player player, int waveMultiplier, GameData gameData, Gameplay compositeRoot)
     {
         _enemyPrefabs = enemyPrefabs;
@@ -44,7 +45,6 @@ public class Wave : MonoBehaviour
             }
         }
 
-        // Спавним обычных врагов на оставшуюся сумму угрозы
         while (remainingThreat > 0)
         {
             Enemy enemyToSpawn = GetRandomEnemy(remainingThreat);
@@ -60,7 +60,7 @@ public class Wave : MonoBehaviour
     public void EndWave() {
         Debug.Log("End wave!");
         _gameData.IncreaseWaveNumber();
-        OnWaveEnd?.Invoke(this, EventArgs.Empty);
+        OnWaveEnd?.Invoke(this, _resourceStorage);
         Destroy(gameObject);
     }
 
@@ -102,10 +102,9 @@ public class Wave : MonoBehaviour
     {
         Vector2 spawnPosition = GetRandomSpawnPosition();
         Enemy newEnemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
-        newEnemy.Initialize(_player); // Передаем Player в Initialize
+        newEnemy.Initialize(_player, _resourceStorage); 
 
         
-
         EnemyVisual enemyVisual = newEnemy.GetComponentInChildren<EnemyVisual>();
         if (enemyVisual != null)
         {

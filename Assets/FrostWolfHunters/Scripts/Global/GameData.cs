@@ -7,18 +7,21 @@ public class GameData : ScriptableObject
     [SerializeField] private int _currentWaveNumber = 1;
     [SerializeField] private int _maxWaveNumber = 1;
     [SerializeField] private string _playerName;
+    [SerializeField] private ResourceStorage _resourceStorage;
 
     public PlayerStatsSO PlayerStats => _playerStats;
     public int CurrentWaveNumber => _currentWaveNumber;
     public int MaxWaveNumber => _maxWaveNumber;
     public string PlayerName => _playerName;
+    public ResourceStorage ResourceStorage => _resourceStorage;
 
-    public void Initialize(PlayerStatsSO playerStats, int maxWaveNumber, int currentWaveNumber, string playerName)
+    public void Initialize(PlayerStatsSO playerStats, int maxWaveNumber, int currentWaveNumber, string playerName, ResourceStorage resourceStorage)
     {
         _playerStats = playerStats;
         _maxWaveNumber = maxWaveNumber;
         _currentWaveNumber = currentWaveNumber;
         _playerName = playerName;
+        _resourceStorage = resourceStorage;
     }
 
     public void Initialize(GameData gameData) {
@@ -26,6 +29,7 @@ public class GameData : ScriptableObject
         _maxWaveNumber = gameData.MaxWaveNumber;
         _currentWaveNumber = gameData.CurrentWaveNumber;
         _playerName = gameData.PlayerName;
+        _resourceStorage = gameData.ResourceStorage;
     }
 
     public void IncreaseWaveNumber()

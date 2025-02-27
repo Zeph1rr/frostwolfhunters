@@ -37,6 +37,7 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
         InitializeEnemy();
         InitializeUI();
         InitializeCamera();
+        _gameData.ResourceStorage.PrintResources();
     }
 
     public void Unpause()
@@ -99,7 +100,9 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
         }
     }
 
-    private void HandleWaveEnd(object sender, EventArgs e) {
+    private void HandleWaveEnd(object sender, ResourceStorage resourceStorage) {
+        resourceStorage.PrintResources();
+        _gameData.ResourceStorage.AddResources(resourceStorage.Resources);
         SaveGame();
         OnPausePressed?.Invoke(this, EventArgs.Empty);
         _uiInstance.ShowWinMenu();
@@ -114,7 +117,7 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
     {
         GameObject uiInstance = Instantiate(_uiPrefab, Vector3.zero, Quaternion.identity);
         _uiInstance = uiInstance.GetComponent<GameplayUI>();
-        _uiInstance.Initialize(this, _playerInstance, _gameData);
+        _uiInstance.Initialize(this, _playerInstance, _gameData, _gameData.ResourceStorage);
         HealthBar healthBar = uiInstance.GetComponentInChildren<HealthBar>();
         StaminaBar staminaBar = uiInstance.GetComponentInChildren<StaminaBar>();
         if (staminaBar != null && healthBar != null)

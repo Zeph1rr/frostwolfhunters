@@ -40,6 +40,16 @@ public class ResourceStorage
         }
     }
 
+    public void AddResource(string key, int value)
+    {
+        if(!Enum.IsDefined(typeof(ResourceType), key))
+        {
+            Debug.LogWarning($"Unknown resource type: {key}");
+            return;
+        }
+        _resources[key] += value;
+    }
+
     public bool TrySpendResources(Dictionary<string, int> resources)
     {
         Dictionary<string, int>temp_resources = _resources.ToDictionary(entry => entry.Key, entry => entry.Value);
@@ -57,6 +67,14 @@ public class ResourceStorage
         }
         SpendResources(resources);
         return true;
+    }
+
+    public void PrintResources()
+    {
+        foreach(string key in _resources.Keys)
+        {
+            Debug.Log($"{key}: {_resources[key]}");
+        }
     }
 
     private void SpendResources(Dictionary<string, int> resources)

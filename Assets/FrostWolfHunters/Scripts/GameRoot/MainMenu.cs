@@ -79,7 +79,7 @@ public class MainMenu : MonoBehaviour, ISceeneRoot
             Debug.LogWarning($"Save with name {_playerNameInputField.text}.save already exists!");
         }
         _playerStats.Initialize(_basePlayerStats);
-        _gameData.Initialize(_playerStats, _defaultGameData.MaxWaveNumber, _defaultGameData.CurrentWaveNumber, _playerNameInputField.text);
+        _gameData.Initialize(_playerStats, _defaultGameData.MaxWaveNumber, _defaultGameData.CurrentWaveNumber, _playerNameInputField.text, new ResourceStorage());
         StartGame();
     }
 

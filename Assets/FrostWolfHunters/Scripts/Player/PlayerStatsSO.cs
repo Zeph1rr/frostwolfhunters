@@ -15,7 +15,8 @@ public class PlayerStatsSO : ScriptableObject
     public float Speed;
     public int Defence;
 
-    public void Initialize(int maxHealth, int maxStamina, int damage, float attackSpeed, float speed, int defence) {
+    public void Initialize(int maxHealth, int maxStamina, int damage, float attackSpeed, float speed, int defence) 
+    {
         MaxHealth = maxHealth;
         CurrentHealth = maxHealth;
         MaxStamina = maxStamina;
@@ -51,7 +52,8 @@ public class PlayerStatsSO : ScriptableObject
     }
 
     public bool UseStamina(int stamina) {
-        if (stamina < 0) {
+        if (stamina < 0) 
+        {
             throw new ArgumentOutOfRangeException("Stamina cannot be negative");
         }
         if (CurrentStamina - stamina < 0) {
@@ -69,7 +71,8 @@ public class PlayerStatsSO : ScriptableObject
 
 public class StatChangedArgs : EventArgs
 {
-    public StatChangedArgs(int beforeValue, int currentValue, int maxValue) {
+    public StatChangedArgs(int beforeValue, int currentValue, int maxValue) 
+    {
         CurrentValue = currentValue;
         MaxValue = maxValue;
         BeforeValue = beforeValue;

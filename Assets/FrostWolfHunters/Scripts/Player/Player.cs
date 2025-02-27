@@ -67,7 +67,8 @@ public class Player : MonoBehaviour
         _movementVector = _gameInput.GetMovementVector();
         Vector3 mousePos = _gameInput.GetMousePosition();
         ChangeFacingDirection(transform.position, Camera.main.ScreenToWorldPoint(mousePos));
-        if (_attackCooldownTimer != 0) {
+        if (_attackCooldownTimer != 0) 
+        {
             _attackCooldownTimer = Math.Max(_attackCooldownTimer - Time.deltaTime, 0);
         }
     }
@@ -75,7 +76,8 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         if (_isPaused || _isDead) return;
-        if (Mathf.Abs(_movementVector.x) > _minMovingSpeed || Mathf.Abs(_movementVector.y) > _minMovingSpeed) {
+        if (Mathf.Abs(_movementVector.x) > _minMovingSpeed || Mathf.Abs(_movementVector.y) > _minMovingSpeed) 
+        {
             _isRunning = true;
             Move(_movementVector);
         } else {
@@ -119,7 +121,8 @@ public class Player : MonoBehaviour
 
     private void ChangeFacingDirection(Vector3 sourcePosition, Vector3 targetPosition) 
     {
-        if (sourcePosition.x > targetPosition.x) {
+        if (sourcePosition.x > targetPosition.x) 
+        {
             transform.rotation = Quaternion.Euler(0, -180, 0);
         } else {
             transform.rotation = Quaternion.Euler(0, 0, 0);
