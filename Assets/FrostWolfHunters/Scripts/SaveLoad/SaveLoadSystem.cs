@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class SaveLoadSystem
 {
-    private static string _saveDirectory = Path.Combine(Application.persistentDataPath, "save"); 
-    private static string _settingsFilePath = Path.Combine(Application.persistentDataPath, "settings.json");
+    private static readonly string _saveDirectory = Path.Combine(Application.persistentDataPath, "save"); 
+    private static readonly string _settingsFilePath = Path.Combine(Application.persistentDataPath, "settings.json");
+    
     private static void CreateSaveDirectory() {
         if (!Directory.Exists(_saveDirectory)) {
             Directory.CreateDirectory(_saveDirectory);
