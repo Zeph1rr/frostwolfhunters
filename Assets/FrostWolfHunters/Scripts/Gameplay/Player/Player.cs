@@ -102,7 +102,7 @@ public class Player : MonoBehaviour
     {
         if (!_isDead)
         {
-            _characterStats.TakeDamage(damage);
+            _characterStats.TakeDamage(Mathf.Max(damage - _characterStats.Defence, 0));
             if (_characterStats.CurrentHealth <= 0)
             {
                 Die();

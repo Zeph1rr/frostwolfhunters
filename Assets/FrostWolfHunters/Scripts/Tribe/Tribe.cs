@@ -8,16 +8,23 @@ public class Tribe : MonoBehaviour, ISceeneRoot
 {
     [SerializeField] private GameObject _alertPrefab;
     [SerializeField] private GameObject _resourcePrefab;
+    [SerializeField] private Upgrader _upgrader;
     private Alert _alert;
     private GameData _gameData;
     public void StartScene(GameData gameData)
     {
         _gameData = gameData;
         Debug.Log("Tribe");
-        _gameData.ResourceStorage.PrintResources();
+        //_gameData.ResourceStorage.PrintResources();
         InitializeResources();
         if (_gameData.IsDead) SendAlert("Dead");
         if (_gameData.IsLeaved) SendAlert("Leave");
+        _gameData.ResourceStorage.OnResourcesChanged += HandleResourcesChanged;
+    }
+
+    private void OnDestroy()
+    {
+        _gameData.ResourceStorage.OnResourcesChanged -= HandleResourcesChanged;
     }
 
     private void SendAlert(string key)
@@ -59,5 +66,10 @@ public class Tribe : MonoBehaviour, ISceeneRoot
                 image.sprite = Resources.Load<Sprite>($"Resources/{resourceType}");
             }
         }
+    }
+
+    private void HandleResourcesChanged(object sender, EventArgs e)
+    {
+        InitializeResources();
     }
 }

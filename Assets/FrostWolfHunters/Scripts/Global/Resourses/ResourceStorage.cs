@@ -8,6 +8,7 @@ public class ResourceStorage
 {
     [SerializeField] private Dictionary<string, int> _resources = new();
     public Dictionary<string, int> Resources => _resources;
+    public event EventHandler OnResourcesChanged;
 
     public ResourceStorage()
     {
@@ -31,6 +32,7 @@ public class ResourceStorage
             }
             _resources[key] += resources[key];
         }
+        OnResourcesChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public void ResetHuntResourceStorage()
@@ -46,6 +48,7 @@ public class ResourceStorage
             return;
         }
         _resources[key] += value;
+        OnResourcesChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public void DecreaseAll(float multyiplier)
@@ -107,11 +110,13 @@ public class ResourceStorage
         {
             _resources[key] -= resources[key];
         }
+        OnResourcesChanged?.Invoke(this, EventArgs.Empty);
     }
 
     private void SpendResource(string key, int value)
     {
         _resources[key] -= value;
+        OnResourcesChanged?.Invoke(this, EventArgs.Empty);
     }
 
     private void InitializeEmptyStorage()
