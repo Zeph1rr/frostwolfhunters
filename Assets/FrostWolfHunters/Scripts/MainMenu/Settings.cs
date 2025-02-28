@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -64,6 +63,7 @@ public class Settings : MonoBehaviour
     {
         string language = _languages[languageIndex];
         LocalizationSystem.SetLanguage(language);
+        AlertSystem.SetCurrentLanguage(language);
         _gameSettings.SetLanguage(language);
         foreach (var localizedText in FindObjectsByType<LocalizedText>(FindObjectsSortMode.None))
         {

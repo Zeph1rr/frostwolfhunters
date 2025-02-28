@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/FrostWolfHunters/Scenes/Menu.unity
     guid: a8af9325ea55cbb4ba230dc96dc72c4d
   - enabled: 1
+    path: Assets/FrostWolfHunters/Scenes/Tribe.unity
+    guid: bfab6bd23c576fe46a95ecfa8f0462ce
+  - enabled: 1
     path: Assets/FrostWolfHunters/Scenes/Gameplay.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}

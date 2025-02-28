@@ -105,10 +105,10 @@ public class GameplayUI : MonoBehaviour
         _compositeRoot.Unpause();
     }
 
-    public void QuitScene(bool playerDied) 
+    public void QuitScene(bool playerLeaved) 
     {
         Debug.Log("quit scene");
-        OnSceneQuit?.Invoke(this, playerDied);
+        OnSceneQuit?.Invoke(this, playerLeaved);
     }
 
     public void ShowWinMenu()

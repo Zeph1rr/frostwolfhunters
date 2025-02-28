@@ -11,19 +11,12 @@ public class ResourceStorage
 
     public ResourceStorage()
     {
-        foreach(var resourceType in Enum.GetNames(typeof(ResourceType)))
-        {
-            _resources.Add(resourceType, 0);
-        }
+        InitializeEmptyStorage();
     }
 
     public void Initialize(Dictionary<string, int> resources)
     {
-        _resources = new();
-        foreach(var resourceType in Enum.GetNames(typeof(ResourceType)))
-        {
-            _resources.Add(resourceType, 0);
-        }
+        InitializeEmptyStorage();
         AddResources(resources);
     }
 
@@ -38,6 +31,11 @@ public class ResourceStorage
             }
             _resources[key] += resources[key];
         }
+    }
+
+    public void ResetHuntResourceStorage()
+    {
+        InitializeEmptyStorage();
     }
 
     public void AddResource(string key, int value)
@@ -61,8 +59,19 @@ public class ResourceStorage
             }
             if (_resources[key] == 0) return;
             _resources[key] = Mathf.FloorToInt(_resources[key] * multyiplier);
-            Debug.Log($"{key}: {_resources[key]}");
         }
+    }
+
+    public bool TrySpendResource(string key, int value)
+    {
+        if(!Enum.IsDefined(typeof(ResourceType), key))
+        {
+            Debug.LogWarning($"Unknown resource type: {key}");
+            return false;
+        }
+        if (value > _resources[key]) return false;
+        SpendResource(key, value);
+        return true;
     }
 
     public bool TrySpendResources(Dictionary<string, int> resources)
@@ -97,6 +106,20 @@ public class ResourceStorage
         foreach(string key in resources.Keys)
         {
             _resources[key] -= resources[key];
+        }
+    }
+
+    private void SpendResource(string key, int value)
+    {
+        _resources[key] -= value;
+    }
+
+    private void InitializeEmptyStorage()
+    {
+        _resources = new();
+        foreach(var resourceType in Enum.GetNames(typeof(ResourceType)))
+        {
+            _resources.Add(resourceType, 0);
         }
     }
 }

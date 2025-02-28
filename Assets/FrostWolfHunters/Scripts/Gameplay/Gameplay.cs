@@ -7,7 +7,6 @@ using Cinemachine;
 public class Gameplay : MonoBehaviour, ISceeneRoot
 {
     [Header("GameData")]
-    [SerializeField] private GameData _gameData;
     [SerializeField] private GameInput _gameInput;
 
     [Header("UI Elements")]
@@ -30,9 +29,12 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
     private Player _playerInstance;
     private Wave _waveInstance;
     private GameplayUI _uiInstance;
-
-    public void StartScene()
+    private GameData _gameData;
+    
+    public void StartScene(GameData gameData)
     {
+        _gameData = gameData;
+        _gameData.HuntResourceStorage.ResetHuntResourceStorage();
         InitializePlayer();
         InitializeEnemy();
         InitializeUI();
@@ -54,12 +56,6 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
         _waveInstance.OnWaveEnd -= HandleWaveEnd;
 
         _playerInstance.OnPlayerDied -= HandlePlayerDie;
-    }
-
-    private void SaveGame() {
-        PlayerStatsSerializable playerStats = new(_playerStats);
-        GameDataSerializable gameData = new(_gameData, playerStats);
-        SaveLoadSystem.SaveGame(gameData, $"{_gameData.PlayerName}.save");
     }
 
     private void InitializePlayer()
@@ -105,7 +101,6 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
     private void HandleWaveEnd(object sender, ResourceStorage resourceStorage) {
         resourceStorage.PrintResources();
         _gameData.HuntResourceStorage.AddResources(resourceStorage.Resources);
-        SaveGame();
         OnPausePressed?.Invoke(this, EventArgs.Empty);
         _uiInstance.ShowWinMenu();
     }
@@ -137,6 +132,8 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
 
     private void HandlePlayerDie(object sender, EventArgs e) {        
         OnPausePressed?.Invoke(this, EventArgs.Empty);
+        _gameData.HuntResourceStorage.AddResources(_waveInstance.ResourceStorage.Resources);
+        _gameData.Die();
         _uiInstance.ShowLoseMenu();
     }
 
@@ -150,14 +147,16 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
         OnPausePressed?.Invoke(this, EventArgs.Empty);
     }
 
-    private void HandleSceneQuit(object sender, bool playerDied)
+    private void HandleSceneQuit(object sender, bool playerLeaved)
     {
-        if (playerDied)
+        if (playerLeaved)
         {
             _gameData.HuntResourceStorage.AddResources(_waveInstance.ResourceStorage.Resources);
-            _gameData.HuntResourceStorage.DecreaseAll(0.85f);
+            _gameData.HuntResourceStorage.DecreaseAll(0.5f);
+            _gameData.Leave();
         }
         _gameData.ResourceStorage.AddResources(_gameData.HuntResourceStorage.Resources);
-        SceneManager.LoadScene("Menu");
+        _gameData.ResourceStorage.PrintResources();
+        SceneManager.LoadScene("Tribe");
     }
 }

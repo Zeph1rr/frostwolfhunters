@@ -10,7 +10,6 @@ public class MainMenu : MonoBehaviour, ISceeneRoot
 {
     [Header("Stats")]
     [SerializeField] private GameData _defaultGameData;
-    [SerializeField] private GameData _gameData;
     [SerializeField] private PlayerStatsSO _playerStats;
     [SerializeField] private PlayerStatsSO _basePlayerStats;
 
@@ -23,9 +22,11 @@ public class MainMenu : MonoBehaviour, ISceeneRoot
     [SerializeField] private Button _loadButton;
     [SerializeField] private TMP_InputField _playerNameInputField;
     private PlayerInputActions _playerInput;
+    private GameData _gameData;
 
-    public void StartScene()
+    public void StartScene(GameData gameData)
     {
+        _gameData = gameData;
         _playerInput = new PlayerInputActions();
         _playerInput.Enable();
         _playerInput.Global.Escape.performed += Escape_performed;
@@ -138,6 +139,6 @@ public class MainMenu : MonoBehaviour, ISceeneRoot
     }
 
     private void StartGame() {
-        SceneManager.LoadScene("Gameplay");
+        SceneManager.LoadScene("Tribe");
     }
 }

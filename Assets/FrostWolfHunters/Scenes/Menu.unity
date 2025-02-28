@@ -8154,6 +8154,7 @@ MonoBehaviour:
   _gameSettings: {fileID: 11400000, guid: f1d94fff65e99064e813a20f91062a03, type: 2}
   _defaultSettings: {fileID: 11400000, guid: de48c02d324f88843a3102c1dd3f55a5, type: 2}
   _sceneRoot: {fileID: 1788734925}
+  _gameData: {fileID: 11400000, guid: bb01be6cf57747d4eb3efe60a6dfb046, type: 2}
 --- !u!4 &2011493656
 Transform:
   m_ObjectHideFlags: 0

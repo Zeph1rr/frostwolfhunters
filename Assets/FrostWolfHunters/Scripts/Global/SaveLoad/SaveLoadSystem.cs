@@ -21,11 +21,11 @@ public class SaveLoadSystem
     public static void SaveGame(GameDataSerializable gameData, string saveFileName)
     {
         CreateSaveDirectory();
-        string saveFilePath = Path.Combine(_saveDirectory, saveFileName);
+        string saveFilePath = Path.Combine(_saveDirectory, $"{saveFileName}.save");
 
-        using (FileStream fileStream = new FileStream(saveFilePath, FileMode.OpenOrCreate))
+        using (FileStream fileStream = new(saveFilePath, FileMode.OpenOrCreate))
         {
-            BinaryFormatter formatter = new BinaryFormatter();
+            BinaryFormatter formatter = new();
             formatter.Serialize(fileStream, gameData);
         }
         Debug.Log($"Game saved to {saveFilePath}");
@@ -63,16 +63,16 @@ public class SaveLoadSystem
     public static GameData LoadGame(string saveFileName, GameData defaultGameData, PlayerStatsSO stats)
     {
         CreateSaveDirectory();
-        string saveFilePath = Path.Combine(Application.persistentDataPath, "save", saveFileName);
+        string saveFilePath = Path.Combine(_saveDirectory, saveFileName);
         Debug.Log(saveFilePath);
         if (!File.Exists(saveFilePath)) {
             Debug.LogWarning("Save file not found! Returning default game data");
             return defaultGameData;
         }
 
-        using (FileStream fileStream = new FileStream(saveFilePath, FileMode.Open))
+        using (FileStream fileStream = new(saveFilePath, FileMode.Open))
         {
-            BinaryFormatter formatter = new BinaryFormatter();
+            BinaryFormatter formatter = new();
             GameDataSerializable gameDataSerializable = (GameDataSerializable)formatter.Deserialize(fileStream);
             return gameDataSerializable.Deserialize(stats);
         }

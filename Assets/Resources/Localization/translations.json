@@ -21,7 +21,8 @@
                 { "key": "wave_win", "value": "Wave passed!"},
                 { "key": "pause", "value": "Pause"},
                 { "key": "retry", "value": "Retry"},
-                { "key": "wave_lost", "value": "You died!"}
+                { "key": "wave_lost", "value": "You are on the brink of death!"},
+                { "key": "understood", "value": "Ok"}
             ]
         },
         {
@@ -45,7 +46,8 @@
                 { "key": "wave_win", "value": "Волна пройдена!"},
                 { "key": "pause", "value": "Пауза"},
                 { "key": "retry", "value": "Попробовать снова"},
-                { "key": "wave_lost", "value": "Вы погибли!"}
+                { "key": "wave_lost", "value": "Вы на гране смерти!"},
+                { "key": "understood", "value": "Понятно"}
             ]
         }
     ]
