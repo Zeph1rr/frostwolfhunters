@@ -45,9 +45,8 @@ public class PlayerStatsSO : ScriptableObject
         {
             throw new ArgumentOutOfRangeException("Damage cannot be negative");
         }
-        int beforeHealth = CurrentHealth;
         CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
-        OnHealthChanged?.Invoke(this, new StatChangedArgs(beforeHealth, CurrentHealth, MaxHealth));
+        OnHealthChanged?.Invoke(this, new StatChangedArgs(CurrentHealth, MaxHealth));
         Debug.Log("Current health: " + CurrentHealth);
     }
 
@@ -60,25 +59,9 @@ public class PlayerStatsSO : ScriptableObject
             Debug.LogWarning("Not enough stamina!");
             return false;
         }
-        int beforeStamina = CurrentStamina;
         CurrentStamina -= stamina;
-        OnStaminaChanged?.Invoke(this, new StatChangedArgs(beforeStamina, CurrentStamina, MaxStamina));
+        OnStaminaChanged?.Invoke(this, new StatChangedArgs(CurrentStamina, MaxStamina));
         Debug.Log("Current stamina: " + CurrentStamina);
         return true;
     }
-}
-
-
-public class StatChangedArgs : EventArgs
-{
-    public StatChangedArgs(int beforeValue, int currentValue, int maxValue) 
-    {
-        CurrentValue = currentValue;
-        MaxValue = maxValue;
-        BeforeValue = beforeValue;
-    }
-
-    public int CurrentValue;
-    public int MaxValue;
-    public int BeforeValue;
 }

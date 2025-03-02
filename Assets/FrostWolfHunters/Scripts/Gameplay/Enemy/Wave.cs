@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Zeph1rr.Core.Recources;
 
 public class Wave : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class Wave : MonoBehaviour
     private List<Enemy> _spawnedEnemies = new();
     private Gameplay _compositeRoot;
 
-    private ResourceStorage _resourceStorage = new();
+    private ResourceStorage _resourceStorage = new(Enum.GetNames(typeof(ResourceType)));
     public ResourceStorage ResourceStorage => _resourceStorage;
 
     private int GetThreatLimit() => _waveMultiplier * _waveNumber;

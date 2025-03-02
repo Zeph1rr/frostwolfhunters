@@ -1,0 +1,68 @@
+{
+    "stats": [
+        {
+            "stat": "MaxHealth",
+            "entries": [
+                {"level": 0, "value": 100},
+                {"level": 1, "value": 105},
+                {"level": 2, "value": 110}
+            ]
+        },
+        {
+            "stat": "MaxStamina",
+            "entries": [
+                {"level": 0, "value": 110},
+                {"level": 1, "value": 120},
+                {"level": 2, "value": 130}
+            ]
+        },
+        {
+            "stat": "Damage",
+            "entries": [
+                {"level": 0, "value": 5},
+                {"level": 1, "value": 10},
+                {"level": 2, "value": 15}
+            ]
+        },
+        {
+            "stat": "Speed",
+            "entries": [
+                {"level": 0, "value": 5},
+                {"level": 1, "value": 7},
+                {"level": 2, "value": 9}
+            ]
+        },
+        {
+            "stat": "Defence",
+            "entries": [
+                {"level": 0, "value": 0},
+                {"level": 1, "value": 2},
+                {"level": 2, "value": 4}
+            ]
+        },
+        {
+            "stat": "AttackSpeed",
+            "entries": [
+                {"level": 0, "value": 2},
+                {"level": 1, "value": 1.75},
+                {"level": 2, "value": 1.5}
+            ]
+        },
+        {
+            "stat": "CritChance",
+            "entries": [
+                {"level": 0, "value": 0},
+                {"level": 1, "value": 0.1},
+                {"level": 2, "value": 0.2}
+            ]
+        },
+        {
+            "stat": "CritMultiplyer",
+            "entries": [
+                {"level": 0, "value": 1.1},
+                {"level": 1, "value": 1.2},
+                {"level": 2, "value": 1.3}
+            ]
+        }
+    ]
+}

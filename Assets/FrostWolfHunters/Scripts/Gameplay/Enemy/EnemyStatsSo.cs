@@ -4,13 +4,13 @@ using System;
 [CreateAssetMenu(fileName = "BaseEnemyStats", menuName = "Stats/EnemyStats")]
 public class EnemyStatsSo : ScriptableObject
 {
-    public int MaxHealth;
-    public int CurrentHealth;
-    public int Damage;
+    public float MaxHealth;
+    public float CurrentHealth;
+    public float Damage;
     public float AttackSpeed;
     public float AttackRange;
     public float Speed;
-    public int Defence;
+    public float Defence;
     public int ThreatLevel;
     public bool IsBoss;
     public ResourceType Resource;
@@ -45,14 +45,14 @@ public class EnemyStatsSo : ScriptableObject
         ResourceCount = newStats.ResourceCount;
     }
 
-    public event Action<int, int> OnHealthChanged;
+    public event Action<float, float> OnHealthChanged;
 
-    public void TakeDamage(int damage) {
+    public void TakeDamage(float damage) {
         if (damage < 0)
         {
             throw new ArgumentOutOfRangeException("Damage cannot be negative");
         }
-        int oldHealth = CurrentHealth;
+        float oldHealth = CurrentHealth;
         CurrentHealth = Math.Max(CurrentHealth - damage, 0);
         OnHealthChanged?.Invoke(oldHealth, CurrentHealth);
     }

@@ -7,11 +7,11 @@ public class Weapon : MonoBehaviour
     [SerializeField] private string _name;
     private Player _player;
     private PolygonCollider2D _attackCollider;
-    private int _damage;
+    private float _damage;
     
     public string Name => _name;
 
-    public void Initialize(Player player, int damage)
+    public void Initialize(Player player, float damage)
     {
         _player = player;
         _damage = damage;

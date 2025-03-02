@@ -4,23 +4,23 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Image))]
 public class HealthBar : MonoBehaviour
 {
-    private PlayerStatsSO _playerStats;
+    private Player _player;
     private Image _healthBar;
 
-    public void Initialize(PlayerStatsSO playerStats) {
+    public void Initialize(Player player) {
         _healthBar = GetComponent<Image>();
-        _playerStats = playerStats;
-        _playerStats.OnHealthChanged += HandleHealthChanged;
-        _healthBar.fillAmount = (float) playerStats.CurrentHealth / playerStats.MaxHealth;
+        _player = player;
+        _player.OnHealthChanged += HandleHealthChanged;
+        _healthBar.fillAmount = _player.CurrentHealth / player.CharacterStats.GetStatValue(PlayerStats.StatNames.MaxHealth);
     }
 
     private void OnDestroy() {
-        if (_playerStats != null)
-            _playerStats.OnHealthChanged -= HandleHealthChanged;
+        if (_player != null)
+            _player.OnHealthChanged -= HandleHealthChanged;
     }
 
     private void HandleHealthChanged(object sender, StatChangedArgs e)
     {
-        _healthBar.fillAmount = (float) e.CurrentValue / e.MaxValue;
+        _healthBar.fillAmount = e.CurrentValue / e.MaxValue;
     }
 }

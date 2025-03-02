@@ -8,6 +8,9 @@ public class Player : MonoBehaviour
 
     public event EventHandler OnPlayerDied;
     public event EventHandler<float> OnPlayerAttack;
+
+    public event EventHandler<StatChangedArgs> OnHealthChanged;
+    public event EventHandler<StatChangedArgs> OnStaminaChanged;
     
 
     [SerializeField] Weapon _weaponPrefab;
@@ -15,7 +18,12 @@ public class Player : MonoBehaviour
 
     public string WeaponName => _weapon.Name;
 
-    private PlayerStatsSO _characterStats;
+    private PlayerStats _characterStats;
+    public PlayerStats CharacterStats => _characterStats;
+    private float _currentHealth;
+    private float _currentStamina;
+    public float CurrentHealth => _currentHealth;
+    public float CurrentStamina => _currentStamina;
 
     private Rigidbody2D _rigidBody;
     private GameInput _gameInput;
@@ -35,18 +43,18 @@ public class Player : MonoBehaviour
         return _isRunning;
     }
 
-    public void Initialize(PlayerStatsSO stats, GameInput gameInput, Gameplay compositeRoot) 
+    public void Initialize(PlayerStats playerStats, GameInput gameInput, Gameplay compositeRoot) 
     {
         _rigidBody = GetComponent<Rigidbody2D>();
-        _characterStats = stats;
-        _characterStats.CurrentHealth = _characterStats.MaxHealth;
-        _characterStats.CurrentStamina = _characterStats.MaxStamina;
+        _characterStats = playerStats;
+        _currentHealth = _characterStats.GetStatValue(PlayerStats.StatNames.MaxHealth);
+        _currentStamina = _characterStats.GetStatValue(PlayerStats.StatNames.MaxStamina);
         _gameInput = gameInput;
         _gameInput.OnAttackPressed += Attack; 
         _compositeRoot = compositeRoot;
         _compositeRoot.OnPausePressed += TogglePause;
         _weapon = Instantiate(_weaponPrefab, transform);
-        _weapon.Initialize(this, _characterStats.Damage);
+        _weapon.Initialize(this, _characterStats.GetStatValue(PlayerStats.StatNames.Damage));
     }
 
     private void TogglePause(object sender, EventArgs e)
@@ -95,28 +103,52 @@ public class Player : MonoBehaviour
     public void Move(Vector2 direction) 
     {
         direction = direction.normalized;
-        _rigidBody.MovePosition(_rigidBody.position + direction * (_characterStats.Speed * Time.deltaTime));
+        _rigidBody.MovePosition(_rigidBody.position + _characterStats.GetStatValue(PlayerStats.StatNames.Speed) * Time.deltaTime * direction);
     }
 
-    public void TakeDamage(int damage) 
+    public void TakeDamage(float damage) 
     {
+        if (damage < 0)
+        {
+            throw new ArgumentException("Damage cannot be negative");
+        }
         if (!_isDead)
         {
-            _characterStats.TakeDamage(Mathf.Max(damage - _characterStats.Defence, 0));
-            if (_characterStats.CurrentHealth <= 0)
+            float decreasedDamage = Mathf.Max(damage - _characterStats.GetStatValue(PlayerStats.StatNames.Defence), 0);
+            _currentHealth = Mathf.Max(_currentHealth - decreasedDamage);
+            OnHealthChanged?.Invoke(this, new StatChangedArgs(_currentHealth, _characterStats.GetStatValue(PlayerStats.StatNames.MaxHealth)));
+            Debug.Log("Current health: " + _currentHealth);
+            if (_currentHealth <= 0)
             {
                 Die();
             }
         }
     }
 
+    private bool UseStamina(float stamina)
+    {
+        if (stamina < 0) 
+        {
+            throw new ArgumentOutOfRangeException("Stamina cannot be negative");
+        }
+        if (_currentStamina - stamina < 0) {
+            Debug.LogWarning("Not enough stamina!");
+            return false;
+        }
+        float beforeStamina = _currentStamina;
+        _currentStamina -= stamina;
+        OnStaminaChanged?.Invoke(this, new StatChangedArgs(_currentStamina, _characterStats.GetStatValue(PlayerStats.StatNames.MaxStamina)));
+        Debug.Log("Current stamina: " + _currentStamina);
+        return true;
+    }
+
     private void Attack(object sender, EventArgs e) 
     {
         if (_isPaused) return;
         if (_attackCooldownTimer > 0) return;
-        if (!_characterStats.UseStamina(10)) Die();
-        OnPlayerAttack?.Invoke(this, _characterStats.AttackSpeed);
-        _attackCooldownTimer = _characterStats.AttackSpeed;
+        if (!UseStamina(10)) Die();
+        OnPlayerAttack?.Invoke(this, _characterStats.GetStatValue(PlayerStats.StatNames.AttackSpeed));
+        _attackCooldownTimer = _characterStats.GetStatValue(PlayerStats.StatNames.AttackSpeed);
     }
 
     private void ChangeFacingDirection(Vector3 sourcePosition, Vector3 targetPosition) 
@@ -128,4 +160,16 @@ public class Player : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 0, 0);
         }
     }
+}
+
+public class StatChangedArgs : EventArgs
+{
+    public StatChangedArgs(float currentValue, float maxValue) 
+    {
+        CurrentValue = currentValue;
+        MaxValue = maxValue;
+    }
+
+    public float CurrentValue;
+    public float MaxValue;
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zeph1rr.Core.Recources;
 
 
 public class GameplayUI : MonoBehaviour
@@ -77,7 +78,7 @@ public class GameplayUI : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-        foreach (string resourceType in _resourceStorage.Resources.Keys)
+        foreach (string resourceType in Enum.GetNames(typeof(ResourceType)))
         {
             GameObject newResource = Instantiate(_resourcePrefab, resourcesContainer.transform);
             newResource.name = resourceType;
@@ -85,7 +86,7 @@ public class GameplayUI : MonoBehaviour
             TextMeshProUGUI text = newResource.GetComponentInChildren<TextMeshProUGUI>();
             if (text != null)
             {
-                text.text = _resourceStorage.Resources[resourceType].ToString();
+                text.text = _resourceStorage.GetResourceValueByName(resourceType).ToString();
             }
 
             Image image = newResource.GetComponentInChildren<Image>();

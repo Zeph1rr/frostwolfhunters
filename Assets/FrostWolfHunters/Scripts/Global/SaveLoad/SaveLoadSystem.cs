@@ -22,12 +22,16 @@ public class SaveLoadSystem
     {
         CreateSaveDirectory();
         string saveFilePath = Path.Combine(_saveDirectory, $"{saveFileName}.save");
+        string testSeveFilePath = Path.Combine(_saveDirectory, $"{saveFileName}.json");
 
         using (FileStream fileStream = new(saveFilePath, FileMode.OpenOrCreate))
         {
             BinaryFormatter formatter = new();
             formatter.Serialize(fileStream, gameData);
         }
+
+        string json = JsonUtility.ToJson(gameData, true);
+        File.WriteAllText(testSeveFilePath, json);
         Debug.Log($"Game saved to {saveFilePath}");
     }
 
@@ -60,7 +64,7 @@ public class SaveLoadSystem
         return Path.GetFileName(filePath);
     }
 
-    public static GameData LoadGame(string saveFileName, GameData defaultGameData, PlayerStatsSO stats)
+    public static GameData LoadGame(string saveFileName, GameData defaultGameData)
     {
         CreateSaveDirectory();
         string saveFilePath = Path.Combine(_saveDirectory, saveFileName);
@@ -74,7 +78,7 @@ public class SaveLoadSystem
         {
             BinaryFormatter formatter = new();
             GameDataSerializable gameDataSerializable = (GameDataSerializable)formatter.Deserialize(fileStream);
-            return gameDataSerializable.Deserialize(stats);
+            return gameDataSerializable.ToGameData();
         }
     }
 

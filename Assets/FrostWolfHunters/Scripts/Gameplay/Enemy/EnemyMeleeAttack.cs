@@ -6,7 +6,7 @@ public class EnemyMeleeAttack : MonoBehaviour
 {
     private PolygonCollider2D _attackCollider;
     private Enemy _enemy;
-    private int _damage;
+    private float _damage;
 
     public void Initialize(Enemy enemy)
     {
@@ -21,7 +21,7 @@ public class EnemyMeleeAttack : MonoBehaviour
         _enemy.OnAttack -= HandleAttack;
     }
 
-    private void HandleAttack(object sender, int damage) {
+    private void HandleAttack(object sender, float damage) {
         _damage = damage;
         StartCoroutine(Attack());
     }

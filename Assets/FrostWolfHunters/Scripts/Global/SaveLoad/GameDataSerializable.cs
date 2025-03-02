@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Zeph1rr.Core.Recources;
 
 [System.Serializable]
 public class GameDataSerializable
@@ -9,7 +10,7 @@ public class GameDataSerializable
     [SerializeField] private int _maxWaveNumber;
     [SerializeField] private PlayerStatsSerializable _playerStats;
     [SerializeField] private string _playerName;
-    [SerializeField] private List<KeyValuePair<string, int>> _resources;
+    [SerializeField] private ResourcesSerialazable _resources;
 
     public GameDataSerializable(GameData gameData, PlayerStatsSerializable playerStats) 
     {
@@ -17,15 +18,13 @@ public class GameDataSerializable
         _maxWaveNumber = gameData.MaxWaveNumber;
         _playerStats = playerStats;
         _playerName = gameData.PlayerName;
-        Dictionary<string,int> resources = gameData.ResourceStorage.Resources.ToDictionary(entry => entry.Key, entry => entry.Value);
-        _resources = new List<KeyValuePair<string, int>>(resources);
+        _resources = new(gameData.ResourceStorage);
     }
 
-    public GameData Deserialize(PlayerStatsSO stats) {
+    public GameData ToGameData() {
         GameData gameData = ScriptableObject.CreateInstance<GameData>();
-        PlayerStatsSO playerStats = _playerStats.Deserialize(stats);
-        ResourceStorage resourceStorage = new();
-        resourceStorage.AddResources(_resources.ToDictionary(kvp => kvp.Key, kvp => kvp.Value));
+        PlayerStats playerStats = _playerStats.ToPlayerStats();
+        ResourceStorage resourceStorage = _resources.ToResourceStorage();
         gameData.Initialize(playerStats, _maxWaveNumber, _currentWaveNumber, _playerName, resourceStorage);
         return gameData;
     }

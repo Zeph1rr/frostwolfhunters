@@ -1,13 +1,14 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using Zeph1rr.Core.Recources;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public class Enemy : MonoBehaviour
 {
     public event EventHandler OnTakeHit;
     public event EventHandler OnDeath;
-    public event EventHandler<int> OnAttack;
+    public event EventHandler<float> OnAttack;
 
     [SerializeField] private EnemyStatsSo _initialStats;
     protected EnemyStatsSo _stats;
@@ -135,7 +136,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage) {
+    public void TakeDamage(float damage) {
         if (_isDead) return;
         _stats.TakeDamage(damage);
         OnTakeHit?.Invoke(this, EventArgs.Empty);

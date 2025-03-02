@@ -1047,19 +1047,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1183014718}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1873069879}
-        m_TargetAssemblyTypeName: Upgrader, Assembly-CSharp
-        m_MethodName: UpgradeDefence
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &1323358391
 GameObject:
   m_ObjectHideFlags: 0
@@ -1297,54 +1285,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1873069878
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1873069880}
-  - component: {fileID: 1873069879}
-  m_Layer: 0
-  m_Name: Upgrader
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1873069879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1873069878}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c51be398d90d16d42a5b3dbcadce9f0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerStats: {fileID: 11400000, guid: 9529e05eca1f1b841b8defc0d19b356f, type: 2}
-  _basePlayerStats: {fileID: 11400000, guid: a7204cea441f5664989e3828dbfc1525, type: 2}
-  _gameData: {fileID: 11400000, guid: bb01be6cf57747d4eb3efe60a6dfb046, type: 2}
-  _baseCost: 3
---- !u!4 &1873069880
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1873069878}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.0805655, y: 3.227649, z: 162.62363}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2118512734
 GameObject:
   m_ObjectHideFlags: 0
@@ -1441,4 +1381,3 @@ SceneRoots:
   - {fileID: 967972040}
   - {fileID: 947286337}
   - {fileID: 217889417}
-  - {fileID: 1873069880}

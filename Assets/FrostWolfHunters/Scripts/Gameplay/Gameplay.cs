@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using System;
 using Cinemachine;
+using Zeph1rr.Core.Recources;
 
 public class Gameplay : MonoBehaviour, ISceeneRoot
 {
@@ -34,7 +35,7 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
     public void StartScene(GameData gameData)
     {
         _gameData = gameData;
-        _gameData.HuntResourceStorage.ResetHuntResourceStorage();
+        _gameData.HuntResourceStorage.ResetResourceStorage(Enum.GetNames(typeof(ResourceType)));
         InitializePlayer();
         InitializeEnemy();
         InitializeUI();
@@ -63,7 +64,7 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
         _gameInput.Initialize();
         _gameInput.OnPausePressed += HandlePausePressed;
         _playerInstance = Instantiate(_playerPrefab, Vector3.zero, Quaternion.identity);
-        _playerInstance.Initialize(_playerStats, _gameInput, this);
+        _playerInstance.Initialize(_gameData.PlayerStats,_gameInput, this);
 
         PlayerVisual playerVisual = _playerInstance.GetComponentInChildren<PlayerVisual>();
         if (playerVisual != null)
@@ -119,8 +120,8 @@ public class Gameplay : MonoBehaviour, ISceeneRoot
         StaminaBar staminaBar = uiInstance.GetComponentInChildren<StaminaBar>();
         if (staminaBar != null && healthBar != null)
         {
-            healthBar.Initialize(_playerStats);
-            staminaBar.Initialize(_playerStats);
+            healthBar.Initialize(_playerInstance);
+            staminaBar.Initialize(_playerInstance);
         }
         else
         {

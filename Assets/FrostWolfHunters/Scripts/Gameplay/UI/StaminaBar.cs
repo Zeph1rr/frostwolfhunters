@@ -4,24 +4,24 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Image))]
 public class StaminaBar : MonoBehaviour
 {
-    private PlayerStatsSO _playerStats;
+    private Player _player;
     private Image _staminaBar;
 
-    public void Initialize(PlayerStatsSO playerStats) {
+    public void Initialize(Player player) 
+    {
         _staminaBar = GetComponent<Image>();
-        _playerStats = playerStats;
-        _playerStats.OnStaminaChanged += HandleStaminaChanged;
-        _staminaBar.fillAmount = (float) playerStats.CurrentStamina / playerStats.MaxStamina;
+        _player = player;
+        _player.OnStaminaChanged += HandleStaminaChanged;
+        _staminaBar.fillAmount = _player.CurrentStamina / _player.CharacterStats.GetStatValue(PlayerStats.StatNames.MaxStamina);
     }
 
     private void OnDestroy()
     {
-        _playerStats.OnStaminaChanged -= HandleStaminaChanged;
+        _player.OnStaminaChanged -= HandleStaminaChanged;
     }
 
     private void HandleStaminaChanged(object sender, StatChangedArgs e)
     {
-        Debug.Log("here");
-        _staminaBar.fillAmount = (float) e.CurrentValue / e.MaxValue;
+        _staminaBar.fillAmount = e.CurrentValue / e.MaxValue;
     }
 }

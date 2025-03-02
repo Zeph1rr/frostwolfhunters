@@ -36,7 +36,7 @@ public class EnemyVisual : MonoBehaviour
         _enemy.OnDeath -= HandeDeath;
     }
     
-    private void HandleAttack(object sender, int damage)
+    private void HandleAttack(object sender, float damage)
     {
        _animator.SetTrigger(ATTACK);
     }

@@ -1,10 +1,12 @@
+using System;
 using UnityEngine;
+using Zeph1rr.Core.Recources;
 
 [CreateAssetMenu(fileName = "GameData", menuName = "Game/GameData")]
 public class GameData : ScriptableObject
 {
     [Header("Savable")]
-    [SerializeField] private PlayerStatsSO _playerStats;
+    private PlayerStats _playerStats;
     [SerializeField] private int _currentWaveNumber = 1;
     [SerializeField] private int _maxWaveNumber = 1;
     [SerializeField] private string _playerName;
@@ -15,7 +17,7 @@ public class GameData : ScriptableObject
     [SerializeField] private bool _isLeaved;
 
 
-    public PlayerStatsSO PlayerStats => _playerStats;
+    public PlayerStats PlayerStats => _playerStats;
     public int CurrentWaveNumber => _currentWaveNumber;
     public int MaxWaveNumber => _maxWaveNumber;
     public string PlayerName => _playerName;
@@ -24,14 +26,14 @@ public class GameData : ScriptableObject
     public bool IsDead => _isDead;
     public bool IsLeaved => _isLeaved;
 
-    public void Initialize(PlayerStatsSO playerStats, int maxWaveNumber, int currentWaveNumber, string playerName, ResourceStorage resourceStorage)
+    public void Initialize(PlayerStats playerStats, int maxWaveNumber, int currentWaveNumber, string playerName, ResourceStorage resourceStorage)
     {
         _playerStats = playerStats;
         _maxWaveNumber = maxWaveNumber;
         _currentWaveNumber = currentWaveNumber;
         _playerName = playerName;
         _resourceStorage = resourceStorage;
-        _huntResourceStorage = new();
+        _huntResourceStorage = new(Enum.GetNames(typeof(ResourceType)));
         _isDead = false;
         _isLeaved = false;
     }
@@ -76,4 +78,9 @@ public class GameData : ScriptableObject
         _isLeaved = false;
         _isDead = false;
     }
+
+    private void OnEnable()
+    {
+        if (_playerStats == null) _playerStats = new();
+    } 
 }

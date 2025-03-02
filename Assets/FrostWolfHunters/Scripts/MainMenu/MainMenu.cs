@@ -5,13 +5,14 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using System.Linq;
 using UnityEngine.InputSystem;
+using Zeph1rr.Core.Recources;
+using System;
 
 public class MainMenu : MonoBehaviour, ISceeneRoot
 {
     [Header("Stats")]
     [SerializeField] private GameData _defaultGameData;
-    [SerializeField] private PlayerStatsSO _playerStats;
-    [SerializeField] private PlayerStatsSO _basePlayerStats;
+    private PlayerStats _playerStats;
 
     [Header("UI")]
     [SerializeField] private GameObject _menu;
@@ -22,6 +23,7 @@ public class MainMenu : MonoBehaviour, ISceeneRoot
     [SerializeField] private Button _loadButton;
     [SerializeField] private TMP_InputField _playerNameInputField;
     private PlayerInputActions _playerInput;
+    public PlayerStats playerStats => _playerStats;
     private GameData _gameData;
 
     public void StartScene(GameData gameData)
@@ -32,7 +34,6 @@ public class MainMenu : MonoBehaviour, ISceeneRoot
         _playerInput.Global.Escape.performed += Escape_performed;
         _menu.SetActive(true);
         UpdateLocalizedText();
-        _defaultGameData.PlayerStats.Initialize(_basePlayerStats);
         if (SaveLoadSystem.GetSaveFiles().Length == 0)
         {
             _loadButton.interactable = false;
@@ -79,14 +80,12 @@ public class MainMenu : MonoBehaviour, ISceeneRoot
         {
             Debug.LogWarning($"Save with name {_playerNameInputField.text}.save already exists!");
         }
-        _playerStats.Initialize(_basePlayerStats);
-        _gameData.Initialize(_playerStats, _defaultGameData.MaxWaveNumber, _defaultGameData.CurrentWaveNumber, _playerNameInputField.text, new ResourceStorage());
+        _gameData.Initialize(new PlayerStats(), _defaultGameData.MaxWaveNumber, _defaultGameData.CurrentWaveNumber, _playerNameInputField.text, new ResourceStorage(Enum.GetNames(typeof(ResourceType))));
         StartGame();
     }
 
     public void LoadGame(string fileName) {
-        _gameData.Initialize(SaveLoadSystem.LoadGame(fileName, _defaultGameData, _playerStats));
-        _playerStats.Initialize(_gameData.PlayerStats);
+        _gameData.Initialize(SaveLoadSystem.LoadGame(fileName, _defaultGameData));
         StartGame();
     }
 

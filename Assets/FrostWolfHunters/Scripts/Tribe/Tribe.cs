@@ -48,7 +48,7 @@ public class Tribe : MonoBehaviour, ISceeneRoot
         {
             Destroy(child.gameObject);
         }
-        foreach (string resourceType in _gameData.ResourceStorage.Resources.Keys)
+        foreach (string resourceType in Enum.GetNames(typeof(ResourceType)))
         {
             GameObject newResource = Instantiate(_resourcePrefab, resourcesContainer.transform);
             newResource.name = resourceType;
@@ -56,7 +56,7 @@ public class Tribe : MonoBehaviour, ISceeneRoot
             TextMeshProUGUI text = newResource.GetComponentInChildren<TextMeshProUGUI>();
             if (text != null)
             {
-                text.text = _gameData.ResourceStorage.Resources[resourceType].ToString();
+                text.text = _gameData.ResourceStorage.GetResourceValueByName(resourceType).ToString();
             }
 
             Image image = newResource.GetComponentInChildren<Image>();
