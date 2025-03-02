@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: PlayerStats
   m_EditorClassIdentifier: 
   MaxHealth: 100
-  CurrentHealth: 100
+  CurrentHealth: 78
   MaxStamina: 110
-  CurrentStamina: 110
+  CurrentStamina: 30
   Damage: 5
   AttackSpeed: 1.4
   Speed: 5
-  Defence: 0
+  Defence: 20

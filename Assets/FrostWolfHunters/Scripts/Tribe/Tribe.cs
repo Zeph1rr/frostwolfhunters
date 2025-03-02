@@ -8,7 +8,6 @@ public class Tribe : MonoBehaviour, ISceeneRoot
 {
     [SerializeField] private GameObject _alertPrefab;
     [SerializeField] private GameObject _resourcePrefab;
-    [SerializeField] private Upgrader _upgrader;
     private Alert _alert;
     private GameData _gameData;
     public void StartScene(GameData gameData)

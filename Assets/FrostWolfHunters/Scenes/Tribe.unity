@@ -719,7 +719,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _alertPrefab: {fileID: 4139750617994164861, guid: 933ea2fb5f47f494e9691254b47f1595, type: 3}
   _resourcePrefab: {fileID: 3849301960412113112, guid: 14fd9c9fff7706c499afc13badcd26cc, type: 3}
-  _upgrader: {fileID: 1873069879}
 --- !u!1 &961948194
 GameObject:
   m_ObjectHideFlags: 0
@@ -731,7 +730,7 @@ GameObject:
   - component: {fileID: 961948195}
   - component: {fileID: 961948196}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: ResourceContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
