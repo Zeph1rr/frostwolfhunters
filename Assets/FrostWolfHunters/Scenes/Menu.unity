@@ -1770,7 +1770,19 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 962723724}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: SetVolume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &433787094
 GameObject:
   m_ObjectHideFlags: 0
@@ -4063,7 +4075,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _resolutionDropdown: {fileID: 782464855}
-  _gameSettings: {fileID: 11400000, guid: f1d94fff65e99064e813a20f91062a03, type: 2}
   _languagesDropdown: {fileID: 1096652430}
   _fullscreenToggle: {fileID: 1062595263}
 --- !u!1 &977312828
@@ -7368,9 +7379,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _defaultGameData: {fileID: 11400000, guid: 26c213f43eff0014a8998d7c2dd74c48, type: 2}
-  _gameData: {fileID: 11400000, guid: bb01be6cf57747d4eb3efe60a6dfb046, type: 2}
-  _playerStats: {fileID: 11400000, guid: 9529e05eca1f1b841b8defc0d19b356f, type: 2}
-  _basePlayerStats: {fileID: 11400000, guid: a7204cea441f5664989e3828dbfc1525, type: 2}
   _menu: {fileID: 860376235}
   _saveSelector: {fileID: 1582893656}
   _playerName: {fileID: 1147377842}
@@ -8151,9 +8159,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6efe1172107fec84da2995edac5fa344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameSettings: {fileID: 11400000, guid: f1d94fff65e99064e813a20f91062a03, type: 2}
-  _defaultSettings: {fileID: 11400000, guid: de48c02d324f88843a3102c1dd3f55a5, type: 2}
-  _sceneRoot: {fileID: 1788734925}
   _gameData: {fileID: 11400000, guid: bb01be6cf57747d4eb3efe60a6dfb046, type: 2}
 --- !u!4 &2011493656
 Transform:

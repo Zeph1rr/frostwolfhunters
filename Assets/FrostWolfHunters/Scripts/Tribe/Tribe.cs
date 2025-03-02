@@ -4,21 +4,23 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class Tribe : MonoBehaviour, ISceeneRoot
+public class Tribe : MonoBehaviour, ISceneCompositeRoot
 {
     [SerializeField] private GameObject _alertPrefab;
     [SerializeField] private GameObject _resourcePrefab;
+    [SerializeField] private Button _saveAndLoadButton;
+    [SerializeField] private Button _startHuntButton;
     private Alert _alert;
     private GameData _gameData;
     public void StartScene(GameData gameData)
     {
         _gameData = gameData;
-        Debug.Log("Tribe");
-        //_gameData.ResourceStorage.PrintResources();
         InitializeResources();
         if (_gameData.IsDead) SendAlert("Dead");
         if (_gameData.IsLeaved) SendAlert("Leave");
         _gameData.ResourceStorage.OnResourcesChanged += HandleResourcesChanged;
+        _saveAndLoadButton.onClick.AddListener(() => GameRoot.Instance.SaveAndLeaveToMainMenu());
+        _startHuntButton.onClick.AddListener(() => GameRoot.Instance.ChangeScene("Gameplay"));
     }
 
     private void OnDestroy()

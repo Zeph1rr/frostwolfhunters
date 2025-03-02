@@ -1,23 +1,44 @@
+using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Zeph1rr.Core.Stats;
 
 public class GameRoot : MonoBehaviour
 {
-    [SerializeField] private GameSettings _gameSettings;
-    [SerializeField] private GameSettings _defaultSettings;
-    [SerializeField] private GameObject _sceneRoot;
+    private GameSettings _gameSettings;
+    public GameDataSaveLoadSystem GameDataSaveLoadSystem {get; private set;}
+    public SettingsSaveLoadSystem SettingsSaveLoadSystem {get; private set;}
+    public GameSettings GameSettings => _gameSettings;
     [SerializeField] private GameData _gameData;
+
+    public static GameRoot Instance {get; private set;}
+
 
     private void Awake()
     {
-        ISceeneRoot sceeneRoot = _sceneRoot.GetComponent<ISceeneRoot>();
-        _gameSettings.Initialize(SaveLoadSystem.LoadSettings(_defaultSettings));
+        GameDataSaveLoadSystem = new(Path.Combine(Application.persistentDataPath, "save"));
+        GameDataSaveLoadSystem.CreateSaveDirectory();
+        SettingsSaveLoadSystem = new(Application.persistentDataPath);
+        GameSettings defaultSettings = new();
+        _gameSettings = SettingsSaveLoadSystem.Load("", defaultSettings);
         LocalizationSystem.SetLanguage(_gameSettings.Language);
         AlertSystem.SetCurrentLanguage(_gameSettings.Language);
         Utils.SetResolution(_gameSettings.CurrentResolution);
         Utils.SetFullScreen(_gameSettings.IsFullscreen);
-        sceeneRoot.StartScene(_gameData);
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        ISceneCompositeRoot sceneRoot = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<ISceneCompositeRoot>().ToArray()[0];
+        sceneRoot.StartScene(_gameData);
     }
 
     public void ChangeScene(string name)
@@ -28,13 +49,12 @@ public class GameRoot : MonoBehaviour
 
     public void SaveAndLeaveToMainMenu()
     {
-        SaveGame();
+        GameDataSaveLoadSystem.Save(_gameData, _gameData.PlayerName);
         ChangeScene("Menu");
     }
 
-    private void SaveGame() {
-        PlayerStatsSerializable playerStats = new(_gameData.PlayerStats);
-        GameDataSerializable gameData = new(_gameData, playerStats);
-        SaveLoadSystem.SaveGame(gameData, _gameData.PlayerName);
+    private void OnDestroy()
+    {  
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

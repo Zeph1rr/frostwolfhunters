@@ -1,8 +1,9 @@
 using System;
 using UnityEngine;
+using Zeph1rr.Core.SaveLoad;
 
 [Serializable]
-public class SettingsSerializable
+public class SettingsSerializable: ISerializableData<GameSettings>
 {
     [SerializeField] private string _currentResolution;
     [SerializeField] private bool _isFullscreen;
@@ -23,10 +24,9 @@ public class SettingsSerializable
         _language = settings.Language;
     }
 
-    public GameSettings Desirialize() 
+    public GameSettings Deserialize() 
     {
-        GameSettings settings = ScriptableObject.CreateInstance<GameSettings>();
-        settings.Initialize(_currentResolution, _isFullscreen, _volume, _language);
+        GameSettings settings = new(_currentResolution, _isFullscreen, _volume, _language);
         return settings;
     }
 }

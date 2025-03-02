@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 using Zeph1rr.Core.Recources;
 using System;
 
-public class MainMenu : MonoBehaviour, ISceeneRoot
+public class MainMenu : MonoBehaviour, ISceneCompositeRoot
 {
     [Header("Stats")]
     [SerializeField] private GameData _defaultGameData;
@@ -25,6 +25,7 @@ public class MainMenu : MonoBehaviour, ISceeneRoot
     private PlayerInputActions _playerInput;
     public PlayerStats playerStats => _playerStats;
     private GameData _gameData;
+    private GameDataSaveLoadSystem _saveLoadSystem;
 
     public void StartScene(GameData gameData)
     {
@@ -34,10 +35,13 @@ public class MainMenu : MonoBehaviour, ISceeneRoot
         _playerInput.Global.Escape.performed += Escape_performed;
         _menu.SetActive(true);
         UpdateLocalizedText();
-        if (SaveLoadSystem.GetSaveFiles().Length == 0)
+        _saveLoadSystem = GameRoot.Instance.GameDataSaveLoadSystem;
+        if (_saveLoadSystem.GetSaveFiles().Length == 0)
         {
             _loadButton.interactable = false;
         }
+        Settings settings = _settings.GetComponent<Settings>();
+        settings.Initialize();
     }
 
     public void QuitGame() {
@@ -49,7 +53,7 @@ public class MainMenu : MonoBehaviour, ISceeneRoot
         _menu.SetActive(false);
         _playerName.SetActive(true);
         UpdateLocalizedText();
-        _playerNameInputField.text = $"{LocalizationSystem.Translate("hunter")}{SaveLoadSystem.GetSaveFiles().Length + 1}";
+        _playerNameInputField.text = $"{LocalizationSystem.Translate("hunter")}{_saveLoadSystem.GetSaveFiles().Length + 1}";
         
     }
 
@@ -76,7 +80,7 @@ public class MainMenu : MonoBehaviour, ISceeneRoot
 
     public void ApplyPlayerName()
     {
-        if (SaveLoadSystem.IsSaveExists(_playerNameInputField.text))
+        if (_saveLoadSystem.IsSaveExists(_playerNameInputField.text))
         {
             Debug.LogWarning($"Save with name {_playerNameInputField.text}.save already exists!");
         }
@@ -85,7 +89,7 @@ public class MainMenu : MonoBehaviour, ISceeneRoot
     }
 
     public void LoadGame(string fileName) {
-        _gameData.Initialize(SaveLoadSystem.LoadGame(fileName, _defaultGameData));
+        _gameData.Initialize(_saveLoadSystem.Load(fileName, _defaultGameData));
         StartGame();
     }
 
@@ -111,7 +115,7 @@ public class MainMenu : MonoBehaviour, ISceeneRoot
 
     private void CreateLoadList()
     {
-        string[] saveFiles = SaveLoadSystem.GetSaveFiles();
+        string[] saveFiles = _saveLoadSystem.GetSaveFiles();
         saveFiles = saveFiles
             .OrderByDescending(file => File.GetLastWriteTime(file)) 
             .ToArray();
@@ -127,12 +131,12 @@ public class MainMenu : MonoBehaviour, ISceeneRoot
 
             Button button = newButton.GetComponent<Button>();
             if (button != null) {
-                button.onClick.AddListener(() => LoadGame(SaveLoadSystem.GetSaveFileName(filePath)));
+                button.onClick.AddListener(() => LoadGame(_saveLoadSystem.GetSaveFileName(filePath)));
             }
 
             TextMeshProUGUI buttonText = newButton.GetComponentInChildren<TextMeshProUGUI>();
             if (buttonText != null) {
-                buttonText.text = $"{Path.GetFileNameWithoutExtension(filePath)} - {SaveLoadSystem.GetSaveFileLastWriteTime(filePath)}"; 
+                buttonText.text = $"{Path.GetFileNameWithoutExtension(filePath)} - {_saveLoadSystem.GetSaveFileLastWriteTime(filePath)}"; 
             }
         }
     }

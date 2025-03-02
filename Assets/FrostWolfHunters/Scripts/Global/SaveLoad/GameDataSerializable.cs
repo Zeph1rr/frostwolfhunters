@@ -1,10 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Zeph1rr.Core.Recources;
+using Zeph1rr.Core.SaveLoad;
 
 [System.Serializable]
-public class GameDataSerializable
+public class GameDataSerializable: ISerializableData<GameData>
 {
     [SerializeField] private int _currentWaveNumber;
     [SerializeField] private int _maxWaveNumber;
@@ -21,7 +20,7 @@ public class GameDataSerializable
         _resources = new(gameData.ResourceStorage);
     }
 
-    public GameData ToGameData() {
+    public GameData Deserialize() {
         GameData gameData = ScriptableObject.CreateInstance<GameData>();
         PlayerStats playerStats = _playerStats.ToPlayerStats();
         ResourceStorage resourceStorage = _resources.ToResourceStorage();

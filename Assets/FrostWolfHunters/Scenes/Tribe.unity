@@ -444,7 +444,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 967972039}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameRoot, Assembly-CSharp
         m_MethodName: ChangeScene
         m_Mode: 5
@@ -719,6 +719,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _alertPrefab: {fileID: 4139750617994164861, guid: 933ea2fb5f47f494e9691254b47f1595, type: 3}
   _resourcePrefab: {fileID: 3849301960412113112, guid: 14fd9c9fff7706c499afc13badcd26cc, type: 3}
+  _saveAndLoadButton: {fileID: 1323358396}
+  _startHuntButton: {fileID: 602866439}
 --- !u!1 &961948194
 GameObject:
   m_ObjectHideFlags: 0
@@ -779,54 +781,6 @@ MonoBehaviour:
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
---- !u!1 &967972038
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 967972040}
-  - component: {fileID: 967972039}
-  m_Layer: 0
-  m_Name: GameRoot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &967972039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 967972038}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6efe1172107fec84da2995edac5fa344, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _gameSettings: {fileID: 11400000, guid: f1d94fff65e99064e813a20f91062a03, type: 2}
-  _defaultSettings: {fileID: 11400000, guid: de48c02d324f88843a3102c1dd3f55a5, type: 2}
-  _sceneRoot: {fileID: 947286333}
-  _gameData: {fileID: 11400000, guid: bb01be6cf57747d4eb3efe60a6dfb046, type: 2}
---- !u!4 &967972040
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 967972038}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1003330672
 GameObject:
   m_ObjectHideFlags: 0
@@ -1181,7 +1135,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 967972039}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameRoot, Assembly-CSharp
         m_MethodName: SaveAndLeaveToMainMenu
         m_Mode: 1
@@ -1378,6 +1332,5 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1765716105}
-  - {fileID: 967972040}
   - {fileID: 947286337}
   - {fileID: 217889417}

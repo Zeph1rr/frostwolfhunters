@@ -5,7 +5,7 @@ using System;
 using Cinemachine;
 using Zeph1rr.Core.Recources;
 
-public class Gameplay : MonoBehaviour, ISceeneRoot
+public class Gameplay : MonoBehaviour, ISceneCompositeRoot
 {
     [Header("GameData")]
     [SerializeField] private GameInput _gameInput;

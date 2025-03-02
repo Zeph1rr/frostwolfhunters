@@ -1,51 +1,55 @@
-using System;
 using UnityEngine;
+using System;
 
-[CreateAssetMenu(fileName = "Settings", menuName = "Game/Settings")]
-public class GameSettings : ScriptableObject
+public class GameSettings
 {
-    [SerializeField] private string _currentResolution;
-    [SerializeField] private bool _isFullscreen;
-    [SerializeField][Range(0,1)] private float _volume;
-    [SerializeField] private string _language;
 
-    public string CurrentResolution => _currentResolution;
-    public bool IsFullscreen => _isFullscreen;
-    public float Volume => _volume;
-    public string Language => _language;
+    public string CurrentResolution {get; private set;}
+    public bool IsFullscreen {get; private set;}
+    public float Volume {get; private set;}
+    public string Language {get; private set;}
 
-    public void Initialize(string currentResolution, bool isFullscreen, float volume, string language)
+    public GameSettings()
     {
-        _currentResolution = currentResolution;
-        _isFullscreen = isFullscreen;
-        _volume = volume;
-        _language = language;
+        CurrentResolution = "1920x1080";
+        IsFullscreen = true;
+        Volume = 1;
+        Language = "English";
     }
 
-    public void Initialize(GameSettings settings) {
-        _currentResolution = settings.CurrentResolution;
-        _isFullscreen = settings.IsFullscreen;
-        _volume = settings.Volume;
-        _language = settings.Language;
+    public GameSettings(string currentResolution, bool isFullscreen, float volume, string language)
+    {
+        CurrentResolution = currentResolution;
+        IsFullscreen = isFullscreen;
+        Volume = volume;
+        Language = language;
+    }
+
+    public GameSettings(GameSettings settings) {
+        CurrentResolution = settings.CurrentResolution;
+        IsFullscreen = settings.IsFullscreen;
+        Volume = settings.Volume;
+        Language = settings.Language;
+        Debug.Log($"{CurrentResolution}, {IsFullscreen}, {Volume}, {Language}");
     }
 
     public void SetVolume(float value)
     {
         if (value < 0 || value > 1) throw new ArgumentOutOfRangeException();
-        _volume = value;
+        Volume = value;
     }
 
     public void SetResolution(string resolution) {
-        _currentResolution = resolution;
+        CurrentResolution = resolution;
     }
 
-    public void setFullscreen(bool fullscreen)
+    public void SetFullscreen(bool fullscreen)
     {
-        _isFullscreen = fullscreen;
+        IsFullscreen = fullscreen;
     }
 
     public void SetLanguage(string language)
     {
-        _language = language;
+        Language = language;
     }
 }

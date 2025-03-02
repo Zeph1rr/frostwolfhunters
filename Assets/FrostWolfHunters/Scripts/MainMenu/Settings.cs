@@ -6,14 +6,15 @@ using UnityEngine.UI;
 public class Settings : MonoBehaviour
 {
     [SerializeField] private TMP_Dropdown _resolutionDropdown;
-    [SerializeField] private GameSettings _gameSettings;
+    private GameSettings _gameSettings;
     [SerializeField] private TMP_Dropdown _languagesDropdown;
     [SerializeField] private Toggle _fullscreenToggle;
     private Resolution[] _resolutions;
     private List<string> _languages;
 
-    private void Start()
+    public void Initialize()
     {
+        _gameSettings = GameRoot.Instance.GameSettings;
         List<string> resolutionOptions = new List<string>();
         _resolutions = Screen.resolutions;
         int currentResolutionIndex = 0;
@@ -26,7 +27,6 @@ public class Settings : MonoBehaviour
             
             if (_resolutions[i].width == int.Parse(currentResolutionData[0]) && _resolutions[i].height == int.Parse(currentResolutionData[1]))
             {
-                Debug.Log(i);
                 currentResolutionIndex = i;
             }
         }
@@ -48,7 +48,7 @@ public class Settings : MonoBehaviour
     public void SetFullscreen(bool isFullscreen)
     {
         Utils.SetFullScreen(isFullscreen);
-        _gameSettings.setFullscreen(isFullscreen);
+        _gameSettings.SetFullscreen(isFullscreen);
     }
 
     public void SetResolution(int resolutionIndex)
@@ -57,6 +57,12 @@ public class Settings : MonoBehaviour
         string resolution_string = resolution.width + "x" + resolution.height;
         Utils.SetResolution(resolution_string);
         _gameSettings.SetResolution(resolution_string);
+    }
+
+    public void SetVolume(float value)
+    {
+        Debug.Log(value);
+        _gameSettings.SetVolume(value);
     }
 
     public void SetLanguage(int languageIndex)
@@ -73,6 +79,6 @@ public class Settings : MonoBehaviour
 
     public void SaveSettings() 
     {
-        SaveLoadSystem.SaveSettings(new SettingsSerializable(_gameSettings));
+        GameRoot.Instance.SettingsSaveLoadSystem.Save(_gameSettings, "");
     }
 }
