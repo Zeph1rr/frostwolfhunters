@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using UnityEngine;
 
@@ -22,6 +23,7 @@ namespace Zeph1rr.Core.Stats
         private static float FindValueByLevel(StatEntry statEntry, int level)
         {
             StatData statData = statEntry.entries.Find(stat => stat.level == level);
+            if (statData == null) throw new ArgumentOutOfRangeException("This stat don't have this level");
             return statData.value;
         }
 

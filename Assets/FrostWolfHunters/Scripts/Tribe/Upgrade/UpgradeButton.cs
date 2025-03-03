@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using Zeph1rr.Core.Stats;
 using UnityEngine.UI;
+using System;
 
 public class UpgradeButton : MonoBehaviour
 {
@@ -19,8 +20,18 @@ public class UpgradeButton : MonoBehaviour
         _resourceStorage = resourceStorage;
         _button = GetComponent<Button>();
         _stat = stat;
+        try
+        {
+            float nextValue = _stat.GetNextValue();
+            _resourceName.text = $"{LocalizationSystem.Translate(_stat.Name)} ({_stat.Value} -> {_stat.GetNextValue()})";
+        } catch (ArgumentOutOfRangeException e) {
+            Debug.Log(e);
+            _resourceName.text = $"{LocalizationSystem.Translate(_stat.Name)} ({_stat.Value} MAX)";
+            _resourceName.color = Color.red;
+            _button.interactable = false;
+        }
         _upgradeName.text = LocalizationSystem.Translate($"{_stat.Name}_upgrade");
-        _resourceName.text = $"{LocalizationSystem.Translate(_stat.Name)} ({_stat.Value} -> {_stat.GetNextValue()})";
+        
 
         TextMeshProUGUI resourceText = _resource.GetComponentInChildren<TextMeshProUGUI>();
         resourceText.text = _stat.GetNextValueCost().ToString();

@@ -16,7 +16,7 @@ public class Wave : MonoBehaviour
     private List<Enemy> _spawnedEnemies = new();
     private Gameplay _compositeRoot;
 
-    private ResourceStorage _resourceStorage = new(Enum.GetNames(typeof(ResourceType)));
+    private ResourceStorage _resourceStorage;
     public ResourceStorage ResourceStorage => _resourceStorage;
 
     private int GetThreatLimit() => _waveMultiplier * _waveNumber;
@@ -30,6 +30,7 @@ public class Wave : MonoBehaviour
         _waveMultiplier = waveMultiplier;
         _compositeRoot = compositeRoot;
         _compositeRoot.OnPausePressed += HandlePause;
+        _resourceStorage = new(Enum.GetNames(typeof(ResourceType)));
     }
 
     public void StartWave()
