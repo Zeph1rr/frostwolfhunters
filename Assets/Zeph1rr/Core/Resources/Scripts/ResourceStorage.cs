@@ -12,19 +12,18 @@ namespace Zeph1rr.Core.Resources
 
         public ResourceStorage(string[] keys)
         {
-            Resources = new();
             ResetResourceStorage(keys);
         }
 
         public ResourceStorage(Dictionary<string, int> resources)
         {
-            Resources = new();
             ResetResourceStorage(resources.Keys.ToArray<string>());
             AddResources(resources);
         }
 
         public void ResetResourceStorage(string[] keys)
         {
+            Resources = new();
             foreach(string key in keys)
             {
                 Resources.Add(new Resource(key, 0));

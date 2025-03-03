@@ -50,8 +50,7 @@ public class UpgradeButton : MonoBehaviour
 
     public void Upgrade()
     {
-        _resourceStorage.SpendResource(_resourceType.ToString(), _stat.GetNextValueCost());
         _stat.Upgrade();
-        Initialize(_stat, _resourceType, _resourceStorage);
+        _resourceStorage.SpendResource(_resourceType.ToString(), _stat.GetNextValueCost());
     }
 }

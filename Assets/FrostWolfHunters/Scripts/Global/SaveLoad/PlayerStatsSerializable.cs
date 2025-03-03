@@ -26,6 +26,7 @@ public class PlayerStatsSerializable
     }
 
     public PlayerStats ToPlayerStats() {
+        PrintStats();
         List<Stat> loadedStats = new()
         {
             new Stat(PlayerStats.StatNames.MaxHealth.ToString(), _maxHealth, 3),
@@ -39,5 +40,17 @@ public class PlayerStatsSerializable
         };
         PlayerStats stats = new(loadedStats);
         return stats;
+    }
+
+    private void PrintStats()
+    {
+        Debug.Log($"_maxHealth: {_maxHealth}");
+        Debug.Log($"_maxStamina: {_maxStamina}");
+        Debug.Log($"_damage: {_damage}");
+        Debug.Log($"_attackSpeed: {_attackSpeed}");
+        Debug.Log($"_speed: {_speed}");
+        Debug.Log($"_defence: {_defence}");
+        Debug.Log($"_critChance: {_critChance}");
+        Debug.Log($"_critMultiplyer: {_critMultiplyer}");
     }
 }

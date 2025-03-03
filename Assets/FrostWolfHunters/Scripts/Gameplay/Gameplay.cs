@@ -100,7 +100,6 @@ public class Gameplay : MonoBehaviour, ISceneCompositeRoot
     }
 
     private void HandleWaveEnd(object sender, ResourceStorage resourceStorage) {
-        resourceStorage.PrintResources();
         _gameData.HuntResourceStorage.AddResources(resourceStorage.Resources);
         OnPausePressed?.Invoke(this, EventArgs.Empty);
         _uiInstance.ShowWinMenu();

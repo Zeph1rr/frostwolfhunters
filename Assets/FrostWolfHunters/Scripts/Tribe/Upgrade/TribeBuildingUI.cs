@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -38,6 +39,7 @@ public class TribeBuildingUI : MonoBehaviour
         _title.text = LocalizationSystem.Translate(name);
         _gameData = gameData;
         InitializeButtons();
+        _gameData.ResourceStorage.OnResourcesChanged += HandleResourceChanged;
     }
 
     public void CloseWindow()
@@ -45,8 +47,22 @@ public class TribeBuildingUI : MonoBehaviour
         Destroy(gameObject);
     }
 
+    private void OnDestroy()
+    {
+        _gameData.ResourceStorage.OnResourcesChanged -= HandleResourceChanged;
+    }
+
+    private void HandleResourceChanged(object sender, EventArgs e)
+    {
+        InitializeButtons();
+    }
+
     private void InitializeButtons()
     {
+        foreach (Transform child in _shopButtonContainer.transform)
+        {
+            Destroy(child.gameObject);
+        }
         foreach(PlayerStats.StatNames stat in _hutToStats[_hutName])
         {
             UpgradeButton buttonInstance = Instantiate(_shopButtonPrefab, _shopButtonContainer.transform).GetComponent<UpgradeButton>();

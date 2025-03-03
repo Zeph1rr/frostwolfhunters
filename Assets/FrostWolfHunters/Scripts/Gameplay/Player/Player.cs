@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
         _compositeRoot = compositeRoot;
         _compositeRoot.OnPausePressed += TogglePause;
         _weapon = Instantiate(_weaponPrefab, transform);
-        _weapon.Initialize(this, _characterStats.GetStatValue(PlayerStats.StatNames.Damage));
+        _weapon.Initialize(this, _characterStats);
     }
 
     private void TogglePause(object sender, EventArgs e)
