@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Zeph1rr.Core.Recources;
+using Zeph1rr.Core.Resources;
 
 public class Wave : MonoBehaviour
 {

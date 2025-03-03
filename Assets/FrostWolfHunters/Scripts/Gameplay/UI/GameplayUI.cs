@@ -3,7 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Zeph1rr.Core.Recources;
+using Zeph1rr.Core.Resources;
 
 
 public class GameplayUI : MonoBehaviour

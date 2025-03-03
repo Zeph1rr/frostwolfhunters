@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Zeph1rr.Core.Recources
+namespace Zeph1rr.Core.Resources
 {
     public class ResourceStorage
     {

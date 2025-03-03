@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using System;
 using Cinemachine;
-using Zeph1rr.Core.Recources;
+using Zeph1rr.Core.Resources;
 
 public class Gameplay : MonoBehaviour, ISceneCompositeRoot
 {
@@ -157,6 +157,7 @@ public class Gameplay : MonoBehaviour, ISceneCompositeRoot
             _gameData.Leave();
         }
         _gameData.ResourceStorage.AddResources(_gameData.HuntResourceStorage.Resources);
+        _gameData.HuntResourceStorage.ResetResourceStorage(Enum.GetNames(typeof(ResourceType)));
         _gameData.ResourceStorage.PrintResources();
         SceneManager.LoadScene("Tribe");
     }

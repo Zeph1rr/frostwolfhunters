@@ -1,5 +1,5 @@
 using System;
-using Zeph1rr.Core.Recources;
+using Zeph1rr.Core.Resources;
 
 public class GameData
 {
@@ -96,5 +96,10 @@ public class GameData
     {
         _isLeaved = false;
         _isDead = false;
+    }
+
+    public GameDataSerializable ToGameDataSerializable()
+    {
+        return new(this, new PlayerStatsSerializable(_playerStats));
     }
 }

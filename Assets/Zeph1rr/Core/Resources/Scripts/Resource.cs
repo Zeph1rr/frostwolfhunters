@@ -1,9 +1,9 @@
 using System;
 using UnityEngine;
 
-namespace Zeph1rr.Core.Recources
+namespace Zeph1rr.Core.Resources
 {
-    [System.Serializable]
+    [Serializable]
     public class Resource
     {
         private string _name;

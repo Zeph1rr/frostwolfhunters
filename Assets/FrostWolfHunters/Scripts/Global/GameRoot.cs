@@ -2,12 +2,13 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Zeph1rr.Core.SaveLoad;
 
 public class GameRoot : MonoBehaviour
 {
     private GameSettings _gameSettings;
-    public GameDataSaveLoadSystem GameDataSaveLoadSystem {get; private set;}
-    public SettingsSaveLoadSystem SettingsSaveLoadSystem {get; private set;}
+    public BinarySaveLoadSystem<GameData, GameDataSerializable> GameDataSaveLoadSystem {get; private set;}
+    public JsonSaveLoadSystem<GameSettings, SettingsSerializable> SettingsSaveLoadSystem {get; private set;}
     public GameSettings GameSettings => _gameSettings;
     private GameData _gameData;
 
@@ -20,7 +21,11 @@ public class GameRoot : MonoBehaviour
         GameDataSaveLoadSystem.CreateSaveDirectory();
         SettingsSaveLoadSystem = new(Application.persistentDataPath);
         GameSettings defaultSettings = new();
-        _gameSettings = SettingsSaveLoadSystem.Load("", defaultSettings);
+        _gameSettings = SettingsSaveLoadSystem.Load("settings", defaultSettings);
+        if (_gameSettings == defaultSettings)
+        {
+            SettingsSaveLoadSystem.Save(new SettingsSerializable(defaultSettings), "settings");
+        }
         LocalizationSystem.SetLanguage(_gameSettings.Language);
         AlertSystem.SetCurrentLanguage(_gameSettings.Language);
         Utils.SetResolution(_gameSettings.CurrentResolution);
@@ -49,7 +54,7 @@ public class GameRoot : MonoBehaviour
 
     public void SaveAndLeaveToMainMenu()
     {
-        GameDataSaveLoadSystem.Save(_gameData, _gameData.PlayerName);
+        GameDataSaveLoadSystem.Save(_gameData.ToGameDataSerializable(), _gameData.PlayerName);
         ChangeScene("Menu");
     }
 

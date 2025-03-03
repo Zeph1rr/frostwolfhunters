@@ -79,6 +79,6 @@ public class Settings : MonoBehaviour
 
     public void SaveSettings() 
     {
-        GameRoot.Instance.SettingsSaveLoadSystem.Save(_gameSettings, "");
+        GameRoot.Instance.SettingsSaveLoadSystem.Save(new SettingsSerializable(_gameSettings), "settings");
     }
 }

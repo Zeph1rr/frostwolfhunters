@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Zeph1rr.Core.SaveLoad
 {
-    public abstract class SaveLoadSystem<T>
+    public abstract class SaveLoadSystem<T, C> where C: ISerializableData<T>
     {
         public string SaveDirectory {get; private set;}
 
@@ -23,7 +23,7 @@ namespace Zeph1rr.Core.SaveLoad
             return File.Exists(Path.Combine(SaveDirectory, $"{playerName}.save"));
         }
 
-        public abstract void Save(T data, string saveFileName);
+        public abstract void Save(ISerializableData<T> data, string saveFileName);
 
         public abstract T Load(string saveFileName, T defaultData);
 

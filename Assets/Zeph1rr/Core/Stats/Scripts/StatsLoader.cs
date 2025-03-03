@@ -27,7 +27,7 @@ namespace Zeph1rr.Core.Stats
 
         private static void LoadStats()
         {
-            TextAsset jsonFile = Resources.Load<TextAsset>("Stats/stats");
+            TextAsset jsonFile = UnityEngine.Resources.Load<TextAsset>("Stats/stats");
             if (jsonFile == null) throw new FileNotFoundException("Can't find recource /Stats/stats.json");
             
             _stats = JsonUtility.FromJson<StatEntryList>(jsonFile.text);

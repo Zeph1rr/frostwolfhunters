@@ -5,8 +5,7 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using System.Linq;
 using UnityEngine.InputSystem;
-using Zeph1rr.Core.Recources;
-using System;
+using Zeph1rr.Core.SaveLoad;
 
 public class MainMenu : MonoBehaviour, ISceneCompositeRoot
 {
@@ -23,7 +22,7 @@ public class MainMenu : MonoBehaviour, ISceneCompositeRoot
     private PlayerInputActions _playerInput;
     public PlayerStats playerStats => _playerStats;
     private GameData _gameData;
-    private GameDataSaveLoadSystem _saveLoadSystem;
+    private BinarySaveLoadSystem<GameData, GameDataSerializable> _saveLoadSystem;
 
     public void StartScene(GameData gameData)
     {

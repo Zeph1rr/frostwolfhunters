@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using Zeph1rr.Core.Recources;
+using Zeph1rr.Core.Resources;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public class Enemy : MonoBehaviour
@@ -48,6 +48,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    // todo: Remove random resource choose
     public virtual void Initialize(Player player, ResourceStorage resourceStorage) {
         _rigidBody = GetComponent<Rigidbody2D>();
 
@@ -57,6 +58,9 @@ public class Enemy : MonoBehaviour
         _stats = ScriptableObject.CreateInstance<EnemyStatsSo>();
         _stats.Initialize(_initialStats);
         _resourceStorage = resourceStorage;
+        Array values = Enum.GetValues(typeof(ResourceType));
+        System.Random random = new();
+        _stats.Resource = (ResourceType) values.GetValue(random.Next(values.Length));
     }
 
     private void OnDestroy() {

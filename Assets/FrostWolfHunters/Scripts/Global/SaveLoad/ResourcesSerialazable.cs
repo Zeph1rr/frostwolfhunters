@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Zeph1rr.Core.Recources;
+using Zeph1rr.Core.Resources;
 
 [System.Serializable]
 public class ResourcesSerialazable

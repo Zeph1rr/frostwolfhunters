@@ -1,5 +1,5 @@
 using UnityEngine;
-using Zeph1rr.Core.Recources;
+using Zeph1rr.Core.Resources;
 using Zeph1rr.Core.SaveLoad;
 
 [System.Serializable]
