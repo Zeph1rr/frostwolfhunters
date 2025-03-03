@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,6 +7,7 @@ public class StaminaBar : MonoBehaviour
 {
     private Player _player;
     private Image _staminaBar;
+    private TextMeshProUGUI _text;
 
     public void Initialize(Player player) 
     {
@@ -13,6 +15,8 @@ public class StaminaBar : MonoBehaviour
         _player = player;
         _player.OnStaminaChanged += HandleStaminaChanged;
         _staminaBar.fillAmount = _player.CurrentStamina / _player.CharacterStats.GetStatValue(PlayerStats.StatNames.MaxStamina);
+        _text = GetComponentInChildren<TextMeshProUGUI>();
+        _text.text = $"{_player.CurrentStamina}/{player.CharacterStats.GetStatValue(PlayerStats.StatNames.MaxStamina)}";
     }
 
     private void OnDestroy()
@@ -23,5 +27,6 @@ public class StaminaBar : MonoBehaviour
     private void HandleStaminaChanged(object sender, StatChangedArgs e)
     {
         _staminaBar.fillAmount = e.CurrentValue / e.MaxValue;
+        _text.text = $"{e.CurrentValue}/{e.MaxValue}";
     }
 }

@@ -22,7 +22,27 @@
                 { "key": "pause", "value": "Pause"},
                 { "key": "retry", "value": "Retry"},
                 { "key": "wave_lost", "value": "You are on the brink of death!"},
-                { "key": "understood", "value": "Ok"}
+                { "key": "understood", "value": "Ok"},
+                { "key": "chief_hut", "value": "Chief hut"},
+                { "key": "priest_hut", "value": "Priest hut"},
+                { "key": "shaman_hut", "value": "Shaman hut"},
+                { "key": "wolf_hut", "value": "Wolf hut"},
+                { "key": "MaxHealth", "value": "Health"},
+                { "key": "MaxStamina", "value": "Stamina"},
+                { "key": "AtackSpeed", "value": "Attack Cooldown"},
+                { "key": "Damage", "value": "Damage"},
+                { "key": "Defence", "value": "Defence"},
+                { "key": "Speed", "value": "Speed"},
+                { "key": "CritChance", "value": "Crit Chance"},
+                { "key": "CritMultiplyer", "value": "Crit Damage"},
+                { "key": "MaxHealth_upgrade", "value": "Night in an Ice Cave"},
+                { "key": "MaxStamina_upgrade", "value": "Ritual Dance Until Dawn"},
+                { "key": "AtackSpeed_upgrade", "value": "Training with Two Axes in a Blizzard"},
+                { "key": "Damage_upgrade", "value": "Strength Training"},
+                { "key": "Defence_upgrade", "value": "Armor Fitting"},
+                { "key": "Speed_upgrade", "value": "Leap Across an Ice Chasm"},
+                { "key": "CritChance_upgrade", "value": "Training in the Dark" },
+                { "key": "CritMultiplyer_upgrade", "value": "Prayer to the Spirit of the Wolf"}
             ]
         },
         {
@@ -47,7 +67,27 @@
                 { "key": "pause", "value": "Пауза"},
                 { "key": "retry", "value": "Попробовать снова"},
                 { "key": "wave_lost", "value": "Вы на гране смерти!"},
-                { "key": "understood", "value": "Понятно"}
+                { "key": "understood", "value": "Понятно"},
+                { "key": "chief_hut", "value": "Шатер вождя"},
+                { "key": "priest_hut", "value": "Шатер жрицы"},
+                { "key": "shaman_hut", "value": "Шатер шамана"},
+                { "key": "wolf_hut", "value": "Псарни"},
+                { "key": "MaxHealth", "value": "Здоровье"},
+                { "key": "MaxStamina", "value": "Выносливость"},
+                { "key": "AtackSpeed", "value": "Перезарядка атаки"},
+                { "key": "Damage", "value": "Урон"},
+                { "key": "Defence", "value": "Защита"},
+                { "key": "Speed", "value": "Скорость"},
+                { "key": "CritChance", "value": "Шанс крита"},
+                { "key": "CritMultiplyer", "value": "Критический урон"},
+                { "key": "MaxHealth_upgrade", "value": "Ночь в ледяной пещере"},
+                { "key": "MaxStamina_upgrade", "value": "Ритуальный танец до рассвета"},
+                { "key": "AtackSpeed_upgrade", "value": "Тренировка с двумя топорами в метель"},
+                { "key": "Damage_upgrade", "value": "Силовая тренировка"},
+                { "key": "Defence_upgrade", "value": "Подгонка доспеха"},
+                { "key": "Speed_upgrade", "value": "Прыжок через ледяную пропасть"},
+                { "key": "CritChance_upgrade", "value": "Тренировка в темноте"},
+                { "key": "CritMultiplyer_upgrade", "value": "Молитва духу волка"}
             ]
         }
     ]

@@ -8,8 +8,10 @@ public class Tribe : MonoBehaviour, ISceneCompositeRoot
 {
     [SerializeField] private GameObject _alertPrefab;
     [SerializeField] private GameObject _resourcePrefab;
+    [SerializeField] private GameObject _tribeBuildingPrefab;
     [SerializeField] private Button _saveAndLoadButton;
     [SerializeField] private Button _startHuntButton;
+    
     private Alert _alert;
     private GameData _gameData;
     public void StartScene(GameData gameData)
@@ -21,6 +23,12 @@ public class Tribe : MonoBehaviour, ISceneCompositeRoot
         _gameData.ResourceStorage.OnResourcesChanged += HandleResourcesChanged;
         _saveAndLoadButton.onClick.AddListener(() => GameRoot.Instance.SaveAndLeaveToMainMenu());
         _startHuntButton.onClick.AddListener(() => GameRoot.Instance.ChangeScene("Gameplay"));
+    }
+
+    public void OpenTribeBuilding(string name)
+    {
+        TribeBuildingUI tribeBuilding = Instantiate(_tribeBuildingPrefab, transform). GetComponent<TribeBuildingUI>();
+        tribeBuilding.Initialize(name, _gameData);
     }
 
     private void OnDestroy()
