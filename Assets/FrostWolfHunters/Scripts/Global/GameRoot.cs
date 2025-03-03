@@ -54,8 +54,13 @@ public class GameRoot : MonoBehaviour
 
     public void SaveAndLeaveToMainMenu()
     {
-        GameDataSaveLoadSystem.Save(_gameData.ToGameDataSerializable(), _gameData.PlayerName);
+        SaveGame();
         ChangeScene("Menu");
+    }
+
+    public void SaveGame()
+    {
+        GameDataSaveLoadSystem.Save(_gameData.ToGameDataSerializable(), _gameData.PlayerName);
     }
 
     public void SetGameData(GameData gameData)

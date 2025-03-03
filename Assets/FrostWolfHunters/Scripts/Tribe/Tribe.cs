@@ -31,6 +31,11 @@ public class Tribe : MonoBehaviour, ISceneCompositeRoot
         tribeBuilding.Initialize(name, _gameData);
     }
 
+    private void OnApplicationQuit()
+    {
+        GameRoot.Instance.SaveGame();
+    }
+
     private void OnDestroy()
     {
         _gameData.ResourceStorage.OnResourcesChanged -= HandleResourcesChanged;
