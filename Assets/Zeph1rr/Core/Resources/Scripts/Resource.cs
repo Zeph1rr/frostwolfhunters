@@ -32,6 +32,10 @@ namespace Zeph1rr.Core.Resources
             {
                 throw new ArgumentOutOfRangeException("Value cannot be negative!");
             }
+            if (value > _value)
+            {
+                throw new ArgumentOutOfRangeException($"You don't have enough {_value}");
+            }
             _value -= value;
         }
 
