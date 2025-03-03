@@ -9,7 +9,7 @@ public class GameRoot : MonoBehaviour
     public GameDataSaveLoadSystem GameDataSaveLoadSystem {get; private set;}
     public SettingsSaveLoadSystem SettingsSaveLoadSystem {get; private set;}
     public GameSettings GameSettings => _gameSettings;
-    [SerializeField] private GameData _gameData;
+    private GameData _gameData;
 
     public static GameRoot Instance {get; private set;}
 
@@ -51,6 +51,11 @@ public class GameRoot : MonoBehaviour
     {
         GameDataSaveLoadSystem.Save(_gameData, _gameData.PlayerName);
         ChangeScene("Menu");
+    }
+
+    public void SetGameData(GameData gameData)
+    {
+        _gameData = gameData;
     }
 
     private void OnDestroy()

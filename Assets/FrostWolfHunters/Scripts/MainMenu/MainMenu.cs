@@ -10,8 +10,6 @@ using System;
 
 public class MainMenu : MonoBehaviour, ISceneCompositeRoot
 {
-    [Header("Stats")]
-    [SerializeField] private GameData _defaultGameData;
     private PlayerStats _playerStats;
 
     [Header("UI")]
@@ -84,12 +82,12 @@ public class MainMenu : MonoBehaviour, ISceneCompositeRoot
         {
             Debug.LogWarning($"Save with name {_playerNameInputField.text}.save already exists!");
         }
-        _gameData.Initialize(new PlayerStats(), _defaultGameData.MaxWaveNumber, _defaultGameData.CurrentWaveNumber, _playerNameInputField.text, new ResourceStorage(Enum.GetNames(typeof(ResourceType))));
+        _gameData = new(_playerNameInputField.text);
         StartGame();
     }
 
     public void LoadGame(string fileName) {
-        _gameData.Initialize(_saveLoadSystem.Load(fileName, _defaultGameData));
+        _gameData = new GameData(_saveLoadSystem.Load(fileName, new GameData()));
         StartGame();
     }
 
@@ -142,6 +140,7 @@ public class MainMenu : MonoBehaviour, ISceneCompositeRoot
     }
 
     private void StartGame() {
+        GameRoot.Instance.SetGameData(_gameData);
         SceneManager.LoadScene("Tribe");
     }
 }

@@ -21,10 +21,9 @@ public class GameDataSerializable: ISerializableData<GameData>
     }
 
     public GameData Deserialize() {
-        GameData gameData = ScriptableObject.CreateInstance<GameData>();
         PlayerStats playerStats = _playerStats.ToPlayerStats();
         ResourceStorage resourceStorage = _resources.ToResourceStorage();
-        gameData.Initialize(playerStats, _maxWaveNumber, _currentWaveNumber, _playerName, resourceStorage);
+        GameData gameData = new(playerStats, _maxWaveNumber, _currentWaveNumber, _playerName, resourceStorage);
         return gameData;
     }
 

@@ -1,22 +1,17 @@
 using System;
-using UnityEngine;
 using Zeph1rr.Core.Recources;
 
-[CreateAssetMenu(fileName = "GameData", menuName = "Game/GameData")]
-public class GameData : ScriptableObject
+public class GameData
 {
-    [Header("Savable")]
     private PlayerStats _playerStats;
-    [SerializeField] private int _currentWaveNumber = 1;
-    [SerializeField] private int _maxWaveNumber = 1;
-    [SerializeField] private string _playerName;
-    [SerializeField] private ResourceStorage _resourceStorage;
-    [Header("Unsavable")]
-    [SerializeField] private ResourceStorage _huntResourceStorage;
-    [SerializeField] private bool _isDead;
-    [SerializeField] private bool _isLeaved;
-
-
+    private int _currentWaveNumber;
+    private int _maxWaveNumber;
+    private string _playerName;
+    private ResourceStorage _resourceStorage;
+    private ResourceStorage _huntResourceStorage;
+    private bool _isDead;
+    private bool _isLeaved;
+    
     public PlayerStats PlayerStats => _playerStats;
     public int CurrentWaveNumber => _currentWaveNumber;
     public int MaxWaveNumber => _maxWaveNumber;
@@ -26,7 +21,19 @@ public class GameData : ScriptableObject
     public bool IsDead => _isDead;
     public bool IsLeaved => _isLeaved;
 
-    public void Initialize(PlayerStats playerStats, int maxWaveNumber, int currentWaveNumber, string playerName, ResourceStorage resourceStorage)
+    public GameData()
+    {
+        _playerStats = new();
+        _maxWaveNumber = 1;
+        _currentWaveNumber = 1;
+        _playerName = "hunter";
+        _resourceStorage = new(Enum.GetNames(typeof(ResourceType)));
+        _huntResourceStorage = new(Enum.GetNames(typeof(ResourceType)));
+        _isDead = false;
+        _isLeaved = false;
+    }
+
+    public GameData(PlayerStats playerStats, int maxWaveNumber, int currentWaveNumber, string playerName, ResourceStorage resourceStorage)
     {
         _playerStats = playerStats;
         _maxWaveNumber = maxWaveNumber;
@@ -38,7 +45,7 @@ public class GameData : ScriptableObject
         _isLeaved = false;
     }
 
-    public void Initialize(GameData gameData) {
+    public GameData(GameData gameData) {
         _playerStats = gameData.PlayerStats;
         _maxWaveNumber = gameData.MaxWaveNumber;
         _currentWaveNumber = gameData.CurrentWaveNumber;
@@ -47,6 +54,18 @@ public class GameData : ScriptableObject
         _huntResourceStorage = gameData.HuntResourceStorage;
         _isDead = gameData.IsDead;
         _isLeaved = gameData.IsLeaved;
+    }
+
+    public GameData(string playerName)
+    {
+        _playerStats = new();
+        _maxWaveNumber = 1;
+        _currentWaveNumber = 1;
+        _playerName = playerName;
+        _resourceStorage = new(Enum.GetNames(typeof(ResourceType)));
+        _huntResourceStorage = new(Enum.GetNames(typeof(ResourceType)));
+        _isDead = false;
+        _isLeaved = false;
     }
 
     public void IncreaseWaveNumber()
@@ -78,9 +97,4 @@ public class GameData : ScriptableObject
         _isLeaved = false;
         _isDead = false;
     }
-
-    private void OnEnable()
-    {
-        if (_playerStats == null) _playerStats = new();
-    } 
 }
