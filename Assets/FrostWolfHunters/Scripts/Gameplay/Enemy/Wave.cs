@@ -35,6 +35,11 @@ public class Wave : MonoBehaviour
 
     public void StartWave()
     {
+        StartCoroutine(SpawnEnemies());
+    }
+
+    private System.Collections.IEnumerator SpawnEnemies()
+    {
         int remainingThreat = GetThreatLimit();
 
         // Если волна кратна 5, выбираем и спавним босса
@@ -45,6 +50,7 @@ public class Wave : MonoBehaviour
             {
                 remainingThreat -= boss.ThreatLevel;
                 SpawnEnemy(boss);
+                yield return new WaitForSeconds(0.5f);
             }
         }
 
@@ -55,6 +61,7 @@ public class Wave : MonoBehaviour
 
             remainingThreat -= enemyToSpawn.ThreatLevel;
             SpawnEnemy(enemyToSpawn);
+            yield return new WaitForSeconds(0.5f);
         }
 
         Debug.Log($"Wave {_waveNumber} started! Total enemies: {_spawnedEnemies.Count}");

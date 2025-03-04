@@ -31,6 +31,8 @@ public class Gameplay : MonoBehaviour, ISceneCompositeRoot
     private Wave _waveInstance;
     private GameplayUI _uiInstance;
     private GameData _gameData;
+
+    private bool _waveFinished;
     
     public void StartScene(GameData gameData)
     {
@@ -39,6 +41,7 @@ public class Gameplay : MonoBehaviour, ISceneCompositeRoot
         InitializeEnemy();
         InitializeUI();
         InitializeCamera();
+        _waveFinished = false;
     }
 
     public void Unpause()
@@ -99,6 +102,8 @@ public class Gameplay : MonoBehaviour, ISceneCompositeRoot
     }
 
     private void HandleWaveEnd(object sender, ResourceStorage resourceStorage) {
+        if (_waveFinished) return;
+        _waveFinished = true;
         _gameData.HuntResourceStorage.AddResources(resourceStorage.Resources);
         OnPausePressed?.Invoke(this, EventArgs.Empty);
         _uiInstance.ShowWinMenu();
@@ -129,7 +134,9 @@ public class Gameplay : MonoBehaviour, ISceneCompositeRoot
         _uiInstance.OnSceneQuit += HandleSceneQuit;
     }
 
-    private void HandlePlayerDie(object sender, EventArgs e) {        
+    private void HandlePlayerDie(object sender, EventArgs e) {  
+        if (_waveFinished) return;
+        _waveFinished = true;      
         OnPausePressed?.Invoke(this, EventArgs.Empty);
         _gameData.HuntResourceStorage.AddResources(_waveInstance.ResourceStorage.Resources);
         _gameData.Die();
