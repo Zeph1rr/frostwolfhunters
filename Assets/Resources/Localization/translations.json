@@ -66,7 +66,7 @@
                 { "key": "wave_win", "value": "Волна пройдена!"},
                 { "key": "pause", "value": "Пауза"},
                 { "key": "retry", "value": "Попробовать снова"},
-                { "key": "wave_lost", "value": "Вы на гране смерти!"},
+                { "key": "wave_lost", "value": "Вы на грани смерти!"},
                 { "key": "understood", "value": "Понятно"},
                 { "key": "chief_hut", "value": "Шатер вождя"},
                 { "key": "priest_hut", "value": "Шатер жрицы"},

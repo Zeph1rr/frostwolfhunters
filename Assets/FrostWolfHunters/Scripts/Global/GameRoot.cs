@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Linq;
 using UnityEngine;
@@ -48,7 +49,11 @@ public class GameRoot : MonoBehaviour
 
     public void ChangeScene(string name)
     {
-        if (name == "Gameplay") _gameData.ResetWaveNumber();
+        if (name == "Gameplay")
+        {
+            _gameData.ResetWaveNumber();
+            _gameData.HuntResourceStorage.ResetResourceStorage(Enum.GetNames(typeof(ResourceType)));
+        } 
         SceneManager.LoadScene(name);
     }
 

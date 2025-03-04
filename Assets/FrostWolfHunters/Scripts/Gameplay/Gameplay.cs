@@ -35,7 +35,6 @@ public class Gameplay : MonoBehaviour, ISceneCompositeRoot
     public void StartScene(GameData gameData)
     {
         _gameData = gameData;
-        _gameData.HuntResourceStorage.ResetResourceStorage(Enum.GetNames(typeof(ResourceType)));
         InitializePlayer();
         InitializeEnemy();
         InitializeUI();
