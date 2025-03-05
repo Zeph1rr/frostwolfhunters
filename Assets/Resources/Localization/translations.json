@@ -46,7 +46,7 @@
             ]
         },
         {
-            "language": "Русский",
+            "language": "Russian",
             "entries": [
                 { "key": "new_game", "value": "Новая игра" },
                 { "key": "load_game", "value": "Загрузить игру" },

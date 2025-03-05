@@ -41,6 +41,7 @@ public class Gameplay : MonoBehaviour, ISceneCompositeRoot
         InitializeEnemy();
         InitializeUI();
         InitializeCamera();
+        // КОСТЫЛЬ ПЕРЕДЕЛАТЬ
         _waveFinished = false;
     }
 

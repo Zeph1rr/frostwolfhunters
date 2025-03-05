@@ -18,28 +18,34 @@ public class GameRoot : MonoBehaviour
 
     private void Awake()
     {
-        GameDataSaveLoadSystem = new(Path.Combine(Application.persistentDataPath, "save"));
-        GameDataSaveLoadSystem.CreateSaveDirectory();
-        SettingsSaveLoadSystem = new(Application.persistentDataPath);
-        GameSettings defaultSettings = new();
-        _gameSettings = SettingsSaveLoadSystem.Load("settings", defaultSettings);
-        if (_gameSettings == defaultSettings)
-        {
-            SettingsSaveLoadSystem.Save(new SettingsSerializable(defaultSettings), "settings");
-        }
-        LocalizationSystem.SetLanguage(_gameSettings.Language);
-        AlertSystem.SetCurrentLanguage(_gameSettings.Language);
-        Utils.SetResolution(_gameSettings.CurrentResolution);
-        Utils.SetFullScreen(_gameSettings.IsFullscreen);
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
         Instance = this;
+
+        GameDataSaveLoadSystem = new(Path.Combine(Application.persistentDataPath, "save"));
+        GameDataSaveLoadSystem.CreateSaveDirectory();
+
+        SettingsSaveLoadSystem = new(Application.persistentDataPath);
+
+        GameSettings defaultSettings = new();
+        _gameSettings = SettingsSaveLoadSystem.Load("settings", defaultSettings);
+        if (_gameSettings == defaultSettings)
+        {
+            SettingsSaveLoadSystem.Save(new SettingsSerializable(defaultSettings), "settings");
+        }
+
+        LocalizationSystem.SetLanguage(_gameSettings.Language);
+        AlertSystem.SetCurrentLanguage(_gameSettings.Language);
+        Utils.SetResolution(_gameSettings.CurrentResolution);
+        Utils.SetFullScreen(_gameSettings.IsFullscreen);
+
         DontDestroyOnLoad(gameObject);
+
         SceneManager.sceneLoaded += OnSceneLoaded;
-    }
+    }   
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {

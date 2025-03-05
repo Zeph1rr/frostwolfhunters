@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Linq;
 
 public class GameSettings
 {
@@ -14,7 +15,13 @@ public class GameSettings
         CurrentResolution = "1920x1080";
         IsFullscreen = true;
         Volume = 1;
-        Language = "English";
+        if (LocalizationSystem.GetAllKeys().Any(entry => entry == Application.systemLanguage.ToString()))
+        {
+            Language = Application.systemLanguage.ToString();
+        } else {
+            Language = "English";
+        }
+        Debug.Log(Language);
     }
 
     public GameSettings(string currentResolution, bool isFullscreen, float volume, string language)
