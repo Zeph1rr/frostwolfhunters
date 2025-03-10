@@ -1,22 +1,23 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zeph1rr.FrostWolfHunters.Hunt;
 
 [RequireComponent(typeof(Image))]
 public class StaminaBar : MonoBehaviour
 {
-    private Player _player;
+    private Hunter _player;
     private Image _staminaBar;
     private TextMeshProUGUI _text;
 
-    public void Initialize(Player player) 
+    public void Initialize(Hunter player) 
     {
         _staminaBar = GetComponent<Image>();
+        _text = GetComponentInChildren<TextMeshProUGUI>();
         _player = player;
         _player.OnStaminaChanged += HandleStaminaChanged;
-        _staminaBar.fillAmount = _player.CurrentStamina / _player.CharacterStats.GetStatValue(PlayerStats.StatNames.MaxStamina);
-        _text = GetComponentInChildren<TextMeshProUGUI>();
-        _text.text = $"{_player.CurrentStamina}/{player.CharacterStats.GetStatValue(PlayerStats.StatNames.MaxStamina)}";
+        SetVisual();
     }
 
     private void OnDestroy()
@@ -24,9 +25,14 @@ public class StaminaBar : MonoBehaviour
         _player.OnStaminaChanged -= HandleStaminaChanged;
     }
 
-    private void HandleStaminaChanged(object sender, StatChangedArgs e)
+    private void HandleStaminaChanged(object sender, EventArgs e)
     {
-        _staminaBar.fillAmount = e.CurrentValue / e.MaxValue;
-        _text.text = $"{e.CurrentValue}/{e.MaxValue}";
+        SetVisual();
+    }
+
+    private void SetVisual()
+    {
+        _staminaBar.fillAmount = _player.CurrentStamina / _player.CharacterStats.GetStatValue(PlayerStats.StatNames.MaxStamina);
+        _text.text = $"{_player.CurrentStamina}/{_player.CharacterStats.GetStatValue(PlayerStats.StatNames.MaxStamina)}";
     }
 }

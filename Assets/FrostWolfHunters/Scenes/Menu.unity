@@ -1217,7 +1217,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 143.99976, y: -97.999756}
+  m_AnchoredPosition: {x: 144, y: -97.999756}
   m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &166861489
@@ -7378,7 +7378,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e0b64be828cee44283731f5f1ef465d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defaultGameData: {fileID: 11400000, guid: 26c213f43eff0014a8998d7c2dd74c48, type: 2}
   _menu: {fileID: 860376235}
   _saveSelector: {fileID: 1582893656}
   _playerName: {fileID: 1147377842}
@@ -8159,7 +8158,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6efe1172107fec84da2995edac5fa344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameData: {fileID: 11400000, guid: bb01be6cf57747d4eb3efe60a6dfb046, type: 2}
 --- !u!4 &2011493656
 Transform:
   m_ObjectHideFlags: 0

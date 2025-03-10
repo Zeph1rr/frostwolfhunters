@@ -1,5 +1,7 @@
 using System.Collections;
 using UnityEngine;
+using Zeph1rr.Core.Monos;
+using Zeph1rr.FrostWolfHunters.Hunt;
 
 [RequireComponent(typeof(PolygonCollider2D))]
 public class EnemyMeleeAttack : MonoBehaviour
@@ -36,10 +38,14 @@ public class EnemyMeleeAttack : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (_enemy.IsDead) return;
-        Player player = collision.GetComponent<Player>();
-        if (player != null)
+        CreatureBehaviour behaviour = collision.GetComponent<CreatureBehaviour>();
+        if (behaviour != null)
         {
-            player.TakeDamage(_damage);
+            if (behaviour.ParentObject.GetType() == typeof(Hunter))
+            {
+                Hunter player = (Hunter)behaviour.ParentObject;
+                player.TakeDamage(_damage);
+            }
         }
     }
 }

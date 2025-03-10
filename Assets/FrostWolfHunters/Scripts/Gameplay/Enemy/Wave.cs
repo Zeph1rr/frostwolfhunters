@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Zeph1rr.Core.Resources;
+using Zeph1rr.FrostWolfHunters.Hunt;
 
 public class Wave : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class Wave : MonoBehaviour
     private int _waveMultiplier;
     private GameData _gameData;
     private List<Enemy> _enemyPrefabs;
-    private Player _player;
+    private Hunter _player;
     private List<Enemy> _spawnedEnemies = new();
     private Gameplay _compositeRoot;
 
@@ -21,7 +22,7 @@ public class Wave : MonoBehaviour
 
     private int GetThreatLimit() => _waveMultiplier * _waveNumber;
 
-    public void Initialize(List<Enemy> enemyPrefabs, Player player, int waveMultiplier, GameData gameData, Gameplay compositeRoot)
+    public void Initialize(List<Enemy> enemyPrefabs, Hunter player, int waveMultiplier, GameData gameData, Gameplay compositeRoot)
     {
         _enemyPrefabs = enemyPrefabs;
         _player = player;
@@ -133,6 +134,6 @@ public class Wave : MonoBehaviour
     private Vector2 GetRandomSpawnPosition()
     {
         Vector2 randomDirection = UnityEngine.Random.insideUnitCircle.normalized;
-        return (Vector2)_player.transform.position + randomDirection * 5f;
+        return (Vector2)_player.CreatureBehaviour.Transform.position + randomDirection * 5f;
     }
 }

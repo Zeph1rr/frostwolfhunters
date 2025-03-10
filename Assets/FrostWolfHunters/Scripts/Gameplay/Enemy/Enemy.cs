@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using Zeph1rr.Core.Resources;
+using Zeph1rr.FrostWolfHunters.Hunt;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public class Enemy : MonoBehaviour
@@ -12,7 +13,7 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private EnemyStatsSo _initialStats;
     protected EnemyStatsSo _stats;
-    private Player _player;
+    private Hunter _player;
     private Transform _target;
     private ResourceStorage _resourceStorage;
 
@@ -49,11 +50,11 @@ public class Enemy : MonoBehaviour
     }
 
     // todo: Remove random resource choose
-    public virtual void Initialize(Player player, ResourceStorage resourceStorage) {
+    public virtual void Initialize(Hunter player, ResourceStorage resourceStorage) {
         _rigidBody = GetComponent<Rigidbody2D>();
 
         _player = player;
-        _target = player.transform;
+        _target = player.CreatureBehaviour.Transform;
         _player.OnPlayerDied += HandlePlayerDie;
         _stats = ScriptableObject.CreateInstance<EnemyStatsSo>();
         _stats.Initialize(_initialStats);

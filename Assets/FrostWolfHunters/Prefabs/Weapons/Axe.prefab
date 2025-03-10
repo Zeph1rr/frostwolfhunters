@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1674017243912182153}
   - component: {fileID: 1181114957263458270}
-  - component: {fileID: 6718081871507494284}
+  - component: {fileID: 3825042653881274647}
   m_Layer: 0
   m_Name: Axe
   m_TagString: Untagged
@@ -86,7 +86,7 @@ PolygonCollider2D:
       - {x: 0.7194567, y: -0.109081805}
       - {x: 1.0251876, y: 0.30407476}
   m_UseDelaunayMesh: 0
---- !u!114 &6718081871507494284
+--- !u!114 &3825042653881274647
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,7 +95,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8441440055141502231}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a60218c1150664842ace8b60e6cdb473, type: 3}
+  m_Script: {fileID: 11500000, guid: 76bd5269f29949c4892ffb11f5aaf5d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Axe
+  _name: 0

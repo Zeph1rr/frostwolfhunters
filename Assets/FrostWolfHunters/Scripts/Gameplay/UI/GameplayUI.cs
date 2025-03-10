@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Zeph1rr.Core.Resources;
+using Zeph1rr.FrostWolfHunters.Hunt;
 
 
 public class GameplayUI : MonoBehaviour
@@ -23,11 +24,11 @@ public class GameplayUI : MonoBehaviour
     private GameData _gameData;
     private float _attackCooldown;
     private float _attackSpeed;
-    private Player _player;
+    private Hunter _player;
     private Gameplay _compositeRoot;
     private ResourceStorage _resourceStorage;
 
-    public void Initialize(Gameplay compositeRoot, Player player, GameData gameData, ResourceStorage resourceStorage)
+    public void Initialize(Gameplay compositeRoot, Hunter player, GameData gameData, ResourceStorage resourceStorage)
     {
         _compositeRoot = compositeRoot;
         _compositeRoot.OnPausePressed += HandlePause;

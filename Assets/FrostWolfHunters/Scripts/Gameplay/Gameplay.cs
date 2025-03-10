@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using System;
 using Cinemachine;
 using Zeph1rr.Core.Resources;
+using Zeph1rr.FrostWolfHunters.Hunt;
 
 public class Gameplay : MonoBehaviour, ISceneCompositeRoot
 {
@@ -12,10 +13,6 @@ public class Gameplay : MonoBehaviour, ISceneCompositeRoot
 
     [Header("UI Elements")]
     [SerializeField] private GameObject _uiPrefab;
-
-    [Header("Player")]
-    [SerializeField] private Player _playerPrefab;
-    [SerializeField] private PlayerStatsSO _playerStats;
 
     [Header ("Enemy")]
     [SerializeField] private List<Enemy> _enemyPrefabs;
@@ -27,10 +24,10 @@ public class Gameplay : MonoBehaviour, ISceneCompositeRoot
 
     public event EventHandler OnPausePressed;
 
-    private Player _playerInstance;
     private Wave _waveInstance;
     private GameplayUI _uiInstance;
     private GameData _gameData;
+    private Hunter _hunter;
 
     private bool _waveFinished;
     
@@ -59,28 +56,21 @@ public class Gameplay : MonoBehaviour, ISceneCompositeRoot
 
         _waveInstance.OnWaveEnd -= HandleWaveEnd;
 
-        _playerInstance.OnPlayerDied -= HandlePlayerDie;
+        _hunter.OnPlayerDied -= HandlePlayerDie;
     }
 
     private void InitializePlayer()
     {
         _gameInput.Initialize();
         _gameInput.OnPausePressed += HandlePausePressed;
-        _playerInstance = Instantiate(_playerPrefab, Vector3.zero, Quaternion.identity);
-        _playerInstance.Initialize(_gameData.PlayerStats,_gameInput, this);
-
-        PlayerVisual playerVisual = _playerInstance.GetComponentInChildren<PlayerVisual>();
-        if (playerVisual != null)
-        {
-            playerVisual.Initialize(_playerInstance);
-        }
-        _playerInstance.OnPlayerDied += HandlePlayerDie;
+        _hunter = new Hunter(_gameInput, _gameData.PlayerStats, this);
+        _hunter.OnPlayerDied += HandlePlayerDie;
     }
 
     private void InitializeEnemy() 
     {
         _waveInstance = Instantiate(_wave, new Vector3(0, 0, 0), Quaternion.identity);
-        _waveInstance.Initialize(_enemyPrefabs, _playerInstance, _waveMultiplier, _gameData, this);
+        _waveInstance.Initialize(_enemyPrefabs, _hunter, _waveMultiplier, _gameData, this);
         _waveInstance.OnWaveEnd += HandleWaveEnd;
         _waveInstance.StartWave();
     }
@@ -92,9 +82,9 @@ public class Gameplay : MonoBehaviour, ISceneCompositeRoot
             _cinemachineCamera = FindFirstObjectByType<CinemachineVirtualCamera>();
         }
 
-        if (_cinemachineCamera != null && _playerInstance != null)
+        if (_cinemachineCamera != null && _hunter != null)
         {
-            _cinemachineCamera.Follow = _playerInstance.transform;
+            _cinemachineCamera.Follow = _hunter.CreatureBehaviour.Transform;
         }
         else
         {
@@ -119,13 +109,13 @@ public class Gameplay : MonoBehaviour, ISceneCompositeRoot
     {
         GameObject uiInstance = Instantiate(_uiPrefab, Vector3.zero, Quaternion.identity);
         _uiInstance = uiInstance.GetComponent<GameplayUI>();
-        _uiInstance.Initialize(this, _playerInstance, _gameData, _gameData.HuntResourceStorage);
+        _uiInstance.Initialize(this, _hunter, _gameData, _gameData.HuntResourceStorage);
         HealthBar healthBar = uiInstance.GetComponentInChildren<HealthBar>();
         StaminaBar staminaBar = uiInstance.GetComponentInChildren<StaminaBar>();
         if (staminaBar != null && healthBar != null)
         {
-            healthBar.Initialize(_playerInstance);
-            staminaBar.Initialize(_playerInstance);
+            healthBar.Initialize(_hunter);
+            staminaBar.Initialize(_hunter);
         }
         else
         {
