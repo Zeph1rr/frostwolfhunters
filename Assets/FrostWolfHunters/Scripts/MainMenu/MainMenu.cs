@@ -6,10 +6,10 @@ using TMPro;
 using System.Linq;
 using UnityEngine.InputSystem;
 using Zeph1rr.Core.SaveLoad;
+using Zeph1rr.FrostWolfHunters.Hunt;
 
 public class MainMenu : MonoBehaviour, ISceneCompositeRoot
 {
-    private PlayerStats _playerStats;
 
     [Header("UI")]
     [SerializeField] private GameObject _menu;
@@ -19,8 +19,8 @@ public class MainMenu : MonoBehaviour, ISceneCompositeRoot
     [SerializeField] private GameObject _settings;
     [SerializeField] private Button _loadButton;
     [SerializeField] private TMP_InputField _playerNameInputField;
+
     private PlayerInputActions _playerInput;
-    public PlayerStats playerStats => _playerStats;
     private GameData _gameData;
     private BinarySaveLoadSystem<GameData, GameDataSerializable> _saveLoadSystem;
 

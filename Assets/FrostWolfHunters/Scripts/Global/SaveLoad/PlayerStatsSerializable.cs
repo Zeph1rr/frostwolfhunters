@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Zeph1rr.Core.Stats;
+using Zeph1rr.FrostWolfHunters.Hunt;
+
+
 
 [System.Serializable]
 public class PlayerStatsSerializable
@@ -14,7 +17,8 @@ public class PlayerStatsSerializable
     [SerializeField] private int _critChance;
     [SerializeField] private int _critMultiplyer;
 
-    public PlayerStatsSerializable(PlayerStats stats) {
+    public PlayerStatsSerializable(PlayerStats stats)
+    {
         _maxHealth = stats.GetStatByName(PlayerStats.StatNames.MaxHealth).Level;
         _maxStamina = stats.GetStatByName(PlayerStats.StatNames.MaxStamina).Level;
         _damage = stats.GetStatByName(PlayerStats.StatNames.Damage).Level;
@@ -25,19 +29,19 @@ public class PlayerStatsSerializable
         _critMultiplyer = stats.GetStatByName(PlayerStats.StatNames.CritMultiplyer).Level;
     }
 
-    public PlayerStats ToPlayerStats() {
-        PrintStats();
+    public PlayerStats ToPlayerStats()
+    {
         List<Stat> loadedStats = new()
-        {
-            new Stat(PlayerStats.StatNames.MaxHealth.ToString(), _maxHealth, 3),
-            new Stat(PlayerStats.StatNames.MaxStamina.ToString(), _maxStamina, 3),
-            new Stat(PlayerStats.StatNames.Damage.ToString(), _damage, 3),
-            new Stat(PlayerStats.StatNames.AttackSpeed.ToString(), _attackSpeed, 3),
-            new Stat(PlayerStats.StatNames.Speed.ToString(), _speed, 3),
-            new Stat(PlayerStats.StatNames.Defence.ToString(), _defence, 3),
-            new Stat(PlayerStats.StatNames.CritChance.ToString(), _critChance, 3),
-            new Stat(PlayerStats.StatNames.CritMultiplyer.ToString(), _critMultiplyer, 3)
-        };
+    {
+        new Stat(PlayerStats.StatNames.MaxHealth.ToString(), _maxHealth, 3),
+        new Stat(PlayerStats.StatNames.MaxStamina.ToString(), _maxStamina, 3),
+        new Stat(PlayerStats.StatNames.Damage.ToString(), _damage, 3),
+        new Stat(PlayerStats.StatNames.AttackSpeed.ToString(), _attackSpeed, 3),
+        new Stat(PlayerStats.StatNames.Speed.ToString(), _speed, 3),
+        new Stat(PlayerStats.StatNames.Defence.ToString(), _defence, 3),
+        new Stat(PlayerStats.StatNames.CritChance.ToString(), _critChance, 3),
+        new Stat(PlayerStats.StatNames.CritMultiplyer.ToString(), _critMultiplyer, 3)
+    };
         PlayerStats stats = new(loadedStats);
         return stats;
     }

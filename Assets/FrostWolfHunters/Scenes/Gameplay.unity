@@ -148,12 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce3bbab20aa289c4396bbed8649ff94a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameInput: {fileID: 251843117}
   _uiPrefab: {fileID: 7175955202319680666, guid: 5a9340ef1d4f0114081e1247ec5d4893, type: 3}
-  _playerPrefab: {fileID: 8002140743645943270, guid: 2f3336985dd278e4e85068d416982d16, type: 3}
-  _enemyPrefabs:
-  - {fileID: 4174404808847161889, guid: 03d7c34b20b596548aaa6f6de0cec3e5, type: 3}
-  _wave: {fileID: 6864642961927639362, guid: cb367a3a04acf454db53f87381135349, type: 3}
   _waveMultiplier: 4
   _cinemachineCamera: {fileID: 1978815588}
 --- !u!4 &37729396
@@ -171,50 +166,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &251843116
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 251843118}
-  - component: {fileID: 251843117}
-  m_Layer: 0
-  m_Name: GameInput
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &251843117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 251843116}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4f30491b335bbb47ab17f54e9dd166e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &251843118
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 251843116}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.9632087, y: -0.060845923, z: 0.053418532}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &288198726
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,7 +177,7 @@ GameObject:
   - component: {fileID: 288198727}
   - component: {fileID: 288198729}
   - component: {fileID: 288198728}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Square (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -381,6 +332,9 @@ MonoBehaviour:
   _prefabs:
   - {fileID: 5908508658272281480, guid: 39b4631a52e8e0b448b9856ff2763e58, type: 3}
   - {fileID: 3825042653881274647, guid: d28cda3c6c3395d42a2de478c44d5f51, type: 3}
+  - {fileID: 7323768693513490616, guid: e11df9e1cb7a5b049b89defb4891d504, type: 3}
+  _enemyStats:
+  - {fileID: 11400000, guid: 98f7fdc5cc20ecd4095bc68d5c4597dd, type: 2}
 --- !u!4 &394977434
 Transform:
   m_ObjectHideFlags: 0
@@ -407,7 +361,7 @@ GameObject:
   - component: {fileID: 483802582}
   - component: {fileID: 483802584}
   - component: {fileID: 483802583}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -668,7 +622,7 @@ GameObject:
   - component: {fileID: 695758703}
   - component: {fileID: 695758705}
   - component: {fileID: 695758704}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -802,7 +756,7 @@ GameObject:
   - component: {fileID: 957169124}
   - component: {fileID: 957169126}
   - component: {fileID: 957169125}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Square (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1002,7 +956,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1971851884}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Arena
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1200,7 +1154,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
-  - {fileID: 251843118}
   - {fileID: 961952737}
   - {fileID: 37729396}
   - {fileID: 1978815589}

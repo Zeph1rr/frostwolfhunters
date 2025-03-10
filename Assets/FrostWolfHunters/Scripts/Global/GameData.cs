@@ -1,5 +1,6 @@
 using System;
 using Zeph1rr.Core.Resources;
+using Zeph1rr.FrostWolfHunters.Hunt;
 
 public class GameData
 {

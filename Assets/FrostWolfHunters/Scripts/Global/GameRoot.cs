@@ -8,12 +8,12 @@ using Zeph1rr.Core.SaveLoad;
 public class GameRoot : MonoBehaviour
 {
     private GameSettings _gameSettings;
-    public BinarySaveLoadSystem<GameData, GameDataSerializable> GameDataSaveLoadSystem {get; private set;}
-    public JsonSaveLoadSystem<GameSettings, SettingsSerializable> SettingsSaveLoadSystem {get; private set;}
+    public BinarySaveLoadSystem<GameData, GameDataSerializable> GameDataSaveLoadSystem { get; private set; }
+    public JsonSaveLoadSystem<GameSettings, SettingsSerializable> SettingsSaveLoadSystem { get; private set; }
     public GameSettings GameSettings => _gameSettings;
     private GameData _gameData;
 
-    public static GameRoot Instance {get; private set;}
+    public static GameRoot Instance { get; private set; }
 
 
     private void Awake()
@@ -45,7 +45,7 @@ public class GameRoot : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         SceneManager.sceneLoaded += OnSceneLoaded;
-    }   
+    }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -59,7 +59,7 @@ public class GameRoot : MonoBehaviour
         {
             _gameData.ResetWaveNumber();
             _gameData.HuntResourceStorage.ResetResourceStorage(Enum.GetNames(typeof(ResourceType)));
-        } 
+        }
         SceneManager.LoadScene(name);
     }
 
@@ -80,7 +80,7 @@ public class GameRoot : MonoBehaviour
     }
 
     private void OnDestroy()
-    {  
+    {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

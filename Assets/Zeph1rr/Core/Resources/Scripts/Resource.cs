@@ -34,7 +34,7 @@ namespace Zeph1rr.Core.Resources
             }
             if (value > _value)
             {
-                throw new ArgumentOutOfRangeException($"You don't have enough {_value}");
+                throw new ArgumentOutOfRangeException($"You don't have enough {_name}");
             }
             _value -= value;
         }

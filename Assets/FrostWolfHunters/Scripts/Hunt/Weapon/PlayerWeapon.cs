@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Zeph1rr.Core.Monos;
 
 namespace Zeph1rr.FrostWolfHunters.Hunt
 {
@@ -40,16 +41,20 @@ namespace Zeph1rr.FrostWolfHunters.Hunt
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            Enemy enemy = collision.GetComponent<Enemy>();
             float damage = _playerStats.GetStatValue(PlayerStats.StatNames.Damage);
             System.Random random = new();
             if (random.NextDouble() * (1.0 - 0.0) + 0.0 <= _playerStats.GetStatValue(PlayerStats.StatNames.CritChance))
             {
                 damage *= _playerStats.GetStatValue(PlayerStats.StatNames.CritMultiplyer);
             }
-            if (enemy != null)
+            CreatureBehaviour behaviour = collision.GetComponent<CreatureBehaviour>();
+            if (behaviour != null)
             {
-                enemy.TakeDamage(damage);
+                if (behaviour.ParentObject.GetType() == typeof(Enemy))
+                {
+                    Enemy enemy = (Enemy)behaviour.ParentObject;
+                    enemy.TakeDamage(damage);
+                }
             }
         }
     }

@@ -9,6 +9,8 @@ namespace Zeph1rr.Core.Monos
         public static AssetsStorage Instance { get; private set; }
 
         [SerializeField] private List<Mono> _prefabs;
+        [SerializeField] private List<EnemyStatsSo> _enemyStats;
+        public List<EnemyStatsSo> EnemyStats => _enemyStats;
 
         public void Awake()
         {
@@ -37,6 +39,13 @@ namespace Zeph1rr.Core.Monos
         public Mono CreateObject<TEnum>(TEnum name, Vector3 position, Quaternion rotation)
         {
             return Instantiate(GetPrefab<TEnum>(name), position, rotation);
+        }
+
+        public EnemyStatsSo GetStats<TEnum>(TEnum name)
+        {
+            EnemyStatsSo stats =  ScriptableObject.CreateInstance<EnemyStatsSo>();
+            stats.Initialize(_enemyStats.FirstOrDefault(s => s.name == name.ToString()));
+            return stats;
         }
     }
 }

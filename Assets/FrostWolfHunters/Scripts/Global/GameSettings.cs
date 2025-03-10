@@ -21,7 +21,6 @@ public class GameSettings
         } else {
             Language = "English";
         }
-        Debug.Log(Language);
     }
 
     public GameSettings(string currentResolution, bool isFullscreen, float volume, string language)

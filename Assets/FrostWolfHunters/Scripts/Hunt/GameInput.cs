@@ -2,13 +2,13 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
 
-public class GameInput : MonoBehaviour
+public class GameInput
 {
     public event EventHandler OnAttackPressed;
     public event EventHandler OnPausePressed;
     private PlayerInputActions _playerInputActions;
  
-    public void Initialize()
+    public GameInput()
     {
         _playerInputActions = new PlayerInputActions();
         _playerInputActions.Enable();

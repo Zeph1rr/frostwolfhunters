@@ -1,9 +1,10 @@
 using UnityEngine;
 using Zeph1rr.Core.Resources;
 using Zeph1rr.Core.SaveLoad;
+using Zeph1rr.FrostWolfHunters.Hunt;
 
 [System.Serializable]
-public class GameDataSerializable: ISerializableData<GameData>
+public class GameDataSerializable : ISerializableData<GameData>
 {
     [SerializeField] private int _currentWaveNumber;
     [SerializeField] private int _maxWaveNumber;
@@ -11,7 +12,7 @@ public class GameDataSerializable: ISerializableData<GameData>
     [SerializeField] private string _playerName;
     [SerializeField] private ResourcesSerialazable _resources;
 
-    public GameDataSerializable(GameData gameData, PlayerStatsSerializable playerStats) 
+    public GameDataSerializable(GameData gameData, PlayerStatsSerializable playerStats)
     {
         _currentWaveNumber = gameData.CurrentWaveNumber;
         _maxWaveNumber = gameData.MaxWaveNumber;
@@ -20,7 +21,8 @@ public class GameDataSerializable: ISerializableData<GameData>
         _resources = new(gameData.ResourceStorage);
     }
 
-    public GameData Deserialize() {
+    public GameData Deserialize()
+    {
         PlayerStats playerStats = _playerStats.ToPlayerStats();
         ResourceStorage resourceStorage = _resources.ToResourceStorage();
         GameData gameData = new(playerStats, _maxWaveNumber, _currentWaveNumber, _playerName, resourceStorage);

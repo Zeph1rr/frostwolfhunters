@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 namespace Zeph1rr.Core.Monos
@@ -20,6 +21,11 @@ namespace Zeph1rr.Core.Monos
         public new void StopCoroutine(Coroutine coroutine)
         {
             base.StopCoroutine(coroutine);
+        }
+
+        public void SelfDestroy()
+        {
+            Destroy(gameObject);
         }
 
         public IEnumerator SmoothUpdateValue(Action<float> updateAction, float duration, float startValue, float targetValue, Action callback = null)
