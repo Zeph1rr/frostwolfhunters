@@ -330,7 +330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefabs:
-  - {fileID: 5908508658272281480, guid: 39b4631a52e8e0b448b9856ff2763e58, type: 3}
+  - {fileID: 7547219827774384872, guid: 39b4631a52e8e0b448b9856ff2763e58, type: 3}
   - {fileID: 3825042653881274647, guid: d28cda3c6c3395d42a2de478c44d5f51, type: 3}
   - {fileID: 7323768693513490616, guid: e11df9e1cb7a5b049b89defb4891d504, type: 3}
   _enemyStats:

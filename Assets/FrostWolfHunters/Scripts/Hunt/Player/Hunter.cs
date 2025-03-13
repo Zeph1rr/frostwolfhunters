@@ -13,7 +13,7 @@ namespace Zeph1rr.FrostWolfHunters.Hunt
 
         public float CurrentHealth => _currentHealth;
         public float CurrentStamina => _currentStamina;
-        public CreatureBehaviour CreatureBehaviour => _creatureBehaviour;
+        public HunterBehavoiur CreatureBehaviour => _creatureBehaviour;
         public WeaponList WeaponName => _weaponName;
         public PlayerStats CharacterStats => _characterStats;
 
@@ -21,7 +21,7 @@ namespace Zeph1rr.FrostWolfHunters.Hunt
         private const string IS_RUNNING = "IsRunning";
         private const string IS_DEAD = "IsDead";
 
-        private CreatureBehaviour _creatureBehaviour;
+        private HunterBehavoiur _creatureBehaviour;
         private GameInput _gameInput;
         private PlayerStats _characterStats;
         private Gameplay _compositeRoot;
@@ -40,12 +40,13 @@ namespace Zeph1rr.FrostWolfHunters.Hunt
 
         public Hunter(GameInput gameInput, PlayerStats characterStats, Gameplay compositeRoot)
         {
-            _creatureBehaviour = (CreatureBehaviour)AssetsStorage.Instance.CreateObject<CreatureList>(CreatureList.Hunter, Vector3.zero, Quaternion.identity);
+            _creatureBehaviour = (HunterBehavoiur) AssetsStorage.Instance.CreateObject<CreatureList>(CreatureList.Hunter, Vector3.zero, Quaternion.identity);
             _creatureBehaviour.SetParentSctipt(this);
             _creatureBehaviour.SetLoop(Loop, FixedLoop);
 
             _gameInput = gameInput;
             _gameInput.OnAttackPressed += Attack;
+            _gameInput.OnUltPressed += Ult;
 
             _compositeRoot = compositeRoot;
             _compositeRoot.OnPausePressed += TogglePause;
@@ -55,12 +56,10 @@ namespace Zeph1rr.FrostWolfHunters.Hunt
             _currentStamina = _characterStats.GetStatValue(PlayerStats.StatNames.MaxStamina);
 
             _weaponName = WeaponList.Axe;
-            PlayerWeapon weapon = (PlayerWeapon)AssetsStorage.Instance.CreateObject<WeaponList>(_weaponName, _creatureBehaviour.Transform);
-            weapon.Initialize(this, _characterStats);
 
         }
 
-        public void TakeDamage(float damage)
+        public override void TakeDamage(float damage)
         {
             if (damage < 0)
             {
@@ -85,8 +84,24 @@ namespace Zeph1rr.FrostWolfHunters.Hunt
             if (_attackCooldownTimer > 0) return;
             if (!UseStamina(10)) Die();
             OnPlayerAttack?.Invoke(this, _characterStats.GetStatValue(PlayerStats.StatNames.AttackSpeed));
+            float damage = _characterStats.GetStatValue(PlayerStats.StatNames.Damage);
+            System.Random random = new();
+            if (random.NextDouble() * (1.0 - 0.0) + 0.0 <= _characterStats.GetStatValue(PlayerStats.StatNames.CritChance))
+            {
+                damage *= _characterStats.GetStatValue(PlayerStats.StatNames.CritMultiplyer);
+            }
+            _creatureBehaviour.AttackBehaviour.Attack<Enemy>(0.75f, damage);
             _attackCooldownTimer = _characterStats.GetStatValue(PlayerStats.StatNames.AttackSpeed);
             _creatureBehaviour.Animator.SetTrigger($"{_weaponName.ToString().ToUpper()}_ATTACK");
+        }
+
+        private void Ult(object sender, EventArgs e)
+        {
+            if (_isPaused) return;
+            if (!UseStamina(50)) Die();
+            float damage = _characterStats.GetStatValue(PlayerStats.StatNames.Damage) * _characterStats.GetStatValue(PlayerStats.StatNames.CritMultiplyer);
+            _creatureBehaviour.Ult.Attack<Enemy>(0.75f, damage);
+            _creatureBehaviour.Animator.SetTrigger($"{_weaponName.ToString().ToUpper()}_ULT");
         }
 
         private void ChangeFacingDirection(Vector3 sourcePosition, Vector3 targetPosition)

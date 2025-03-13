@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
+using System.Security.Cryptography.X509Certificates;
 
 public class GameInput
 {
     public event EventHandler OnAttackPressed;
+    public event EventHandler OnUltPressed;
     public event EventHandler OnPausePressed;
     private PlayerInputActions _playerInputActions;
  
@@ -12,9 +14,15 @@ public class GameInput
     {
         _playerInputActions = new PlayerInputActions();
         _playerInputActions.Enable();
-        
+
         _playerInputActions.Player.Attack.performed += Attack_performed;
+        _playerInputActions.Player.Ult.performed += Ult_performed;
         _playerInputActions.Global.Escape.performed += Pause_performed;
+    }
+
+    private void Ult_performed(InputAction.CallbackContext context)
+    {
+        OnUltPressed?.Invoke(this, EventArgs.Empty);
     }
 
     private void Attack_performed(InputAction.CallbackContext context) {

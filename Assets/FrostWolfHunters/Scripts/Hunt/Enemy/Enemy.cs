@@ -12,7 +12,6 @@ namespace Zeph1rr.FrostWolfHunters.Hunt
     {
         public event EventHandler OnTakeHit;
         public event EventHandler OnDeath;
-        public event EventHandler<float> OnAttack;
 
         private Hunter _player;
         private Transform _target;
@@ -160,12 +159,12 @@ namespace Zeph1rr.FrostWolfHunters.Hunt
             if (_attackCooldownTimer <= 0)
             {
                 _attackCooldownTimer = _stats.AttackSpeed;
-                OnAttack?.Invoke(this, _stats.Damage);
+                _creatureBehaviour.AttackBehaviour.Attack<Hunter>(_stats.AttackRange, _stats.Damage);
                 _creatureBehaviour.Animator.SetTrigger(ATTACK);
             }
         }
 
-        public void TakeDamage(float damage)
+        public override void TakeDamage(float damage)
         {
             if (_isDead) return;
             _stats.TakeDamage(damage);

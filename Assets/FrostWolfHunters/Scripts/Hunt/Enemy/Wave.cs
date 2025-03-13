@@ -105,12 +105,6 @@ namespace Zeph1rr.FrostWolfHunters.Hunt
             Vector2 spawnPosition = GetRandomSpawnPosition();
             Enemy newEnemy = new(enemyPrefab, _player, _resourceStorage, spawnPosition);
 
-            EnemyMeleeAttack enemyAttack = newEnemy.CreatureBehavoiur.GetComponentInChildren<EnemyMeleeAttack>();
-            if (enemyAttack != null)
-            {
-                enemyAttack.Initialize(newEnemy);
-            }
-
             _spawnedEnemies.Add(newEnemy);
             newEnemy.OnDeath += CheckWaveEnd;
         }

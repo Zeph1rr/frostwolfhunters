@@ -20,12 +20,16 @@ namespace Zeph1rr.Core.Monos
         [SerializeField] private CapsuleCollider2D _capsuleCollider;
         public CapsuleCollider2D CapsuleCollider => _capsuleCollider;
 
+        [SerializeField] private AttackBehaviour _attackBehaviour;
+        public AttackBehaviour AttackBehaviour => _attackBehaviour;
+
         private void Awake()
         {
             _animator = GetComponent<Animator>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _rigidBody = GetComponent<Rigidbody2D>();
             _capsuleCollider = GetComponent<CapsuleCollider2D>();
+            if (_attackBehaviour == null) _attackBehaviour = GetComponent<AttackBehaviour>();
         }
     }
 }

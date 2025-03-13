@@ -13,7 +13,9 @@ GameObject:
   - component: {fileID: 7598682977516748351}
   - component: {fileID: 344519698872398989}
   - component: {fileID: 4136406644733634796}
-  - component: {fileID: 5908508658272281480}
+  - component: {fileID: 7547219827774384872}
+  - component: {fileID: 933857985342350452}
+  - component: {fileID: 515349078885722404}
   m_Layer: 6
   m_Name: Hunter
   m_TagString: Untagged
@@ -177,7 +179,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.4998383}
   m_Size: {x: 0.5, y: 0.96895397}
   m_Direction: 0
---- !u!114 &5908508658272281480
+--- !u!114 &7547219827774384872
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,10 +188,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 7842074519859096629}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36ac33aa870dec643b331842199dd65f, type: 3}
+  m_Script: {fileID: 11500000, guid: 6fb5c7f564ad12d4c872366c7a58c7af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 0}
   _spriteRenderer: {fileID: 0}
   _rigidBody: {fileID: 0}
   _capsuleCollider: {fileID: 0}
+  _attackBehaviour: {fileID: 933857985342350452}
+  _ult: {fileID: 515349078885722404}
+--- !u!114 &933857985342350452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7842074519859096629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ef362aa85da9ac41b2b02d66abfa480, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &515349078885722404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7842074519859096629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e4253b3da94a174fa1ea342637064ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
