@@ -1,4 +1,5 @@
 using System;
+using FrostWolfHunters.Scripts.Game.Data.Enums;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,7 +32,7 @@ public class HealthBar : MonoBehaviour
 
     private void SetVisual()
     {
-        _healthBar.fillAmount = _player.CurrentHealth / _player.CharacterStats.GetStatValue(PlayerStats.StatNames.MaxHealth);
-        _text.text = $"{_player.CurrentHealth}/{_player.CharacterStats.GetStatValue(PlayerStats.StatNames.MaxHealth)}";
+        _healthBar.fillAmount = _player.CurrentHealth / _player.CharacterStats.GetStatValue(StatNames.MaxHealth);
+        _text.text = $"{_player.CurrentHealth}/{_player.CharacterStats.GetStatValue(StatNames.MaxHealth)}";
     }
 }

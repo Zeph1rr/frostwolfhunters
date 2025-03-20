@@ -4,6 +4,8 @@ using UnityEngine;
 using Zeph1rr.Core.Stats;
 using UnityEngine.UI;
 using System;
+using FrostWolfHunters.Scripts.Game.Data.Enums;
+using Zeph1rr.Core.Localization;
 
 public class UpgradeButton : MonoBehaviour
 {

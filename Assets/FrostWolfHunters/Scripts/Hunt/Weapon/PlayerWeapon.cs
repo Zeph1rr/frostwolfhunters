@@ -1,8 +1,11 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using FrostWolfHunters.Scripts.Game.Data;
+using FrostWolfHunters.Scripts.Game.Data.Enums;
+using UnityEngine;
 using Zeph1rr.Core.Monos;
+using Zeph1rr.FrostWolfHunters.Hunt;
 
-namespace Zeph1rr.FrostWolfHunters.Hunt
+namespace FrostWolfHunters.Scripts.Hunt.Weapon
 {
     class PlayerWeapon: Zeph1rr.Core.Monos.Mono
     {
@@ -41,18 +44,18 @@ namespace Zeph1rr.FrostWolfHunters.Hunt
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            float damage = _playerStats.GetStatValue(PlayerStats.StatNames.Damage);
+            float damage = _playerStats.GetStatValue(StatNames.Damage);
             System.Random random = new();
-            if (random.NextDouble() * (1.0 - 0.0) + 0.0 <= _playerStats.GetStatValue(PlayerStats.StatNames.CritChance))
+            if (random.NextDouble() * (1.0 - 0.0) + 0.0 <= _playerStats.GetStatValue(StatNames.CritChance))
             {
-                damage *= _playerStats.GetStatValue(PlayerStats.StatNames.CritMultiplyer);
+                damage *= _playerStats.GetStatValue(StatNames.CritMultiplyer);
             }
             CreatureBehaviour behaviour = collision.GetComponent<CreatureBehaviour>();
             if (behaviour != null)
             {
-                if (behaviour.ParentObject.GetType() == typeof(Enemy))
+                if (behaviour.ParentObject.GetType() == typeof(Zeph1rr.FrostWolfHunters.Hunt.Enemy))
                 {
-                    Enemy enemy = (Enemy)behaviour.ParentObject;
+                    Zeph1rr.FrostWolfHunters.Hunt.Enemy enemy = (Zeph1rr.FrostWolfHunters.Hunt.Enemy)behaviour.ParentObject;
                     enemy.TakeDamage(damage);
                 }
             }

@@ -1,14 +1,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
-using System.Security.Cryptography.X509Certificates;
 
 public class GameInput
 {
     public event EventHandler OnAttackPressed;
     public event EventHandler OnUltPressed;
     public event EventHandler OnPausePressed;
-    private PlayerInputActions _playerInputActions;
+        
+    private readonly PlayerInputActions _playerInputActions;
  
     public GameInput()
     {
@@ -18,6 +18,11 @@ public class GameInput
         _playerInputActions.Player.Attack.performed += Attack_performed;
         _playerInputActions.Player.Ult.performed += Ult_performed;
         _playerInputActions.Global.Escape.performed += Pause_performed;
+    }
+
+    public void Disable()
+    {
+        OnDisable();
     }
 
     private void Ult_performed(InputAction.CallbackContext context)
@@ -36,7 +41,6 @@ public class GameInput
 
     private void OnDisable()
     {
-        // Отключаем контролы
         _playerInputActions.Disable();
         _playerInputActions.Player.Attack.performed -= Attack_performed;
         _playerInputActions.Global.Escape.performed -= Pause_performed;

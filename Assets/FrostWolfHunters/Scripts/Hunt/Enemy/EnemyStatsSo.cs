@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using FrostWolfHunters.Scripts.Game.Data.Enums;
 
 [CreateAssetMenu(fileName = "BaseEnemyStats", menuName = "Stats/EnemyStats")]
 public class EnemyStatsSo : ScriptableObject

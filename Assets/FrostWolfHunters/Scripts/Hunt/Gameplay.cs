@@ -1,12 +1,15 @@
-using UnityEngine;
-using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 using System;
 using Cinemachine;
-using Zeph1rr.Core.Resources;
+using FrostWolfHunters.Scripts.Game.Data;
+using FrostWolfHunters.Scripts.Game.Data.Enums;
+using FrostWolfHunters.Scripts.Hunt.Enemy;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using Zeph1rr.Core.Monos;
+using Zeph1rr.Core.Resources;
+using Zeph1rr.FrostWolfHunters.Hunt;
 
-namespace Zeph1rr.FrostWolfHunters.Hunt
+namespace FrostWolfHunters.Scripts.Hunt
 {
     public class Gameplay : MonoBehaviour, ISceneCompositeRoot
     {
@@ -16,7 +19,7 @@ namespace Zeph1rr.FrostWolfHunters.Hunt
         [SerializeField] private GameObject _uiPrefab;
 
         [Header("Enemy")]
-        [SerializeField] private Wave _wave;
+        private Wave _wave;
         [SerializeField] private int _waveMultiplier;
 
         [Header("Camera")]
@@ -93,6 +96,8 @@ namespace Zeph1rr.FrostWolfHunters.Hunt
 
         private void HandleWaveEnd(object sender, ResourceStorage resourceStorage)
         {
+            _hunter.CreatureBehaviour.StopAllCoroutines();
+            _waveInstance.StopAllCoroutines();
             if (_waveFinished) return;
             _waveFinished = true;
             _gameData.HuntResourceStorage.AddResources(resourceStorage.Resources);
@@ -128,6 +133,8 @@ namespace Zeph1rr.FrostWolfHunters.Hunt
 
         private void HandlePlayerDie(object sender, EventArgs e)
         {
+            _hunter.CreatureBehaviour.StopAllCoroutines();
+            _waveInstance.StopAllCoroutines();
             if (_waveFinished) return;
             _waveFinished = true;
             OnPausePressed?.Invoke(this, EventArgs.Empty);
@@ -157,6 +164,7 @@ namespace Zeph1rr.FrostWolfHunters.Hunt
             _gameData.ResourceStorage.AddResources(_gameData.HuntResourceStorage.Resources);
             _gameData.HuntResourceStorage.ResetResourceStorage(Enum.GetNames(typeof(ResourceType)));
             _gameData.ResourceStorage.PrintResources();
+            _gameInput.Disable();
             SceneManager.LoadScene("Tribe");
         }
     }

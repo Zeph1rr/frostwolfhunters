@@ -5,6 +5,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zeph1rr.Core.Resources;
 using Zeph1rr.FrostWolfHunters.Hunt;
+using FrostWolfHunters.Scripts.Game.Data;
+using FrostWolfHunters.Scripts.Game.Data.Enums;
+using FrostWolfHunters.Scripts.Hunt;
+using Zeph1rr.Core.Localization;
 
 
 public class GameplayUI : MonoBehaviour

@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using FrostWolfHunters.Scripts.Game.Data;
+using FrostWolfHunters.Scripts.Game.Data.Enums;
 
 public class Tribe : MonoBehaviour, ISceneCompositeRoot
 {
     [SerializeField] private GameObject _alertPrefab;
     [SerializeField] private GameObject _resourcePrefab;
     [SerializeField] private GameObject _tribeBuildingPrefab;
-    [SerializeField] private Button _saveAndLoadButton;
+    [SerializeField] private Button _saveAndLeaveButton;
     [SerializeField] private Button _startHuntButton;
     
     private Alert _alert;
@@ -21,7 +23,7 @@ public class Tribe : MonoBehaviour, ISceneCompositeRoot
         if (_gameData.IsDead) SendAlert("Dead");
         if (_gameData.IsLeaved) SendAlert("Leave");
         _gameData.ResourceStorage.OnResourcesChanged += HandleResourcesChanged;
-        _saveAndLoadButton.onClick.AddListener(() => GameRoot.Instance.SaveAndLeaveToMainMenu());
+        _saveAndLeaveButton.onClick.AddListener(() => GameRoot.Instance.SaveAndLeaveToMainMenu());
         _startHuntButton.onClick.AddListener(() => GameRoot.Instance.ChangeScene("Gameplay"));
     }
 

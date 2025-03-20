@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections;
+using FrostWolfHunters.Scripts.Game.Data.Enums;
 using UnityEngine;
 using Zeph1rr.Core.Monos;
 using Zeph1rr.Core.Resources;
@@ -53,13 +54,13 @@ namespace Zeph1rr.FrostWolfHunters.Hunt
             _player = player;
             _target = player.CreatureBehaviour.Transform;
             _player.OnPlayerDied += HandlePlayerDie;
-            _stats = AssetsStorage.Instance.GetStats<CreatureList>(prefabName);
+            _stats = AssetsStorage.Instance.GetStats(prefabName);
             _resourceStorage = resourceStorage;
             Array values = Enum.GetValues(typeof(ResourceType));
             System.Random random = new();
             _stats.Resource = (ResourceType)values.GetValue(random.Next(values.Length));
-            _creatureBehaviour = (CreatureBehaviour) AssetsStorage.Instance.CreateObject<CreatureList>(prefabName, spawnPosition, Quaternion.identity);
-            _creatureBehaviour.SetParentSctipt(this);
+            _creatureBehaviour = (CreatureBehaviour) AssetsStorage.Instance.CreateObject(prefabName, spawnPosition, Quaternion.identity);
+            _creatureBehaviour.SetParentScript(this);
             _creatureBehaviour.SetLoop(Loop, null);
         }
 

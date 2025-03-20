@@ -777,7 +777,7 @@ MonoBehaviour:
   _alertPrefab: {fileID: 4139750617994164861, guid: 933ea2fb5f47f494e9691254b47f1595, type: 3}
   _resourcePrefab: {fileID: 3849301960412113112, guid: 14fd9c9fff7706c499afc13badcd26cc, type: 3}
   _tribeBuildingPrefab: {fileID: 1284667369398199452, guid: d20488187dc8d054a8d83adb180380ed, type: 3}
-  _saveAndLoadButton: {fileID: 1323358396}
+  _saveAndLeaveButton: {fileID: 1323358396}
   _startHuntButton: {fileID: 602866439}
 --- !u!1 &961948194
 GameObject:

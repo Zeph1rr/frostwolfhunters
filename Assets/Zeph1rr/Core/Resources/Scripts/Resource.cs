@@ -6,8 +6,8 @@ namespace Zeph1rr.Core.Resources
     [Serializable]
     public class Resource
     {
-        private string _name;
-        private int _value;
+        [SerializeField] private string _name;
+        [SerializeField] private int _value;
         public string Name => _name;
         public int Value => _value;
 

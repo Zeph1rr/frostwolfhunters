@@ -3,7 +3,7 @@ using Zeph1rr.Core.Monos;
 
 namespace Zeph1rr.FrostWolfHunters.Hunt
 {
-    class MeleeUlt : AttackBehaviour
+    public class MeleeUlt : AttackBehaviour
     {
         public override void Attack<T>(float attackRange, float damage, Transform target = null)
         {

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Zeph1rr.FrostWolfHunters.Hunt;
+using FrostWolfHunters.Scripts.Game.Data;
+using FrostWolfHunters.Scripts.Game.Data.Enums;
+using Zeph1rr.Core.Localization;
 
 public class TribeBuildingUI : MonoBehaviour
 {
@@ -14,24 +16,24 @@ public class TribeBuildingUI : MonoBehaviour
     private GameData _gameData;
     private string _hutName;
 
-    private readonly Dictionary<string, PlayerStats.StatNames[]> _hutToStats = new()
+    private readonly Dictionary<string, StatNames[]> _hutToStats = new()
     {
-        {"priest_hut", new PlayerStats.StatNames[] { PlayerStats.StatNames.MaxHealth, PlayerStats.StatNames.MaxStamina }},
-        {"chief_hut", new PlayerStats.StatNames[] { PlayerStats.StatNames.Damage, PlayerStats.StatNames.AttackSpeed }},
-        {"shaman_hut", new PlayerStats.StatNames[] { PlayerStats.StatNames.Speed, PlayerStats.StatNames.Defence }},
-        {"wolf_hut", new PlayerStats.StatNames[] { PlayerStats.StatNames.CritChance, PlayerStats.StatNames.CritMultiplyer }}
+        {"priest_hut", new StatNames[] { StatNames.MaxHealth, StatNames.MaxStamina }},
+        {"chief_hut", new StatNames[] { StatNames.Damage, StatNames.AttackSpeed }},
+        {"shaman_hut", new StatNames[] { StatNames.Speed, StatNames.Defence }},
+        {"wolf_hut", new StatNames[] { StatNames.CritChance, StatNames.CritMultiplyer }}
     };
 
-    private readonly Dictionary<PlayerStats.StatNames, ResourceType> _statToResource = new()
+    private readonly Dictionary<StatNames, ResourceType> _statToResource = new()
     {
-        {PlayerStats.StatNames.MaxHealth, ResourceType.Eat},
-        {PlayerStats.StatNames.MaxStamina, ResourceType.Eat},
-        {PlayerStats.StatNames.Damage, ResourceType.Stone},
-        {PlayerStats.StatNames.AttackSpeed, ResourceType.Wood},
-        {PlayerStats.StatNames.Speed, ResourceType.Bones},
-        {PlayerStats.StatNames.Defence, ResourceType.Fur},
-        {PlayerStats.StatNames.CritChance, ResourceType.Bones},
-        {PlayerStats.StatNames.CritMultiplyer, ResourceType.Stone}
+        {StatNames.MaxHealth, ResourceType.Eat},
+        {StatNames.MaxStamina, ResourceType.Eat},
+        {StatNames.Damage, ResourceType.Stone},
+        {StatNames.AttackSpeed, ResourceType.Wood},
+        {StatNames.Speed, ResourceType.Bones},
+        {StatNames.Defence, ResourceType.Fur},
+        {StatNames.CritChance, ResourceType.Bones},
+        {StatNames.CritMultiplyer, ResourceType.Stone}
     };
 
     public void Initialize(string name, GameData gameData)
@@ -64,7 +66,7 @@ public class TribeBuildingUI : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-        foreach(PlayerStats.StatNames stat in _hutToStats[_hutName])
+        foreach(StatNames stat in _hutToStats[_hutName])
         {
             UpgradeButton buttonInstance = Instantiate(_shopButtonPrefab, _shopButtonContainer.transform).GetComponent<UpgradeButton>();
             buttonInstance.Initialize(_gameData.PlayerStats.GetStatByName(stat), _statToResource[stat], _gameData.ResourceStorage);

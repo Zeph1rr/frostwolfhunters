@@ -5,9 +5,11 @@ using UnityEngine;
 
 namespace Zeph1rr.Core.Resources
 {
+    [Serializable]
     public class ResourceStorage
     {
-        public List<Resource> Resources;
+        [SerializeField] private List<Resource> _resources;
+        public List<Resource> Resources => _resources;
         public event EventHandler OnResourcesChanged;
 
         public ResourceStorage(string[] keys)
@@ -23,7 +25,7 @@ namespace Zeph1rr.Core.Resources
 
         public void ResetResourceStorage(string[] keys)
         {
-            Resources = new();
+            _resources = new();
             foreach(string key in keys)
             {
                 Resources.Add(new Resource(key, 0));
@@ -85,7 +87,7 @@ namespace Zeph1rr.Core.Resources
 
         public Resource GetResourceByName(string name)
         {
-            return Resources.Find(entry => entry.Name == name) ?? throw new KeyNotFoundException($"Cannot find recource with name: {name}");;
+            return _resources.Find(entry => entry.Name == name) ?? throw new KeyNotFoundException($"Cannot find recource with name: {name}");;
         }
 
         public int GetResourceValueByName(string name)
@@ -95,7 +97,7 @@ namespace Zeph1rr.Core.Resources
 
         public void PrintResources()
         {
-            foreach(Resource resource in Resources)
+            foreach(Resource resource in _resources)
             {
                 Debug.Log($"{resource.Name}: {resource.Value}");
             }

@@ -1,6 +1,9 @@
 using Zeph1rr.Core.Monos;
 using UnityEngine;
 using System;
+using FrostWolfHunters.Scripts.Game.Data;
+using FrostWolfHunters.Scripts.Game.Data.Enums;
+using FrostWolfHunters.Scripts.Hunt;
 
 namespace Zeph1rr.FrostWolfHunters.Hunt
 {
@@ -41,7 +44,7 @@ namespace Zeph1rr.FrostWolfHunters.Hunt
         public Hunter(GameInput gameInput, PlayerStats characterStats, Gameplay compositeRoot)
         {
             _creatureBehaviour = (HunterBehavoiur) AssetsStorage.Instance.CreateObject<CreatureList>(CreatureList.Hunter, Vector3.zero, Quaternion.identity);
-            _creatureBehaviour.SetParentSctipt(this);
+            _creatureBehaviour.SetParentScript(this);
             _creatureBehaviour.SetLoop(Loop, FixedLoop);
 
             _gameInput = gameInput;
@@ -52,8 +55,8 @@ namespace Zeph1rr.FrostWolfHunters.Hunt
             _compositeRoot.OnPausePressed += TogglePause;
 
             _characterStats = characterStats;
-            _currentHealth = _characterStats.GetStatValue(PlayerStats.StatNames.MaxHealth);
-            _currentStamina = _characterStats.GetStatValue(PlayerStats.StatNames.MaxStamina);
+            _currentHealth = _characterStats.GetStatValue(StatNames.MaxHealth);
+            _currentStamina = _characterStats.GetStatValue(StatNames.MaxStamina);
 
             _weaponName = WeaponList.Axe;
 
@@ -67,7 +70,7 @@ namespace Zeph1rr.FrostWolfHunters.Hunt
             }
             if (!_isDead)
             {
-                float decreasedDamage = Mathf.Max(damage - _characterStats.GetStatValue(PlayerStats.StatNames.Defence), 0);
+                float decreasedDamage = Mathf.Max(damage - _characterStats.GetStatValue(StatNames.Defence), 0);
                 _currentHealth = Mathf.Max(_currentHealth - decreasedDamage);
                 OnHealthChanged?.Invoke(this, EventArgs.Empty);
                 Debug.Log("Current health: " + _currentHealth);
@@ -83,15 +86,15 @@ namespace Zeph1rr.FrostWolfHunters.Hunt
             if (_isPaused) return;
             if (_attackCooldownTimer > 0) return;
             if (!UseStamina(10)) Die();
-            OnPlayerAttack?.Invoke(this, _characterStats.GetStatValue(PlayerStats.StatNames.AttackSpeed));
-            float damage = _characterStats.GetStatValue(PlayerStats.StatNames.Damage);
+            OnPlayerAttack?.Invoke(this, _characterStats.GetStatValue(StatNames.AttackSpeed));
+            float damage = _characterStats.GetStatValue(StatNames.Damage);
             System.Random random = new();
-            if (random.NextDouble() * (1.0 - 0.0) + 0.0 <= _characterStats.GetStatValue(PlayerStats.StatNames.CritChance))
+            if (random.NextDouble() * (1.0 - 0.0) + 0.0 <= _characterStats.GetStatValue(StatNames.CritChance))
             {
-                damage *= _characterStats.GetStatValue(PlayerStats.StatNames.CritMultiplyer);
+                damage *= _characterStats.GetStatValue(StatNames.CritMultiplyer);
             }
             _creatureBehaviour.AttackBehaviour.Attack<Enemy>(0.75f, damage);
-            _attackCooldownTimer = _characterStats.GetStatValue(PlayerStats.StatNames.AttackSpeed);
+            _attackCooldownTimer = _characterStats.GetStatValue(StatNames.AttackSpeed);
             _creatureBehaviour.Animator.SetTrigger($"{_weaponName.ToString().ToUpper()}_ATTACK");
         }
 
@@ -99,7 +102,7 @@ namespace Zeph1rr.FrostWolfHunters.Hunt
         {
             if (_isPaused) return;
             if (!UseStamina(50)) Die();
-            float damage = _characterStats.GetStatValue(PlayerStats.StatNames.Damage) * _characterStats.GetStatValue(PlayerStats.StatNames.CritMultiplyer);
+            float damage = _characterStats.GetStatValue(StatNames.Damage) * _characterStats.GetStatValue(StatNames.CritMultiplyer);
             _creatureBehaviour.Ult.Attack<Enemy>(0.75f, damage);
             _creatureBehaviour.Animator.SetTrigger($"{_weaponName.ToString().ToUpper()}_ULT");
         }
@@ -154,7 +157,7 @@ namespace Zeph1rr.FrostWolfHunters.Hunt
         private void Move(Vector2 direction)
         {
             direction = direction.normalized;
-            _creatureBehaviour.RigidBody.MovePosition(_creatureBehaviour.RigidBody.position + _characterStats.GetStatValue(PlayerStats.StatNames.Speed) * Time.deltaTime * direction);
+            _creatureBehaviour.RigidBody.MovePosition(_creatureBehaviour.RigidBody.position + _characterStats.GetStatValue(StatNames.Speed) * Time.deltaTime * direction);
         }
 
         private void TogglePause(object sender, EventArgs e)

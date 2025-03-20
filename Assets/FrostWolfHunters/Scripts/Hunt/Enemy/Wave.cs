@@ -1,25 +1,31 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using FrostWolfHunters.Scripts.Game.Data;
+using FrostWolfHunters.Scripts.Game.Data.Enums;
 using UnityEngine;
 using Zeph1rr.Core.Resources;
+using Zeph1rr.Core.Utils;
+using Zeph1rr.FrostWolfHunters.Hunt;
 
-namespace Zeph1rr.FrostWolfHunters.Hunt
+namespace FrostWolfHunters.Scripts.Hunt.Enemy
 {
     public class Wave
     {
         public event EventHandler<ResourceStorage> OnWaveEnd;
-
-        private int _waveNumber;
-        private int _waveMultiplier;
-        private GameData _gameData;
-        private List<EnemyStatsSo> _enemyPrefabs;
-        private Hunter _player;
-        private List<Enemy> _spawnedEnemies = new();
-        private Gameplay _compositeRoot;
-
-        private ResourceStorage _resourceStorage;
+        
         public ResourceStorage ResourceStorage => _resourceStorage;
+        
+        private readonly int _waveNumber;
+        private readonly int _waveMultiplier;
+        private readonly GameData _gameData;
+        private readonly List<EnemyStatsSo> _enemyPrefabs;
+        private readonly Hunter _player;
+        private readonly List<Zeph1rr.FrostWolfHunters.Hunt.Enemy> _spawnedEnemies = new();
+        private readonly ResourceStorage _resourceStorage;
+        private readonly Gameplay _compositeRoot;
+
         private int GetThreatLimit() => _waveMultiplier * _waveNumber;
 
         public Wave(List<EnemyStatsSo> enemyPrefabs, Hunter player, int waveMultiplier, GameData gameData, Gameplay compositeRoot)
@@ -28,17 +34,26 @@ namespace Zeph1rr.FrostWolfHunters.Hunt
             _waveNumber = gameData.CurrentWaveNumber;
             _waveMultiplier = waveMultiplier;
             _player = player;
-            _compositeRoot = compositeRoot;
             _enemyPrefabs = enemyPrefabs;
             _resourceStorage = new(Enum.GetNames(typeof(ResourceType)));
+            _compositeRoot = compositeRoot;
+            _compositeRoot.OnPausePressed += HandlePause;
         }
 
         public void StartWave()
         {
-            SpawnEnemies();
+            Coroutines.StartRoutine(SpawnEnemies());
         }
 
-        private void SpawnEnemies()
+        public void StopAllCoroutines()
+        {
+            foreach (var enemy in _spawnedEnemies.Where(enemy => !enemy.IsDead))
+            {
+                enemy.CreatureBehavoiur.StopAllCoroutines();
+            }
+        }
+
+        private IEnumerator SpawnEnemies()
         {
             int remainingThreat = GetThreatLimit();
 
@@ -50,6 +65,7 @@ namespace Zeph1rr.FrostWolfHunters.Hunt
                 {
                     remainingThreat -= boss.ThreatLevel;
                     SpawnEnemy((CreatureList) Enum.Parse(typeof(CreatureList), boss.name));
+                    yield return new WaitForSeconds(0.2f);
                 }
             }
 
@@ -60,30 +76,29 @@ namespace Zeph1rr.FrostWolfHunters.Hunt
 
                 remainingThreat -= enemyToSpawn.ThreatLevel;
                 SpawnEnemy((CreatureList) Enum.Parse(typeof(CreatureList), enemyToSpawn.name));
+                yield return new WaitForSeconds(0.2f);
             }
 
             Debug.Log($"Wave {_waveNumber} started! Total enemies: {_spawnedEnemies.Count}");
         }
 
-        public void EndWave()
+        private void EndWave()
         {
             Debug.Log("End wave!");
             _gameData.IncreaseWaveNumber();
+            _compositeRoot.OnPausePressed -= HandlePause;
             OnWaveEnd?.Invoke(this, _resourceStorage);
         }
 
         private void HandlePause(object sender, EventArgs e)
         {
-            foreach (Enemy enemy in _spawnedEnemies)
+            foreach (var enemy in _spawnedEnemies.Where(enemy => !enemy.IsDead))
             {
-                if (!enemy.IsDead)
-                {
-                    enemy.TogglePause();
-                }
+                enemy.TogglePause();
             }
         }
 
-        public void CheckWaveEnd(object sender, EventArgs e)
+        private void CheckWaveEnd(object sender, EventArgs e)
         {
             if (_spawnedEnemies.All(enemy => enemy.IsDead)) EndWave();
         }
@@ -103,7 +118,7 @@ namespace Zeph1rr.FrostWolfHunters.Hunt
         private void SpawnEnemy(CreatureList enemyPrefab)
         {
             Vector2 spawnPosition = GetRandomSpawnPosition();
-            Enemy newEnemy = new(enemyPrefab, _player, _resourceStorage, spawnPosition);
+            Zeph1rr.FrostWolfHunters.Hunt.Enemy newEnemy = new(enemyPrefab, _player, _resourceStorage, spawnPosition);
 
             _spawnedEnemies.Add(newEnemy);
             newEnemy.OnDeath += CheckWaveEnd;

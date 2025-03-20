@@ -6,13 +6,16 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/FrostWolfHunters/Scenes/Menu.unity
+    path: Assets/FrostWolfHunters/Scenes/Boot.unity
+    guid: 6f426018f9784154f86223027bd238c3
+  - enabled: 1
+    path: Assets/FrostWolfHunters/Scenes/MainMenu.unity
     guid: a8af9325ea55cbb4ba230dc96dc72c4d
   - enabled: 1
     path: Assets/FrostWolfHunters/Scenes/Tribe.unity
     guid: bfab6bd23c576fe46a95ecfa8f0462ce
   - enabled: 1
-    path: Assets/FrostWolfHunters/Scenes/Gameplay.unity
+    path: Assets/FrostWolfHunters/Scenes/Hunt.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

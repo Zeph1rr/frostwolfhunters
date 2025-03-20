@@ -1,4 +1,5 @@
 using System;
+using FrostWolfHunters.Scripts.Game.Data.Enums;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,7 +33,7 @@ public class StaminaBar : MonoBehaviour
 
     private void SetVisual()
     {
-        _staminaBar.fillAmount = _player.CurrentStamina / _player.CharacterStats.GetStatValue(PlayerStats.StatNames.MaxStamina);
-        _text.text = $"{_player.CurrentStamina}/{_player.CharacterStats.GetStatValue(PlayerStats.StatNames.MaxStamina)}";
+        _staminaBar.fillAmount = _player.CurrentStamina / _player.CharacterStats.GetStatValue(StatNames.MaxStamina);
+        _text.text = $"{_player.CurrentStamina}/{_player.CharacterStats.GetStatValue(StatNames.MaxStamina)}";
     }
 }
