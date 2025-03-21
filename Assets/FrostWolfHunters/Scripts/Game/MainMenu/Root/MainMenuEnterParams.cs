@@ -1,15 +1,14 @@
 ﻿using FrostWolfHunters.Scripts.Game.Data;
+using FrostWolfHunters.Scripts.Game.GameRoot;
 using R3;
 
 namespace FrostWolfHunters.Scripts.Game.MainMenu.Root
 {
-    public class MainMenuEnterParams
+    public class MainMenuEnterParams : SceneEnterParams
     {
-        public string  Result { get; }
 
-        public MainMenuEnterParams(string result)
+        public MainMenuEnterParams() : base(Scenes.MAIN_MENU)
         {
-            Result = result;
         }
     }
 }

@@ -84,7 +84,7 @@ namespace FrostWolfHunters.Scripts.Game.MainMenu.Root.View
             {
                 Debug.LogWarning($"Save with name {_playerNameInputField.text}.{_saveLoadSystem.FileExtension} already exists!");
             }
-            _gameData = new(_playerNameInputField.text);
+            _gameData.UpdateGameData(new GameData(_playerNameInputField.text));
             StartGame();
         }
 

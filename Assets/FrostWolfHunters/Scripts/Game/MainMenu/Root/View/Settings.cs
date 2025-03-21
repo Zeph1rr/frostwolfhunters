@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using Zeph1rr.Core.Localization;
 using Zeph1rr.Core.Utils;
 
-namespace FrostWolfHunters.Scripts.Game.MainMenu
+namespace FrostWolfHunters.Scripts.Game.MainMenu.Root.View
 {
     public class Settings : MonoBehaviour
     {

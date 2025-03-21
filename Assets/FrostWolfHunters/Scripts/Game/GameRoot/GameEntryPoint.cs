@@ -19,7 +19,6 @@ namespace FrostWolfHunters.Scripts.Game.GameRoot
         public Base64SaveLoadSystem GameDataSaveLoadSystem { get; private set; }
 
         private static GameEntryPoint _instance;
-        private Coroutines _coroutines;
         private readonly GameSettings _gameSettings;
         private readonly UIRoot _uiRoot;
         private readonly DIContainer _rootContainer = new();
@@ -73,14 +72,14 @@ namespace FrostWolfHunters.Scripts.Game.GameRoot
 #if UNITY_EDITOR
             var sceneName = SceneManager.GetActiveScene().name;
 
-            if (sceneName == Scenes.GAMEPLAY)
+            if (sceneName == Scenes.HUNT)
             {
                 return;
             }
 
             if (sceneName == Scenes.TRIBE)
             {
-                return;
+                Coroutines.StartRoutine(LoadAndStartTribe());
             }
 
             if (sceneName == Scenes.MAIN_MENU)
@@ -117,18 +116,36 @@ namespace FrostWolfHunters.Scripts.Game.GameRoot
 
                  if (targetSceneName == Scenes.TRIBE)
                  {
-                     _coroutines.StartCoroutine(LoadAndStartTribe(mainMenuExitParams.TargetSceneEnterParams.As<TribeEnterParams>()));
+                     Coroutines.StartRoutine(LoadAndStartTribe(mainMenuExitParams.TargetSceneEnterParams.As<TribeEnterParams>()));
                  }
              });
-
-             _uiRoot.HideLoadingScreen();
              
             _uiRoot.HideLoadingScreen();
         }
 
         private IEnumerator LoadAndStartTribe(TribeEnterParams enterParams = null)
         {
-            throw new System.NotImplementedException();
+            _uiRoot.ShowLoadingScreen();
+            _cachedSceneContainer?.Dispose();
+            
+            yield return LoadScene(Scenes.BOOT);
+            yield return LoadScene(Scenes.TRIBE);
+            
+            yield return new WaitForSeconds(1f);
+            
+            var sceneEntryPoint = Object.FindFirstObjectByType<TribeEntryPoint>();
+            var tribeContainer = _cachedSceneContainer = new DIContainer(_rootContainer);
+            sceneEntryPoint.Run(tribeContainer, enterParams).Subscribe(tribeExitParams =>
+            {
+                var targetSceneName = tribeExitParams.TargetSceneEnterParams.SceneName;
+
+                if (targetSceneName == Scenes.MAIN_MENU)
+                {
+                    Coroutines.StartRoutine(LoadAndStartMainMenu(tribeExitParams.TargetSceneEnterParams.As<MainMenuEnterParams>()));
+                }
+            });
+            
+            _uiRoot.HideLoadingScreen();
         }
 
         private IEnumerator LoadScene(string sceneName)
