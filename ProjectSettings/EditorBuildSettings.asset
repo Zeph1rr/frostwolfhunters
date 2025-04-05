@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/FrostOrcHunter/Scenes/Boot.unity
+    guid: 1ab3518c5a474c24db0dadcf1f292b20
+  - enabled: 1
+    path: Assets/FrostOrcHunter/Scenes/MainMenu.unity
+    guid: 7ab552e65a2a2a9449a97dbfc90738a5
+  - enabled: 1
+    path: Assets/FrostOrcHunter/Scenes/Tribe.unity
+    guid: cc584251208494c4494649f1dca880af
+  - enabled: 1
+    path: Assets/FrostOrcHunter/Scenes/Gameplay.unity
+    guid: 838c951fe743ab74d8c5e7ea3a377e1c
+  m_configObjects:
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  m_UseUCBPForAssetBundles: 0

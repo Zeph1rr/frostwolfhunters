@@ -1,0 +1,172 @@
+﻿{
+  "stats": [
+    {
+      "stat": "MaxHealth",
+      "entries": [
+        {"level": 0, "value": 100},
+        {"level": 1, "value": 105},
+        {"level": 2, "value": 110},
+        {"level": 3, "value": 115},
+        {"level": 4, "value": 120},
+        {"level": 5, "value": 125},
+        {"level": 6, "value": 130},
+        {"level": 7, "value": 135},
+        {"level": 8, "value": 140},
+        {"level": 9, "value": 145},
+        {"level": 10, "value": 150},
+        {"level": 11, "value": 155},
+        {"level": 12, "value": 160},
+        {"level": 13, "value": 165},
+        {"level": 14, "value": 170},
+        {"level": 15, "value": 175},
+        {"level": 16, "value": 180},
+        {"level": 17, "value": 185},
+        {"level": 18, "value": 190},
+        {"level": 19, "value": 195},
+        {"level": 20, "value": 200}
+      ]
+    },
+    {
+      "stat": "MaxStamina",
+      "entries": [
+        {"level": 0, "value": 110},
+        {"level": 1, "value": 120},
+        {"level": 2, "value": 130},
+        {"level": 3, "value": 140},
+        {"level": 4, "value": 150},
+        {"level": 5, "value": 160},
+        {"level": 6, "value": 170},
+        {"level": 7, "value": 180},
+        {"level": 8, "value": 190},
+        {"level": 9, "value": 200},
+        {"level": 10, "value": 210},
+        {"level": 11, "value": 220},
+        {"level": 12, "value": 230},
+        {"level": 13, "value": 240},
+        {"level": 14, "value": 250},
+        {"level": 15, "value": 260},
+        {"level": 16, "value": 270},
+        {"level": 17, "value": 280},
+        {"level": 18, "value": 290},
+        {"level": 19, "value": 300},
+        {"level": 20, "value": 310}
+      ]
+    },
+    {
+      "stat": "Damage",
+      "entries": [
+        {"level": 0, "value": 5},
+        {"level": 1, "value": 10},
+        {"level": 2, "value": 15},
+        {"level": 3, "value": 20},
+        {"level": 4, "value": 25},
+        {"level": 5, "value": 30},
+        {"level": 6, "value": 35},
+        {"level": 7, "value": 40},
+        {"level": 8, "value": 45},
+        {"level": 9, "value": 50},
+        {"level": 10, "value": 55},
+        {"level": 11, "value": 60},
+        {"level": 12, "value": 65},
+        {"level": 13, "value": 70},
+        {"level": 14, "value": 75},
+        {"level": 15, "value": 80},
+        {"level": 16, "value": 85},
+        {"level": 17, "value": 90},
+        {"level": 18, "value": 95},
+        {"level": 19, "value": 100},
+        {"level": 20, "value": 105}
+      ]
+    },
+    {
+      "stat": "Speed",
+      "entries": [
+        {"level": 0, "value": 5},
+        {"level": 1, "value": 7},
+        {"level": 2, "value": 9},
+        {"level": 3, "value": 11},
+        {"level": 4, "value": 13},
+        {"level": 5, "value": 15},
+        {"level": 6, "value": 17},
+        {"level": 7, "value": 19},
+        {"level": 8, "value": 21},
+        {"level": 9, "value": 25}
+      ]
+    },
+    {
+      "stat": "Defence",
+      "entries": [
+        {"level": 0, "value": 0},
+        {"level": 1, "value": 2},
+        {"level": 2, "value": 4}
+      ]
+    },
+    {
+      "stat": "AttackSpeed",
+      "entries": [
+        {"level": 0, "value": 2},
+        {"level": 1, "value": 1.85},
+        {"level": 2, "value": 1.7},
+        {"level": 3, "value": 1.55},
+        {"level": 4, "value": 1.4},
+        {"level": 5, "value": 1.25},
+        {"level": 6, "value": 1.1},
+        {"level": 7, "value": 0.95},
+        {"level": 8, "value": 0.8},
+        {"level": 9, "value": 0.65},
+        {"level": 10, "value": 0.5},
+        {"level": 11, "value": 0.35},
+        {"level": 12, "value": 0.2},
+        {"level": 13, "value": 0.05},
+        {"level": 14, "value": 0}
+      ]
+    },
+    {
+      "stat": "CritChance",
+      "entries": [
+        {"level": 0, "value": 0},
+        {"level": 1, "value": 0.05},
+        {"level": 2, "value": 0.1},
+        {"level": 3, "value": 0.15},
+        {"level": 4, "value": 0.2},
+        {"level": 5, "value": 0.25},
+        {"level": 6, "value": 0.3},
+        {"level": 7, "value": 0.35},
+        {"level": 8, "value": 0.4},
+        {"level": 9, "value": 0.45},
+        {"level": 10, "value": 0.5},
+        {"level": 11, "value": 0.55},
+        {"level": 12, "value": 0.6},
+        {"level": 13, "value": 0.65},
+        {"level": 14, "value": 0.7},
+        {"level": 15, "value": 0.75}
+      ]
+    },
+    {
+      "stat": "CritMultiplyer",
+      "entries": [
+        {"level": 0, "value": 1.1},
+        {"level": 1, "value": 1.2},
+        {"level": 2, "value": 1.3},
+        {"level": 3, "value": 1.4},
+        {"level": 4, "value": 1.5},
+        {"level": 5, "value": 1.6},
+        {"level": 6, "value": 1.7},
+        {"level": 7, "value": 1.8},
+        {"level": 8, "value": 1.9},
+        {"level": 9, "value": 2},
+        {"level": 10, "value": 2.1},
+        {"level": 11, "value": 2.2},
+        {"level": 12, "value": 2.3},
+        {"level": 13, "value": 2.4},
+        {"level": 14, "value": 2.5},
+        {"level": 15, "value": 2.6},
+        {"level": 16, "value": 2.7},
+        {"level": 17, "value": 2.8},
+        {"level": 18, "value": 2.9},
+        {"level": 19, "value": 3},
+        {"level": 20, "value": 3.1}
+      ]
+    }
+  ]
+}
